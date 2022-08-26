@@ -1,0 +1,64 @@
+{
+  "name": "api-gateway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": "./index.js",
+  "scripts": {
+    "start": "rollup -c --watch",
+    "build": "rollup -c",
+    "update-schema": "cross-env BABEL_DISABLE_CACHE=1 babel-node ../scripts/update-schema",
+    "deploy": "yarn api-gateway:deploy",
+    "api-gw:start": "yarn workspace api-gateway run start",
+    "api-gw:update-schema": "yarn workspace api-gateway run update-schema",
+    "api-gw:build": "yarn workspace api-gateway run build"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "http-proxy-middleware": "^2.0.6",
+    "minimist": "^1.2.6",
+    "morgan": "^1.10.0",
+    "source-map-support": "^0.5.21"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.2",
+    "@babel/node": "^7.17.10",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/register": "^7.17.7",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@rollup/plugin-run": "^2.1.0",
+    "@rollup/plugin-url": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "cross-spawn": "^7.0.3",
+    "envars": "^0.4.0",
+    "prettier": "^2.6.2",
+    "rollup": "^2.75.5",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "supertest": "^6.2.3"
+  },
+  "envars": {
+    "cwd": "../env"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": 16
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  }
+}
