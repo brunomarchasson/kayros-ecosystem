@@ -9,7 +9,7 @@ import TableOfContents from '../../components/TableOfContents';
 function Quotation(props) {
   return (
 <QuotationProvider>
-    <Box sx={{p: 1,flex: 1, display: 'flex', flexDirecion: 'row', overflow: 'auto'}}>
+    <Box sx={{p: 1,flex: 1, display: 'flex', flexDirecion: 'row', justifyContent: 'center', overflow: 'auto'}}>
     {/* <QuotationPlan /> */}
     <TableOfContents></TableOfContents>
     <QuotationForm />

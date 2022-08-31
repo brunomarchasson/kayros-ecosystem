@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import { useForm, Controller } from "react-hook-form";
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
@@ -126,30 +127,23 @@ function QuotationForm() {
   return (
     <Box sx={{
       flex: 1,
+      display: "flex",
+      alignItems: "center",
+          flexDirection: 'column',
       '& h2, h3 ': {
         scrollMarginTop: '16px',
       }
     }}>
-
-    <TextField
-        label="react-number-format"
-        // value={values.numberformat}
-        // onChange={handleChange}
-        name="numberformat"
-        id="formatted-numberformat-input"
-        InputProps={{
-          inputComponent: NumberFormatCustom,
-        }}
-      />
-      <Box
+      <Paper
         component="form"
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
         sx={{
+          padding: "1rem 3rem",
           display: "flex",
           flexDirection: 'column',
           gap: 1,
-          width: 500,
+          width: 600,
         }}
       >
 
@@ -283,7 +277,7 @@ function QuotationForm() {
         <h2 id="packaging">packaging</h2>
 
         <Button type="submit">Submit</Button>
-      </Box>
+      </Paper>
       {/* </form> */}
 
     </Box>
