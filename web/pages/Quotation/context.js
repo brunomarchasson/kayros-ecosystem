@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 const steps = [
   'step 1',
@@ -17,7 +17,7 @@ const Provider =QuotationContext.Provider;
 export const QuotationProvider = ({children}) => {
   const stepsRef = useRef([]);
 
-  return <Provider value = {stepsRef}>
+  return <Provider value = {{stepsRef}}>
     {children}
   </Provider>
 }

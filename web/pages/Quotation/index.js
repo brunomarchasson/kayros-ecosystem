@@ -1,17 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import QuotationPlan from './QuotationPlan'
 import Box from '@mui/material/Box';
 import { QuotationProvider } from './context';
+import QuotationForm from './QuotationForm';
+import TableOfContents from '../../components/TableOfContents';
 
 
 function Quotation(props) {
   return (
 <QuotationProvider>
-    <Box sx={{display: 'flex', flexDirecion: 'row'}}>
-    <QuotationPlan />
+    <Box sx={{p: 1,flex: 1, display: 'flex', flexDirecion: 'row', overflow: 'auto'}}>
+    {/* <QuotationPlan /> */}
+    <TableOfContents></TableOfContents>
     <QuotationForm />
-    <div>Quotation</div>
     </Box>
 </QuotationProvider>
   )

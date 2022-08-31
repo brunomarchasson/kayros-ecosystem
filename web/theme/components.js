@@ -13,17 +13,17 @@ const createComponents = () => ({
 
   MuiTextField: {
     defaultProps: {
-      InputLabelProps: { shrink: true },
+      // InputLabelProps: { shrink: true },
     },
   },
 
   MuiButton: {
     styleOverrides: {
       contained: {
-        boxShadow: "none",
-        "&:hover": {
-          boxShadow: "none",
-        },
+        // boxShadow: "none",
+        // "&:hover": {
+        //   boxShadow: "none",
+        // },
       },
     },
   },
@@ -31,7 +31,7 @@ const createComponents = () => ({
   MuiButtonGroup: {
     styleOverrides: {
       root: {
-        boxShadow: "none",
+        // boxShadow: "none",
       },
     },
   },
@@ -39,7 +39,7 @@ const createComponents = () => ({
   MuiDialogTitle: {
     styleOverrides: {
       root: {
-        fontSize: "1.125rem",
+        // fontSize: "1.125rem",
       },
     },
   },

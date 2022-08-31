@@ -10,11 +10,9 @@ function App() {
     <ThemeProvider >
       <CssBaseline />
       <AuthProvider>
-        <div>
           <AppLayout>
             <AppRoutes />
           </AppLayout>
-        </div>
       </AuthProvider>
     </ThemeProvider>
   );

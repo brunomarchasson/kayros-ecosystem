@@ -23,7 +23,7 @@ function AppRoutes(props) {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/public" element={<Public />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/quotation" element={
         <Quotation />
       } />

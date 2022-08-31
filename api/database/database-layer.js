@@ -16,16 +16,19 @@ const dbConfig = {
     trustServerCertificate: true // change to true for local dev / self-signed certs
   }
 };
+if(dbConfig.server) {
 
-sql.on('error', (err) => {
-  console.error(err);
-});
-sql.on('info', (info) => {
-  console.info(info);
-});
+  sql.on('error', (err) => {
+    console.error(err);
+  });
+  sql.on('info', (info) => {
+    console.info(info);
+  });
 
-sql.connect(dbConfig).then(() => {
-  console.info('sql ready');
-});
-
+  sql.connect(dbConfig).then(() => {
+    console.info('sql ready');
+  });
+} else {
+  console.info('sql not ready');
+}
 export default sql;

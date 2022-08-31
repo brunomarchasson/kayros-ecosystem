@@ -55,7 +55,7 @@ function AppLayout(props) {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItemLink to={"/"+item} primary={item} />
+          <ListItemLink key={item} to={"/"+item} primary={item} />
         ))}
       </List>
     </Box>
@@ -64,7 +64,7 @@ function AppLayout(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', height: '100vh' }}>
       <AppBar component="nav">
         <Toolbar>
           <IconButton
@@ -110,7 +110,7 @@ function AppLayout(props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={{ p: 3 }}>
+      <Box component="main" sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
         <Toolbar />
         {children}
       </Box>

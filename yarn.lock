@@ -11800,7 +11800,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -11967,6 +11967,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.34.2":
+  version: 7.34.2
+  resolution: "react-hook-form@npm:7.34.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 370e18dfb1f28cccecd730d4e9ffa0f786f578153cec5c904e98aa8aa75eb42a5de98fbc945651bee05a25d764f61fa61cc74ff4088adb516102fe587b04a4be
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -11978,6 +11987,18 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: f542f0effed3f89b4faa237bf56e746d437c9dba4ed1039a2ba6e6fcb463244300b8f3c17d8e610e76476a626c4d97ee4c2ed7a5b5d64e2b2e2d7b2144816ac8
+  languageName: node
+  linkType: hard
+
+"react-number-format@npm:^4.9.3":
+  version: 4.9.3
+  resolution: "react-number-format@npm:4.9.3"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 4ff9f79157b8ff6a4cb9f4765d853f15fbbb8fcce5e807f890c171ee81b50ba86065ee3d388ef2d2e277e5c92aa943308009904459fcd77cf2224d4f07628962
   languageName: node
   linkType: hard
 
@@ -14145,6 +14166,8 @@ __metadata:
     prop-types: "npm:^15.8.1"
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
+    react-hook-form: "npm:^7.34.2"
+    react-number-format: "npm:^4.9.3"
     react-refresh: "npm:^0.13.0"
     react-relay: "npm:13.2.0"
     react-router-dom: "npm:^6.3.0"
