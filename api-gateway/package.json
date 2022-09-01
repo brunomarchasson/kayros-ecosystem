@@ -14,7 +14,9 @@
     "api-gw:build": "yarn workspace api-gateway run build"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.1",
+    "helmet": "^6.0.0",
     "http-proxy-middleware": "^2.0.6",
     "minimist": "^1.2.6",
     "morgan": "^1.10.0",

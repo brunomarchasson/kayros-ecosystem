@@ -52,7 +52,6 @@ registerApi(
       const product = await getProduct(data.productIdCode);
       const provider = await getProvider(eanProvider);
 
-      console.log(product, provider)
 
       request.input('user', sql.VarChar, data.currentUser);
       request.input('idArticle', sql.VarChar, product.id.split('.')[0]);
@@ -63,7 +62,6 @@ registerApi(
         )
         .then((r) => r.recordset[0].index);
 
-    console.log('rr')
       request.input('idx', sql.VarChar, idx);
       request.input('eanProvider', sql.VarChar, eanProvider);
       request.input('idProvider', sql.VarChar, provider.id);

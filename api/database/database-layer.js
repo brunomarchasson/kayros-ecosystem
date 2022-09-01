@@ -1,6 +1,8 @@
+import chalk from 'chalk';
 import sql from 'mssql';
 
-const dbConfig = {
+export const dbConfig = {
+  mocked: process.env.DB_MOCK,
   user: process.env.DB_USER,
   password: process.env.DB_PWD,
   database: process.env.DB_NAME,
@@ -16,19 +18,18 @@ const dbConfig = {
     trustServerCertificate: true // change to true for local dev / self-signed certs
   }
 };
-if(dbConfig.server) {
+if(dbConfig.mocked){
+  console.log(chalk.red('DATA IS MOCED'));
+}else {
+    sql.on('error', (err) => {
+      console.error(err);
+    });
+    sql.on('info', (info) => {
+      console.info(info);
+    });
 
-  sql.on('error', (err) => {
-    console.error(err);
-  });
-  sql.on('info', (info) => {
-    console.info(info);
-  });
-
-  sql.connect(dbConfig).then(() => {
-    console.info('sql ready');
-  });
-} else {
-  console.info('sql not ready');
+    sql.connect(dbConfig).then(() => {
+      console.info('sql ready');
+    });
 }
 export default sql;

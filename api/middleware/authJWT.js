@@ -1,8 +1,10 @@
+import { verifyToken } from "../core";
 
 /**
  * middleware that checks the jwt provided in the x-access-token header
  */
-const verifyToken = (req, res, next) => {
+const isAuth = (req, res, next) => {
+  console.log(req.headers)
   let token = req.headers['x-access-token'];
   if (token === 'undefined') token = null;
   // if no token is provided, deny access
@@ -23,4 +25,4 @@ const verifyToken = (req, res, next) => {
   })
 };
 
-export default verifyToken;
+export default isAuth;

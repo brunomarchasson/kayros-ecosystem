@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Switchn, Route, useParams } from "react-router-dom";
+
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+const Api = () => {
+  const [apiId, setApiId] = useState('')
+
+  useEffect(()=> {
+    const parsedData = window.location.pathname.split("/");
+    let api = parsedData[1];
+    setApiId(api)
+  }, [window.location.pathname])
+
+  console.log('eee', apiId)
+
+  return (
+    <BrowserRouter basename={'/'+apiId} >
+      <App apiId={apiId}/>
+    </BrowserRouter>
+  );
+};
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+  <Api></Api>
   </React.StrictMode>
 );
 

@@ -11,6 +11,9 @@ const config = {
     name: `${process.env.APP_NAME}`,
     origin: `${process.env.APP_ORIGIN}`,
   },
+  api: {
+    origin: `${process.env.API_ORIGIN}`,
+  }
 };
 
 export default config;

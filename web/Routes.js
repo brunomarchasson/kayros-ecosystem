@@ -10,7 +10,8 @@ import Quotation from './pages/Quotation';
 function RequireAuth({ children }) {
   const { authed } = useAuth();
   const location = useLocation();
-
+  console.log('authed', authed)
+  if(authed === null) return null;
   return authed === true ? (
     children
   ) : (
@@ -20,12 +21,16 @@ function RequireAuth({ children }) {
 }
 
 function AppRoutes(props) {
+  const { authed } = useAuth();
+  if(authed === null) return null;
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Home />} />
       <Route path="/quotation" element={
+        <RequireAuth>
         <Quotation />
+        </RequireAuth>
       } />
       <Route path="/" element={<RequireAuth>
         <Home />

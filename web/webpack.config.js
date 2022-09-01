@@ -42,17 +42,17 @@ module.exports = function config(env, options) {
   envars.config({ env: envName });
 
   // Fetch the API origin URL from Google Cloud Functions (GCF)
-  if (envName !== "local") {
-    const cp = spawnSync("gcloud", [
-      ...[`beta`, `functions`, `describe`, `api`, `--gen2`],
-      `--project=${process.env.GOOGLE_CLOUD_PROJECT}`,
-      `--region=${process.env.GOOGLE_CLOUD_REGION}`,
-      `--format=value(serviceConfig.uri)`,
-    ]);
-    process.env.API_ORIGIN = cp.stdout.toString().trim();
-  } else {
-    process.env.API_ORIGIN = "http://localhost:8080";
-  }
+  // if (envName !== "local") {
+  //   const cp = spawnSync("gcloud", [
+  //     ...[`beta`, `functions`, `describe`, `api`, `--gen2`],
+  //     `--project=${process.env.GOOGLE_CLOUD_PROJECT}`,
+  //     `--region=${process.env.GOOGLE_CLOUD_REGION}`,
+  //     `--format=value(serviceConfig.uri)`,
+  //   ]);
+  //   process.env.API_ORIGIN = cp.stdout.toString().trim();
+  // } else {
+  //   process.env.API_ORIGIN = "http://localhost:8080";
+  // }
 
   const isEnvProduction = options.mode === "production";
   const isEnvDevelopment = options.mode === "development";

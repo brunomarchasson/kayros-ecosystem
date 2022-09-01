@@ -31,11 +31,13 @@ const registerApi = (
     res,
   )
     .then(
-      () => callback(
-        req.data,
-        (data) => resultHandler(req, res, data),
-        { req, res },
-      ),
+      () => {
+        res.sendResult = (data) => resultHandler(req, res, data);
+        return callback(
+        req,
+        res,
+        // (data) => resultHandler(req, res, data),
+      )},
     );
 
   const s = router[method](

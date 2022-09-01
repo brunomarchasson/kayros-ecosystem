@@ -21,7 +21,7 @@ function LabelImage({ style, shape = 2 }) {
     <svg width={w} height={h} viewBox={"-80 0 " + (w + 80) + " " + h} fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <marker id="startarrow" markerWidth="10" markerHeight="7"
-          refX="start" refY="3.5" orient="auto">
+          refX="0" refY="3.5" orient="auto">
           <polyline points="10 0,0 3.5, 10 7" stroke="#000" />
         </marker>
         <marker id="endarrow" markerWidth="10" markerHeight="7"
