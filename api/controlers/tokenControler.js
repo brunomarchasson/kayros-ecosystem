@@ -8,6 +8,7 @@ const mockedUser = {
  }
 
 const get = async (req, res, next) => {
+  console.log('CONTROLER_GET')
   const u = req.currentUser;
   const user = dbConfig.mocked ? mockedUser : null
   //todo Fetch user from db
@@ -25,7 +26,6 @@ const get = async (req, res, next) => {
       },
     }
   );
-  console.log('t', token)
   res.sendResult({
     user: user,
     success: true,

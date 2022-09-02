@@ -14,6 +14,7 @@ export default cleanEnv(process.env, {
 
   APP_NAME: str(),
   APP_ORIGIN: url(),
+  API_ORIGIN: url(),
   APP_ENV: str({ choices: ["prod", "test", "local"] }),
   VERSION: str(),
 

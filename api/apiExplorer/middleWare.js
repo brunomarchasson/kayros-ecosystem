@@ -17,7 +17,7 @@ const validateSchemaMW = (apiConfig) => async (req, res, next) => {
     req.data = formatedData;
   } catch (e) {
     if (e instanceof ValidationError) {
-      console.error('bad request format', e);
+      // console.error('bad request format', e);
       return res.status(400).json({ errors: e.errors[0] });
     }
     throw e;

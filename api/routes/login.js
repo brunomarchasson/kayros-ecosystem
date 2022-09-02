@@ -2,7 +2,6 @@ import express from 'express';
 import { registerApi, schema } from '../apiExplorer';
 import { credentialSchema } from '../schemas/credentialsSchema';
 import users from '../users.json';
-import { createToken } from '../core';
 import tokenControler from '../controlers/tokenControler';
 import isAuthentified from '../middleware/authJWT';
 

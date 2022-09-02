@@ -28,9 +28,9 @@ registerApi(
       url: schema().string().required(),
     }),
   },
-  async (data, returns, { res }) => {
-    returns({
-      url: config.baseURLApi,
+  async (req, res) => {
+    res.sendResult({
+      url: process.env.API_ORIGIN,
     });
   },
 );

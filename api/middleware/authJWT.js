@@ -4,8 +4,7 @@ import { verifyToken } from "../core";
  * middleware that checks the jwt provided in the x-access-token header
  */
 const isAuth = (req, res, next) => {
-  console.log(req.headers)
-  let token = req.headers['x-access-token'];
+  let token = req.headers?.['x-access-token'];
   if (token === 'undefined') token = null;
   // if no token is provided, deny access
   if (!token) {
@@ -13,12 +12,12 @@ const isAuth = (req, res, next) => {
       message: 'No token provided!',
     });
   }
-  verifyToken (token)
+  return verifyToken (token)
   .then((decoded) => {
     req.currentUser = decoded.user;
     return next();
   })
-  .catch(() => {
+  .catch((e) => {
     return res.status(401).send({
       message: 'Unauthorized!',
     });
