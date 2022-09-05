@@ -9,6 +9,7 @@ import Quotation from './pages/Quotation';
 
 function RequireAuth({ children }) {
   const { authed } = useAuth();
+  console.log(authed)
   const location = useLocation();
   console.log('authed', authed)
   if(authed === null) return null;
@@ -20,12 +21,21 @@ function RequireAuth({ children }) {
 
 }
 
+export function AuthRoutes({children}){
+
+  return(
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/*" element={<RequireAuth>{children}</RequireAuth>} />
+    </Routes>
+  )
+}
 function AppRoutes(props) {
   const { authed } = useAuth();
   if(authed === null) return null;
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      {/* <Route path="/login" element={<Login />} /> */}
       <Route path="/home" element={<Home />} />
       <Route path="/quotation" element={
         <RequireAuth>

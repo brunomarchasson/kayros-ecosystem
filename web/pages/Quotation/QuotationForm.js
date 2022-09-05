@@ -9,6 +9,9 @@ import Button from '@mui/material/Button';
 import { Stack, MenuItem, Autocomplete } from '@mui/material';
 import NumberFormat from 'react-number-format';
 import LabelImage from './LabelImage';
+import { OutupuDirectionInput } from './OutputDirection';
+
+let renderCount = 0;
 
 const objOptions = [
   { value: 65, label: "A" },
@@ -28,7 +31,6 @@ const Row = (p) => (
 );
 const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
   const { onChange, ...other } = props;
-  console.log(other)
   return (
     <NumberFormat
       {...other}
@@ -43,7 +45,7 @@ const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, r
       }}
       thousandSeparator=" "
       isNumericString
-      // prefix="$"
+    // prefix="$"
     />
   );
 });
@@ -62,7 +64,7 @@ const NumberInput = ({ control, name, label, rules, defaultValue, inputProps }) 
     rules={rules}
     render={({ field }) => (
       <TextField
-      {...field}
+        {...field}
         label={label}
         InputProps={{
           inputComponent: NumberFormatCustom,
@@ -123,13 +125,14 @@ function QuotationForm() {
   const watchShape = watch("shape");
   const watchWidth = watch("width");
   const watchHeight = watch("height");
-  console.log(watchShape)
+  renderCount++;
+  console.log("renderCount", renderCount)
   return (
     <Box sx={{
       flex: 1,
       display: "flex",
       alignItems: "center",
-          flexDirection: 'column',
+      flexDirection: 'column',
       '& h2, h3 ': {
         scrollMarginTop: '16px',
       }
@@ -187,14 +190,14 @@ function QuotationForm() {
                 required: true,
               }} />
               {watchShape?.value !== 0 &&
-                <NumberInput control={control} name="height" label="height"  rules={{
+                <NumberInput control={control} name="height" label="height" rules={{
                   required: true,
                 }} />
               }
             </Row>
           </Stack>
           <Box>
-            <LabelImage style ={{maxWidth:200, maxHeight:200}} shape={watchShape} width={watchWidth} height={watchHeight}></LabelImage>
+            <LabelImage style={{ maxWidth: 200, maxHeight: 200 }} shape={watchShape} width={watchWidth} height={watchHeight}></LabelImage>
           </Box>
 
         </Stack>
@@ -253,26 +256,10 @@ function QuotationForm() {
         /> */}
         <h2 id="finish">finish</h2>
         <Row>
-          <SelectInput control={control}
-            name="outputDirection"
-            label="outputDirection"
-            options={[
-              { value: 0, label: "In" },
-              { value: 1, label: "Out" },
-            ]} />
-
-        </Row>
-        <Row>
-          <SelectInput control={control}
-            name="unwindingDirection"
-            label="unwindingDirection"
-            options={[
-              { value: 0, label: "Droite avant" },
-              { value: 1, label: "Gauche avant" },
-              { value: 2, label: "Pied avant" },
-              { value: 3, label: "Tête avant" },
-            ]} />
-
+          <OutupuDirectionInput control={control} name="out" rules={{
+                  required: true,
+                }}>
+          </OutupuDirectionInput>
         </Row>
         <h2 id="packaging">packaging</h2>
 
