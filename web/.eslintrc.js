@@ -1,5 +1,4 @@
 module.exports = {
-  parser: '@babel/eslint-parser',
   settings: {
     react: {
       version: 'detect',
@@ -7,6 +6,7 @@ module.exports = {
   },
   parserOptions: {
     requireConfigFile: false,
+    ecmaVersion: 'latest',
     ecmaFeatures: {
       jsx: true,
     },
@@ -63,7 +63,10 @@ module.exports = {
     'class-methods-use-this': 0,
     'no-new': 0,
     'react/jsx-props-no-spreading': 0,
-    'no-unused-vars': [1, { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
+    'no-unused-vars': [
+      1,
+      { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
+    ],
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'max-len': ['error', { code: 120 }],

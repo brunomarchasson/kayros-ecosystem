@@ -5,7 +5,7 @@
   // "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  // "eslint.nodePath": ".yarn/sdks",
+  "eslint.nodePath": ".yarn/sdks",
   "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
   "jest.jestCommandLine": "yarn jest",
   "jestrunner.enableYarnPnpSupport": true,
@@ -99,16 +99,6 @@
     "yarnpkg",
     "yarnrc"
   ],
-  "[terraform]": {
-    "editor.defaultFormatter": "hashicorp.terraform",
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file"
-  },
-  "[terraform-vars]": {
-    "editor.defaultFormatter": "hashicorp.terraform",
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "file"
-  },
   "cSpell.words": [
     "kayros"
   ]

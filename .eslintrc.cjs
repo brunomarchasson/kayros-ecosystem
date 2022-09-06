@@ -1,12 +1,3 @@
-/* SPDX-FileCopyrightText: 2016-present Kriasoft <hello@kriasoft.com> */
-/* SPDX-License-Identifier: MIT */
-
-/**
- * ESLint configuration
- *
- * @see https://eslint.org/docs/user-guide/configuring
- * @type {import("eslint").Linter.Config}
- */
 module.exports = {
   root: true,
 
@@ -16,7 +7,6 @@ module.exports = {
   },
 
   extends: ["eslint:recommended", "prettier"],
-
   parserOptions: {
     sourceType: "module",
     ecmaVersion: "latest",

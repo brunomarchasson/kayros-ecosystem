@@ -11,7 +11,7 @@
 module.exports = function config(api) {
   api.cache(true);
   return {
-    presets: ["@babel/preset-react"],
-    plugins: ["@babel/plugin-proposal-nullish-coalescing-operator"],
+    presets: ['@babel/preset-react'],
+    plugins: ['@babel/plugin-proposal-nullish-coalescing-operator'],
   };
 };
