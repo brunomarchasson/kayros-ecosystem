@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useLocalize } from 'react-localize';
+// import { useLocalize } from 'react-localize';
+import { useTranslation } from 'react-i18next';
 import { validate } from './validation';
 
 export const useInput = (opts = {}) => {
   const [value, setValue] = useState(opts.initialValue);
   const [error, setError] = useState();
-  const { localize } = useLocalize();
-
+  const { t } = useTranslation();
   useEffect(() => {
     opts.form.registerField({
       key: opts.key,
@@ -19,7 +19,7 @@ export const useInput = (opts = {}) => {
   }, [error]);
 
   useEffect(() => {
-    if (opts.validate || opts.validateItems) setError(validate(opts, value, localize));
+    if (opts.validate || opts.validateItems) setError(validate(opts, value, t));
     opts.form.setFieldValue(opts.key, value);
   }, [value]);
 

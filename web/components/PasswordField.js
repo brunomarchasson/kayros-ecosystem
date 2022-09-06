@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { InputAdornment, IconButton } from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import React, { useState } from 'react';
+import { InputAdornment, IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import TextField from '@mui/material/TextField';
 
-export function PasswordField(props) {
+export const PasswordField = React.forwardRef((props, ref) => {
   const [passwordIsMasked, setPasswordIsMasked] = useState(true);
 
   const maskPassword = (isMasked) => {
@@ -14,23 +14,24 @@ export function PasswordField(props) {
   return (
     <div className="container">
       <TextField
+        ref={ ref }
         autoComplete="current-password"
-        InputProps={{
+        InputProps={ {
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
-                onMouseEnter={() => maskPassword(false)}
-                onMouseLeave={() => maskPassword(true)}
+                onMouseEnter={ () => maskPassword(false) }
+                onMouseLeave={ () => maskPassword(true) }
                 edge="end"
               >
-                {passwordIsMasked ? <Visibility /> : <VisibilityOff />}
+                { passwordIsMasked ? <Visibility /> : <VisibilityOff /> }
               </IconButton>
             </InputAdornment>
           ),
-        }}
-        {...props}
-        type={passwordIsMasked ? "password" : "text"}
+        } }
+        { ...props }
+        type={ passwordIsMasked ? 'password' : 'text' }
       />
     </div>
   );
-}
+});

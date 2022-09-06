@@ -28,14 +28,12 @@ const email = (value, ruleOptions, input, localize) => {
     localize,
   );
 };
-const validateFct = (value, ruleOptions, input, localize) => {
-  return ruleOptions(value, input)
-}
+const validateFct = (value, ruleOptions, input) => ruleOptions(value, input);
 export const rules = {
   required,
   email,
   patern,
-  validate: validateFct
+  validate: validateFct,
 };
 
 const validateRule = (rule, ruleOptions, input, value, localize) => rules[rule](value, ruleOptions, input, localize);
@@ -44,8 +42,8 @@ export const validate = (input, value, localize) => {
   const errors = Object.entries(input.validate || {})
     .map(([rule, ruleOptions]) => validateRule(rule, ruleOptions, input, value, localize))
     .filter((e) => e);
-  errors.items =  value?.map && value.map(v => Object.entries(input.validateItems)
-  .map(([rule, ruleOptions]) => validateRule(rule, ruleOptions, input, v, localize))
-  .filter((e) => e));
+  errors.items = value?.map && value.map((v) => Object.entries(input.validateItems)
+    .map(([rule, ruleOptions]) => validateRule(rule, ruleOptions, input, v, localize))
+    .filter((e) => e));
   return errors;
 };
