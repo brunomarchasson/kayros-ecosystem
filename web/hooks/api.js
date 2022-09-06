@@ -1,51 +1,46 @@
-import React, { useState, useContext, useCallback, useMemo } from 'react';
-import {PropTypes} from 'prop-types';
+import React, {
+  useState, useContext, useMemo,
+} from 'react';
+import { PropTypes } from 'prop-types';
 import ky from 'ky';
-import { useParams } from 'react-router-dom';
 import config from '../config';
 
 const NetworkContext = React.createContext();
 const { Provider } = NetworkContext;
 
-const handleError = async (response) => {
-  if (response.ok) return response;
-  let err;
-  try {
-    err = await response.json();
-  } catch (e) {
-    err = response.statusText;
-  }
-  throw err;
-};
+// const handleError = async (response) => {
+//   if (response.ok) return response;
+//   let err;
+//   try {
+//     err = await response.json();
+//   } catch (e) {
+//     err = response.statusText;
+//   }
+//   throw err;
+// };
 
-export const ApiProvider = ({ children, apiId }) => {
+export function ApiProvider({ children, apiId }) {
   const [networkError, setNetworkError] = useState(false);
   const [JWT, setJWT] = useState();
-  console.log(apiId, JWT)
-  const api = useMemo(() => ky.extend({
-    prefixUrl: config.api.origin+'/'+apiId+'/api/',
-    headers: {
-      'x-access-token': JWT
-    },
-    hooks: {
-      beforeRequest: [
-        () => {
-          if(!apiId) {
-            console.log("no AppId")
-            return new Response({}, {status: 401, statusText: 'OK'})
-          }
-        }
-      ]
-    }
-    // hooks: {
-    //   beforeRequest: [
-    //     request => {
-    //       request.headers.set('x-access-token', JWT);
-    //     }
-    //   ]
-    // }
-  }), [apiId, config.api.origin, JWT]);
-
+  const api = useMemo(
+    () => ky.extend({
+      prefixUrl: `${config.api.origin}/${apiId}/api/`,
+      headers: {
+        'x-access-token': JWT,
+      },
+      hooks: {
+        beforeRequest: [
+          (req) => {
+            if (!apiId) {
+              return new Response({}, { status: 401, statusText: 'OK' });
+            }
+            return req;
+          },
+        ],
+      },
+    }),
+    [apiId, config.api.origin, JWT],
+  );
 
   return (
     <Provider
@@ -60,13 +55,14 @@ export const ApiProvider = ({ children, apiId }) => {
       { children }
     </Provider>
   );
-};
+}
 
 ApiProvider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  apiId: PropTypes.string,
 };
 
 export const useApi = () => {

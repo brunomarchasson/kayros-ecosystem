@@ -1,31 +1,30 @@
 import { CssBaseline } from '@mui/material';
 import React from 'react';
+import PropTypes from 'prop-types';
 import AppLayout from './components/AppLayout';
 import { ApiProvider } from './hooks/api';
-import { TranslationProvider } from './hooks/Translation';
 import { AuthProvider } from './hooks/useAuth';
 import AppRoutes, { AuthRoutes } from './Routes';
-import { ThemeProvider } from "./theme";
+import { ThemeProvider } from './theme';
 
-function App({apiId}) {
-  if(!apiId) return null
-  console.log('app')
+function App({ apiId }) {
+  if (!apiId) return null;
   return (
-    <ApiProvider apiId={apiId} >
-    <TranslationProvider>
-    <ThemeProvider >
-      <CssBaseline />
-      <AuthProvider>
+    <ApiProvider apiId={ apiId }>
+      <ThemeProvider>
+        <CssBaseline />
+        <AuthProvider>
           <AuthRoutes>
-          <AppLayout>
-            <AppRoutes />
-          </AppLayout>
+            <AppLayout>
+              <AppRoutes />
+            </AppLayout>
           </AuthRoutes>
-      </AuthProvider>
-    </ThemeProvider>
-    </TranslationProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </ApiProvider>
   );
 }
-
+App.propTypes = {
+  apiId: PropTypes.string,
+};
 export default App;

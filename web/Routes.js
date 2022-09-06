@@ -1,55 +1,65 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Login from './pages/Login'
-import Home from './pages/Home'
+import React from 'react';
+import {
+  Routes, Route, Navigate, useLocation,
+} from 'react-router-dom';
+import Login from './pages/Login';
+import Home from './pages/Home';
 import useAuth from './hooks/useAuth';
-import Public from './pages/Public';
 import Quotation from './pages/Quotation';
+import { childrenProps } from './proptypes';
 
 function RequireAuth({ children }) {
   const { authed } = useAuth();
-  console.log(authed)
   const location = useLocation();
-  console.log('authed', authed)
-  if(authed === null) return null;
+  if (authed === null) return null;
   return authed === true ? (
     children
   ) : (
-    <Navigate to="/login" replace state={{ path: location.pathname }} />
+    <Navigate to="/login" replace state={ { path: location.pathname } } />
   );
-
 }
+RequireAuth.propTypes = {
+  children: childrenProps,
+};
 
-export function AuthRoutes({children}){
-
-  return(
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/*" element={<RequireAuth>{children}</RequireAuth>} />
-    </Routes>
-  )
-}
-function AppRoutes(props) {
-  const { authed } = useAuth();
-  if(authed === null) return null;
+export function AuthRoutes({ children }) {
   return (
     <Routes>
-      {/* <Route path="/login" element={<Login />} /> */}
-      <Route path="/home" element={<Home />} />
-      <Route path="/quotation" element={
-        <RequireAuth>
-        <Quotation />
-        </RequireAuth>
-      } />
-      <Route path="/" element={<RequireAuth>
-        <Home />
-      </RequireAuth>
-      } />
+      <Route path="/login" element={ <Login /> } />
+      <Route path="/*" element={ <RequireAuth>{ children }</RequireAuth> } />
     </Routes>
-  )
+  );
+}
+AuthRoutes.propTypes = {
+  children: childrenProps,
+};
+function AppRoutes() {
+  const { authed } = useAuth();
+  if (authed === null) return null;
+  return (
+    <Routes>
+      { /* <Route path="/login" element={<Login />} /> */ }
+      <Route path="/home" element={ <Home /> } />
+      <Route
+        path="/quotation"
+        element={ (
+          <RequireAuth>
+            <Quotation />
+          </RequireAuth>
+        ) }
+      />
+      <Route
+        path="/"
+        element={ (
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        ) }
+      />
+    </Routes>
+  );
 }
 
-AppRoutes.propTypes = {}
+AppRoutes.propTypes = {};
 
-export default AppRoutes
+export default AppRoutes;

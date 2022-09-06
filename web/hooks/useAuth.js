@@ -1,79 +1,78 @@
-import React, {useState, useEffect} from "react";
-import { useApi } from "./api";
-import { useTranslation } from "./Translation";
+import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { childrenProps } from '../proptypes';
+import { useApi } from './api';
 
 const authContext = React.createContext();
 
 export function AuthProvider({ children }) {
   const [authed, setAuthed] = React.useState(null);
-  const [isAuthentified, setIsAuthentified] = useState(false);
   const [user, setUser] = useState({});
-  const {api, setJWT} = useApi()
-  const { setLocale } = useTranslation();
-
+  const { api, setJWT } = useApi();
+  const { i18n } = useTranslation();
   React.useEffect(() => {
-    const existingToken = localStorage.getItem("token");
-    console.log('existing', existingToken)
-    if(existingToken){
+    const existingToken = localStorage.getItem('token');
+    if (existingToken) {
       // setJWT(existingToken)
-      api.get("login", {headers: {
-        'x-access-token': existingToken
-      }}).json().then(res => {
-        console.log('loginget', res)
-        setJWT(res.token);
-        setUser(res.user);
-        setAuthed(true);
-        setLocale(res?.user?.language);
-        localStorage.setItem("token", res.token);
-      })
-      .catch((e) => {
-        console.log('eee', e)
-        setAuthed(false);
-      });
+      api
+        .get('login', {
+          headers: {
+            'x-access-token': existingToken,
+          },
+        })
+        .json()
+        .then((res) => {
+          setJWT(res.token);
+          setUser(res.user);
+          setAuthed(true);
+          i18n.changeLanguage(res?.user?.language);
+          localStorage.setItem('token', res.token);
+        })
+        .catch(() => {
+          setAuthed(false);
+        });
     } else {
-      console.log('zaeza')
       setAuthed(false);
     }
-  }, [api])
+  }, [api]);
 
-  const login = (email, password) => {
-    return api.post('login', {json: {email, password}}).json().then(res => {
-      console.log('loged', res)
-      localStorage.setItem("token", res.token);
+  const login = (email, password) => api
+    .post('login', { json: { email, password } })
+    .json()
+    .then((res) => {
+      localStorage.setItem('token', res.token);
       setJWT(res.token);
       setUser(res.user);
-      setLocale(res?.user?.language);
+      i18n.changeLanguage(res?.user?.language);
       setAuthed(true);
-    }).catch(e=> {
-     console.error(e)
-      setAuthed(false)
     })
-    // return new Promise((res) => {
-    //   setAuthed(true);
-    //   res();
-    // });
-  }
-
-  const logout = () => {
-    return new Promise((res) => {
-      console.log('logout')
-      localStorage.removeItem("token");
-      setUser(null);
-      setJWT(null);
+    .catch(() => {
       setAuthed(false);
-      res();
     });
-  }
 
-  const auth = {
-    authed,
-    login,
-    logout,
-    user,
-  }
+  const logout = () => new Promise((res) => {
+    localStorage.removeItem('token');
+    setUser(null);
+    setJWT(null);
+    setAuthed(false);
+    res();
+  });
 
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+  const auth = useMemo(
+    () => ({
+      authed,
+      login,
+      logout,
+      user,
+    }),
+    [authed, login, logout, user],
+  );
+
+  return <authContext.Provider value={ auth }>{ children }</authContext.Provider>;
 }
+AuthProvider.propTypes = {
+  children: childrenProps,
+};
 
 export default function useAuth() {
   return React.useContext(authContext);

@@ -6,124 +6,159 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import Avatar from '@mui/material/Avatar';
 import * as React from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import { childrenProps } from '../proptypes';
 
 const drawerWidth = 240;
 const navItems = ['home', 'quotation'];
 
+
 function ListItemLink(props) {
-  const { icon, primary, to } = props;
-
-  const renderLink = React.useMemo(
-    () =>
-      React.forwardRef(function Link(itemProps, ref) {
-        return <RouterLink to={to} ref={ref} {...itemProps} role={undefined} />;
-      }),
-    [to],
-  );
-
   return (
     <li>
-      <ListItem button component={renderLink}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-        <ListItemText primary={primary} />
-      </ListItem>
+      <RouterLink { ...props } role={ undefined } />
     </li>
   );
 }
 
 function AppLayout(props) {
-  const { window, children } = props;
+  const { children } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { logout } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogout = () => logout();
+
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+    <Box onClick={ handleDrawerToggle } sx={ { textAlign: 'center' } }>
+      <Typography variant="h6" sx={ { my: 2 } }>
         KAYROS
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItemLink key={item} to={"/"+item} primary={item} />
-        ))}
+        { navItems.map((item) => (
+          <ListItemLink key={ item } to={ `/${item}` } primary={ item } />
+        )) }
       </List>
     </Box>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
 
   return (
-    <Box sx={{ display: 'flex', height: '100vh' }}>
+    <Box sx={ { display: 'flex', height: '100vh' } }>
       <AppBar component="nav">
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            onClick={ handleDrawerToggle }
+            sx={ { mr: 2, display: { sm: 'none' } } }
           >
             <MenuIcon />
           </IconButton>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={ { flexGrow: 1, display: { xs: 'none', sm: 'block' } } }
           >
             KAYROS
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-
-              <Button key={item} component={RouterLink} to={"/"+item} sx={{ color: '#fff' }}>
-                {item}
+          <Box sx={ { display: { xs: 'none', sm: 'block' } } }>
+            { navItems.map((item) => (
+              <Button
+                key={ item }
+                component={ RouterLink }
+                to={ `/${item}` }
+                sx={ { color: '#fff' } }
+              >
+                { item }
               </Button>
-            ))}
+            )) }
+          </Box>
+          <Box sx={ { flexGrow: 0 } }>
+            <Tooltip title="Open settings">
+              <IconButton onClick={ handleOpenUserMenu } sx={ { p: 0 } }>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={ { mt: '45px' } }
+              id="menu-appbar"
+              anchorEl={ anchorElUser }
+              anchorOrigin={ {
+                vertical: 'top',
+                horizontal: 'right',
+              } }
+              keepMounted
+              transformOrigin={ {
+                vertical: 'top',
+                horizontal: 'right',
+              } }
+              open={ Boolean(anchorElUser) }
+              onClose={ handleCloseUserMenu }
+            >
+
+              <MenuItem onClick={ handleLogout }>
+                <Typography textAlign="center">logout</Typography>
+              </MenuItem>
+
+            </Menu>
           </Box>
         </Toolbar>
       </AppBar>
       <Box component="nav">
         <Drawer
-          container={container}
           variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
+          open={ mobileOpen }
+          onClose={ handleDrawerToggle }
+          ModalProps={ {
             keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
+          } }
+          sx={ {
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+            },
+          } }
         >
-          {drawer}
+          { drawer }
         </Drawer>
       </Box>
-      <Box component="main" sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Box
+        component="main"
+        sx={ { width: '100%', display: 'flex', flexDirection: 'column' } }
+      >
         <Toolbar />
-        {children}
+        { children }
       </Box>
     </Box>
   );
 }
 
 AppLayout.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
+  children: childrenProps,
 };
 
 export default AppLayout;
