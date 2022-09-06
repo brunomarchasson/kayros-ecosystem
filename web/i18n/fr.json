@@ -1,0 +1,7 @@
+{
+  "login": {
+      "title": "Connexion",
+      "translated-text": "C'est du français"
+  },
+  "form-error-required": "le champ '{{ fieldName }}' est obligatoire"
+}
