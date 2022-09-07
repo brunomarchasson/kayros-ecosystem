@@ -18,12 +18,14 @@ export default cleanEnv(process.env, {
   APP_ENV: str({ choices: ["prod", "test", "local"] }),
   VERSION: str(),
 
-  DB_MOCK: bool(),
-  DB_USER:  str(),
-  DB_PWD :str(),
-  DB_NAME: str(),
-  DB_SERVER : str(),
 
+  DB_CLIENT:str(),
+  DB_HOST:str(),
+  DB_PORT:num(),
+  DB_USR:str(),
+  DB_PWD:str(),
+  DB_NAME:str(),
+  
   // PUBLIC_KEY: json(),
   PRIVATE_KEY: json(),
   SESSION_EXPIRES: num({ default: 60 * 60 * 24 * 30 /* 30 days */ }),

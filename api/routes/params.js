@@ -1,6 +1,6 @@
 import express from 'express';
 import { registerApi, schema } from '../apiExplorer';
-import sql from '../database/database-layer';
+import db from '../core/db';
 
 // TODO Inventory date
 // TODO roll suppliers
@@ -18,10 +18,10 @@ registerApi(
     }),
   },
   async (data, returns) => {
-    const gpaoParams = await sql
+    const gpaoParams = await db
       .query('SELECT * FROM TAB_GPAO_PARAM')
       .then((r) => r.recordset[0]);
-    const socParams = await sql
+    const socParams = await db
       .query('SELECT DATE_INVENTAIRE,INVENTAIRE_TERMINE FROM TAB_GEN_SOC')
       .then((r) => r.recordset[0]);
 

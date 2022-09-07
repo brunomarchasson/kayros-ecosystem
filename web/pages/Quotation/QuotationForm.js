@@ -1,14 +1,15 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import { useForm } from 'react-hook-form';
-import Button from '@mui/material/Button';
 import { Stack } from '@mui/material';
-import LabelImage from './LabelImage';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import ArticleSelect from '../../components/FormInput/ArticleSelect';
 import NumberInput from '../../components/FormInput/NumberInput';
-import TextInput from '../../components/FormInput/TextInput';
-import SelectInput from '../../components/FormInput/SelectInput';
 import OutputDirection from '../../components/FormInput/OutDirection/OutputDirection';
+import SelectInput from '../../components/FormInput/SelectInput';
+import TextInput from '../../components/FormInput/TextInput';
+import LabelImage from './LabelImage';
 
 let renderCount = 0;
 
@@ -33,7 +34,6 @@ function Row(p) {
 function QuotationForm() {
   // const {stepsRef} = useContext(QuotationContext)
   const {
-
     handleSubmit,
     control,
     watch,
@@ -134,7 +134,6 @@ function QuotationForm() {
                 } }
                 name="width"
                 label={ watchShape?.value === 0 ? 'diameter' : 'width' }
-
               />
               { watchShape?.value !== 0 && (
                 <NumberInput
@@ -144,8 +143,6 @@ function QuotationForm() {
                   } }
                   name="height"
                   label="height"
-
-
                 />
               ) }
             </Row>
@@ -191,11 +188,11 @@ function QuotationForm() {
           ] }
         />
         <h2 id="backing">backing</h2>
-        <SelectInput
+        <ArticleSelect
+          type="SUP"
           control={ control }
           name="backing"
           label="backing"
-          options={ objOptions }
         />
         <h2 id="finish">finish</h2>
         <Row>
