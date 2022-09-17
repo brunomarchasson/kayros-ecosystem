@@ -1,18 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
 import authorizationMiddleware from './authJWT';
 import {verifyToken} from "../core/jwt";
+import { mockedResponse } from '../utils/testUtils';
 
 jest.mock('../core/jwt')
+jest.mock('../core/db')
 
-const _mockResponse = () => {
-    const res = {};
-    res.status = (s) => {
-        res._status= s;
-        return res
-    };//jest.fn().mockReturnValue(res);
-    res.send = jest.fn().mockReturnValue(res);
-    return res;
-  };
+// const _mockResponse = () => {
+//     const res = {};
+//     res.status = (s) => {
+//         res._status= s;
+//         return res
+//     };//jest.fn().mockReturnValue(res);
+//     res.send = jest.fn().mockReturnValue(res);
+//     return res;
+//   };
 
 describe('Authorization middleware', () => {
     let mockRequest;
@@ -21,9 +23,9 @@ describe('Authorization middleware', () => {
 
     beforeEach(() => {
         mockRequest = {
-            
+
         };
-        mockResponse = _mockResponse()
+        mockResponse = mockedResponse()
     });
     test('without headers', async () => {
         await authorizationMiddleware(mockRequest , mockResponse , nextFunction);

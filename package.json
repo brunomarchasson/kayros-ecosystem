@@ -86,6 +86,9 @@
           "envars/config",
           "<rootDir>/api/utils/setupTests.js"
         ],
+        "modulePathIgnorePatterns": [
+          "<rootDir>/api/build"
+        ],
         "transformIgnorePatterns": [],
         "transform": {
           "^.*[\\\\\\/](api|db)[\\\\\\/].*\\.(js|ts)$": "babel-jest",

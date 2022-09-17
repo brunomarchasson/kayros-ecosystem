@@ -25,7 +25,7 @@ export default cleanEnv(process.env, {
   DB_USR:str(),
   DB_PWD:str(),
   DB_NAME:str(),
-  
+
   // PUBLIC_KEY: json(),
   PRIVATE_KEY: json(),
   SESSION_EXPIRES: num({ default: 60 * 60 * 24 * 30 /* 30 days */ }),

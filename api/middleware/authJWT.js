@@ -14,7 +14,6 @@ const isAuth = (req, res, next) => {
   }
   return verifyToken (token)
   .then((decoded) => {
-    console.log('decoded', decoded)
     req.currentUser = decoded.user;
     return next();
   })

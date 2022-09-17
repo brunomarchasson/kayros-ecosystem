@@ -4711,6 +4711,7 @@ __metadata:
     knex: "npm:^2.1.0"
     lodash: "npm:^4.17.21"
     minimist: "npm:^1.2.6"
+    mock-knex: "npm:^0.4.11"
     morgan: "npm:^1.10.0"
     mssql: "npm:^9.0.1"
     mysql: "npm:^2.18.1"
@@ -4724,6 +4725,7 @@ __metadata:
     simple-oauth2: "npm:^4.3.0"
     source-map-support: "npm:^0.5.21"
     supertest: "npm:^6.2.4"
+    tedious: "npm:^15.1.0"
     validator: "npm:^13.7.0"
     validator-fluent: "npm:^0.4.2"
   languageName: unknown
@@ -5271,6 +5273,13 @@ __metadata:
   version: 2.1.5
   resolution: "blake3-wasm@npm:2.1.5"
   checksum: 0f2da13db87c3c3d0c8c9ecc01b714643a188d6172f9006478345e5b0ab4d8a6f1839c0bb7ccb93248de2c2e5ddf33058e02648842fb7ca0b9404f2c62bbaa6a
+  languageName: node
+  linkType: hard
+
+"bluebird@npm:^3.4.1":
+  version: 3.7.2
+  resolution: "bluebird@npm:3.7.2"
+  checksum: 42df9603102ffbb71c0bc66056a66dce510ba136ab746fb2f783daa71843f14b6f22c2897cb224b556cc5546b9a524c224f6b1505e074310273a5ee5b222e072
   languageName: node
   linkType: hard
 
@@ -10844,7 +10853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.20, lodash@npm:^4.17.21":
+"lodash@npm:^4.14.2, lodash@npm:^4.17.20, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 3ac18e92108d68f88429fcddee609e42cf2b653583d9bac22308815a4cd6b185b89a0ad0d9b0c670c371d9d6b61571a98fee6b36e1db14e52766ca253ed9cba0
@@ -11314,6 +11323,19 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: 123361119829ab8115234f36ed8ef8f697b0f6f83ec9f9bc8f76da587487976d74bc874ffa892e7a66df607fa8f2cc758eed8db225e9cd3a84846350209e53db
+  languageName: node
+  linkType: hard
+
+"mock-knex@npm:^0.4.11":
+  version: 0.4.11
+  resolution: "mock-knex@npm:0.4.11"
+  dependencies:
+    bluebird: "npm:^3.4.1"
+    lodash: "npm:^4.14.2"
+    semver: "npm:^5.3.0"
+  peerDependencies:
+    knex: "> 0.8 <= 2.0"
+  checksum: 606681e067cb5fb126c7b32fd067918d30e695e7c194654ed53f059db82ff36d706ffaec7ad562a2811b41a7f1ff494b0fb0953c2265e6c773cad01357ffdc63
   languageName: node
   linkType: hard
 
@@ -13263,7 +13285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:2 || 3 || 4 || 5, semver@npm:^5.6.0, semver@npm:^5.7.0":
+"semver@npm:2 || 3 || 4 || 5, semver@npm:^5.3.0, semver@npm:^5.6.0, semver@npm:^5.7.0":
   version: 5.7.1
   resolution: "semver@npm:5.7.1"
   bin:
@@ -14036,7 +14058,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tedious@npm:^15.0.1":
+"tedious@npm:^15.0.1, tedious@npm:^15.1.0":
   version: 15.1.0
   resolution: "tedious@npm:15.1.0"
   dependencies:

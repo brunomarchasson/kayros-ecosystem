@@ -10,9 +10,12 @@ process.once("SIGTERM", function () {
 
 export { db };
 
-db.raw("SELECT VERSION() as v")
+const versionCmd = config.client === 'mssql' ? 'select @@version as v' : "SELECT VERSION() as v"
+
+db.raw(versionCmd)
   .then((version) => {
-    console.log(chalk.blue('DB CONNECTED', version[0][0].v));
+    console.log(chalk.blue('DB CONNECTED'));
+    console.log(chalk.blue(version[0].v));
   })
   .catch((err) => {
     // console.log(err);

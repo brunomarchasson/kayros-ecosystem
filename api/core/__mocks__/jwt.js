@@ -2,10 +2,7 @@
 /* SPDX-License-Identifier: MIT */
 
 import {
-  decodeJwt,
   importJWK,
-  jwtVerify,
-  SignJWT,
 } from "jose";
 import env from "../../env";
 
@@ -16,8 +13,8 @@ const user ={
 }
 
 export async function createToken(user) {
-  return new"TOKEN";
-} 
+  return "TOKEN";
+}
 
 export const verifyToken = jest.fn().mockResolvedValue({user})
 
@@ -25,7 +22,7 @@ export function decodeToken(token) {
   return {user}
 }
 
-export async function getPrivateKey() {
-  if (!privateKeyPromise) privateKeyPromise = importJWK(env.PRIVATE_KEY);
-  return await privateKeyPromise;
-}
+// export async function getPrivateKey() {
+//   if (!privateKeyPromise) privateKeyPromise = importJWK(env.PRIVATE_KEY);
+//   return await privateKeyPromise;
+// }

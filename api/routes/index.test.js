@@ -1,10 +1,11 @@
 import request from "supertest";
 import server from '../server';
 
-jest.mock('../database/database-layer')
+jest.mock('../core/db')
 
 describe("API discover", () => {
-  it("shoult respond to GET", async () => {
+
+  it("should respond to GET", async () => {
     const response = await request(server)
     .get(`/api/hello`)
     .expect(200);
@@ -12,10 +13,10 @@ describe("API discover", () => {
     url: process.env.API_ORIGIN
   });
   });
-  it("shoult not respond to POST", async () => {
-    const response = await request(server)
+  it("should not respond to POST", async () => {
+    await request(server)
     .post(`/api/hello`)
     .expect(404);
- 
+
   });
 });
