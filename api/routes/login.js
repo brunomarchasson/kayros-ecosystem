@@ -1,7 +1,7 @@
 import express from 'express';
 import { registerApi, schema } from '../apiExplorer';
 import { credentialSchema} from '../schemas/credentialsSchema';
-import tokenControler from '../controlers/tokenControler';
+import tokenControler from '../controller/tokenController';
 import isAuthentified from '../middleware/authJWT';
 
 const router = express.Router();

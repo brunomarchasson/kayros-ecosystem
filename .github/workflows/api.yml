@@ -52,5 +52,4 @@ jobs:
             yarn install
 
       # Build
-      - run: yarn api:build
-      - run: yarn api:test
+      - run: yarn test

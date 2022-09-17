@@ -1,6 +1,6 @@
 import express from 'express';
 import token from './token';
-import params from './params';
+import params from './params.route';
 // import roll from './rolls';
 import loginRoutes from './login';
 import articleRoutes from './article';

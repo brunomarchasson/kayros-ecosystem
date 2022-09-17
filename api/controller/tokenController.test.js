@@ -1,4 +1,4 @@
-import tokenControler from "./tokenControler";
+import tokenControler from "./tokenController";
 import db from "../core/db";
 import { mockedResponse } from "../utils/testUtils";
 

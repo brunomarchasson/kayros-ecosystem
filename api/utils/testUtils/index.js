@@ -14,3 +14,4 @@ export const mockedResponse = () => {
   res.sendResult = jest.fn()
   return res;
 };
+

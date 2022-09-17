@@ -1,10 +1,10 @@
 import request from "supertest";
 import server from '../server';
-import tokenController from '../controlers/tokenControler';
+import tokenController from '../controller/tokenController';
 
 jest.mock('../core/db')
 jest.mock('../middleware/authJWT');
-jest.mock('../controlers/tokenControler')
+jest.mock('../controller/tokenController')
 
 const user= {
     id: 123,
