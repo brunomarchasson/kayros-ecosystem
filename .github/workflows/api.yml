@@ -51,7 +51,6 @@ jobs:
             yarn config set enableGlobalCache false
             yarn install
 
-        # Build
-        - run: yarn web:build
-        - run: yarn api:build
-        - run: yarn api;test
+      # Build
+      - run: yarn api:build
+      - run: yarn api:test
