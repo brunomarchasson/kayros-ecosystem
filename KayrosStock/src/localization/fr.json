@@ -1,0 +1,84 @@
+{
+  "api":{
+     "backendFound":"server trouvé",
+     "notFound":"server introuvable"
+  },
+  "bad-password":"mot de passe incirrect",
+  "cancel":"annuler",
+  "home":{
+     "title":"Accueil"
+  },
+  "inventory-close":"Inventaire fermé",
+  "inventory-open":"Inventaire ouvert %{date}",
+  "itemDelivery":{
+     "title":"Livraison articles"
+  },
+  "itemInventory":{
+     "title":"Inventaire articles"
+  },
+  "itemManagment":{
+     "quantityMustBeGreaterThan0":"la quantité doit etre supperieure a 0",
+     "quantityNotInStock":"la quantité n'est pas en stock",
+     "saveError":"erreur d'enregistrement",
+     "saveSuccess":"succés",
+     "delivery":"livraison",
+     "stock":"stock"
+  },
+  "ok":"ok",
+  "open-inventory-password":"mot de passe inventaire",
+  "password":"mot de passe",
+  "roll":{
+     "lastCheck":"dernière verrif",
+     "width":"laize",
+     "length":"longueur",
+     "location":"loc",
+     "sendToJail":"mettre en zone prison",
+     "statuslabels":{
+        "L":"Libre",
+        "R":"Rérérvée",
+        "F":"Fabrication"
+     },
+     "sendToJailError":"erreur",
+     "sendToJailSuccess":"succes",
+     "status":"status",
+     "updateError":"erreur",
+     "updateLocationError":"erreur",
+     "updateLocationSuccess":"succes",
+     "updateSuccess":"succes"
+  },
+  "rollCheck":{
+     "title":"Verrification bobine"
+  },
+  "rollDelivery":{
+     "title":"Livraison Bobine"
+  },
+  "rollInventory":{
+     "title":"Inventaire bobine"
+  },
+  "rollManagment":{
+     "addProduct":"ajouter produit",
+     "rollExists":"cette bobine existe déjas",
+     "saveError":"erreur",
+     "saveSuccess":"succes",
+     "unknowProduct":"produit inconu",
+     "newProductTitle": "rechercher produit",
+     "productIdCode":"EAN produit",
+     "rollIdCode":"Roll ID",
+     "rollDetailCode":"Roll détail",
+     "bestBeforeCode":"BestBefore",
+     "unknowCode":"code inconu"
+  },
+  "scan":{
+     "title":"Entrer le code"
+  },
+  "settings":{
+     "title":"Paramètres",
+     "language":"Langue",
+     "languages":{
+        "fr":"Français",
+        "en":"Anglais"
+     }
+  },
+  "test":"test",
+  "validate":"valider"
+}

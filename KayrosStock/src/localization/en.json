@@ -1,0 +1,83 @@
+{
+  "api": {
+    "backendFound": "server found",
+    "notFound": "server not found"
+  },
+  "bad-password": "incirrect password",
+  "cancel": "cancel",
+  "home": {
+    "title": "Home"
+  },
+  "inventory-close": "Closed inventory",
+  "inventory-open": "Open inventory %{date}",
+  "itemDelivery": {
+    "title": "Items delivery"
+  },
+  "itemInventory": {
+    "title": "Items inventory"
+  },
+  "itemManagment": {
+    "quantityMustBeGreaterThan0": "la quantité doit etre supperieure a 0",
+    "quantityNotInStock": "quantity is not in stock",
+    "saveError": "server not found0",
+    "saveSuccess": "server not found1",
+    "delivery": "server not found2",
+    "stock": "server not found3"
+  },
+  "ok": "server not found4",
+  "open-inventory-password": "server not found5",
+  "password": "server not found6",
+  "roll": {
+    "lastCheck": "server not found7",
+    "width": "server not found8",
+    "length": "server not found9",
+    "location": "incirrect password0",
+    "sendToJail": "incirrect password1",
+    "statuslabels": {
+      "L": "incirrect password2",
+      "R": "incirrect password3",
+      "F": "incirrect password4"
+    },
+    "sendToJailError": "incirrect password5",
+    "sendToJailSuccess": "incirrect password6",
+    "status": "incirrect password7",
+    "updateError": "incirrect password5",
+    "updateLocationError": "incirrect password5",
+    "updateLocationSuccess": "incirrect password6",
+    "updateSuccess": "incirrect password6"
+  },
+  "rollCheck": {
+    "title": "incirrect password8"
+  },
+  "rollDelivery": {
+    "title": "incirrect password9"
+  },
+  "rollInventory": {
+    "title": "cancel0"
+  },
+  "rollManagment": {
+    "addProduct": "cancel1",
+    "rollExists": "cancel2",
+    "saveError": "incirrect password5",
+    "saveSuccess": "incirrect password6",
+    "unknowProduct": "cancel3",
+    "productIdCode": "cancel4",
+    "rollIdCode": "cancel5",
+    "rollDetailCode": "cancel6",
+    "bestBeforeCode": "cancel7",
+    "unknowCode": "cancel8"
+  },
+  "scan": {
+    "title": "cancel9"
+  },
+  "settings": {
+    "title": "Home0",
+    "language": "Home1",
+    "languages": {
+      "fr": "Home2",
+      "en": "Home3"
+    }
+  },
+  "test": "Home4",
+  "validate": "Home5"
+}
