@@ -4726,6 +4726,7 @@ __metadata:
     source-map-support: "npm:^0.5.21"
     supertest: "npm:^6.2.4"
     tedious: "npm:^15.1.0"
+    timekeeper: "npm:^2.2.0"
     validator: "npm:^13.7.0"
     validator-fluent: "npm:^0.4.2"
   languageName: unknown
@@ -7184,6 +7185,23 @@ __metadata:
     jest:
       optional: true
   checksum: 05b6f2ccf69532c0b3f7a4ab0f06e186e8f02dad9cedeff852f9a2fcf2f9c74227508450b287ee1c33b712da5af6a1394ee95a61586741cc5f319c26737a8a3d
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-jest@npm:^27.0.4":
+  version: 27.0.4
+  resolution: "eslint-plugin-jest@npm:27.0.4"
+  dependencies:
+    "@typescript-eslint/utils": "npm:^5.10.0"
+  peerDependencies:
+    "@typescript-eslint/eslint-plugin": ^5.0.0
+    eslint: ^7.0.0 || ^8.0.0
+  peerDependenciesMeta:
+    "@typescript-eslint/eslint-plugin":
+      optional: true
+    jest:
+      optional: true
+  checksum: 51e978dda812c3df07725655ba2aefeee75af565e3891bcb70294f79f63f1588463a2d3c422ad1da9bf219cec7ff0873ac1f4d3ffafd024ca31e099f14c27d5b
   languageName: node
   linkType: hard
 
@@ -10592,6 +10610,7 @@ __metadata:
     envars: "npm:^0.4.0"
     eslint: "npm:^8.17.0"
     eslint-config-prettier: "npm:^8.5.0"
+    eslint-plugin-jest: "npm:^27.0.4"
     eslint-plugin-jsx-a11y: "npm:^6.5.1"
     eslint-plugin-react: "npm:^7.30.0"
     eslint-plugin-react-hooks: "npm:^4.5.0"
@@ -14174,6 +14193,13 @@ __metadata:
   version: 2.0.0
   resolution: "tildify@npm:2.0.0"
   checksum: 4365ed63a4bdb3aff484c119317dce5859b3270cf9b4acb09e922876ec1b9f7187868688adcf4aa5f83694786934a59b74f331d80cc9434c7895adc4c5fe760d
+  languageName: node
+  linkType: hard
+
+"timekeeper@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "timekeeper@npm:2.2.0"
+  checksum: 1f15b362a720b07f62a7a8c90a9932e9a1c2614b7643d87a3705a8bb46dc31a6d8ef7981190684239fd16218d3cef647ee1a606fae10428bb5334a84cdc4575d
   languageName: node
   linkType: hard
 

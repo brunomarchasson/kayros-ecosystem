@@ -1,6 +1,6 @@
 import db from "../core/db.js";
 
-const formatArticle = ({
+export const formatArticle = ({
   id,
   TypeArticle,
   DESIGNATION: Designation,
@@ -18,12 +18,10 @@ const formatArticle = ({
   DATE_MAJ,
 });
 
-const getAll = async (req, res, next) => {
+const getAll = async (req, res) => {
   const u = req.currentUser;
   const { type } = req.data;
-console.log(type)
-const params = { type: type ?? null };
-console.log(params)
+  const params = { type: type ?? null };
   const r = await db
     .raw(
       `SELECT distinct  case when Pelli = 1 then 'PEL' else COALESCE(SF.TYPE_ARTICLE,F.TYPE_ARTICLE,G.TYPE_ARTICLE) end  as TypeArticle,
@@ -35,22 +33,19 @@ LEFT JOIN TAB_SFAM_ART SF  ON SF.CODE_GAMME = A.GAMME AND SF.CODE_FAMILLE = A.FA
 LEFT JOIN K_30 K  ON K.Identifiant like concat(cast(A.SEQ_ARTICLE as CHAR(50)) , '.%')
 LEFT JOIN TAB_WEB_ARTICLES W  ON W.SEQ_ARTICLE = A.SEQ_ARTICLE
 WHERE 1=1
-${
-  params.type
-    ? `AND case when Pelli = 1 then 'PEL' else COALESCE(SF.TYPE_ARTICLE,F.TYPE_ARTICLE,G.TYPE_ARTICLE) end = :type`
-    : ""
-}
-${params.date ? `AND DATE_MAJ > :date` : ""}
+${params.type
+        ? `AND case when Pelli = 1 then 'PEL' else COALESCE(SF.TYPE_ARTICLE,F.TYPE_ARTICLE,G.TYPE_ARTICLE) end = :type`
+        : ""
+      }
 AND VISIBLE_WEB = 1
 `,
       params,
     )
-    .then((r) => r[0].map(formatArticle));
-  console.log(r);
+    .then((r) => r.map(formatArticle));
   res.sendResult(r);
 };
 
-const get = async (req, res, next) => {};
+const get = async (req, res, next) => { };
 
 export default {
   getAll,

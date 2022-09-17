@@ -1,10 +1,11 @@
+import mockControler from "../utils/testUtils/controler";
 import request from "supertest";
 import server from '../server';
 import paramsController from '../controller/params.controller';
 
 jest.mock('../core/db')
 jest.mock('../middleware/authJWT');
-jest.mock('../controller/params.controller');
+jest.mock('../controller/params.controller', () => mockControler());
 
 describe("params routes", () => {
   it("shoult respond to GET", async () => {

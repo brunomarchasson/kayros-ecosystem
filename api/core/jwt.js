@@ -2,7 +2,6 @@
 /* SPDX-License-Identifier: MIT */
 
 import {
-  decodeJwt,
   importJWK,
   jwtVerify,
   SignJWT,
@@ -30,13 +29,10 @@ export async function verifyToken(token) {
   const result = await jwtVerify(token, await getPrivateKey(), {
     issuer: env.APP_ORIGIN,
     audience: env.APP_ORIGIN,
+    maxTokenAge: env.SESSION_EXPIRES,
   });
 
   return result.payload;
-}
-
-export function decodeToken(token) {
-  return decodeJwt(token);
 }
 
 export async function getPrivateKey() {

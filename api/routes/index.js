@@ -1,11 +1,11 @@
 import express from 'express';
 import token from './token';
 import params from './params.route';
-// import roll from './rolls';
+import roll from './rolls';
 import loginRoutes from './login';
 import articleRoutes from './article';
-// import provider from './provider';
-// import product from './product';
+import provider from './provider';
+import product from './product';
 import isAuthentified from '../middleware/authJWT';
 import { apiExplorerRoutes, registerApi, schema } from '../apiExplorer';
 
@@ -15,9 +15,9 @@ router.use('/login', loginRoutes);
 router.use('/token', token);
 router.use('/apiExplorer', apiExplorerRoutes);
 router.use('/article', articleRoutes);
-// router.use('/roll', [isAuthentified], roll);
-// router.use('/provider', [isAuthentified], provider);
-// router.use('/product', [isAuthentified], product);
+router.use('/roll', [isAuthentified], roll);
+router.use('/provider', [isAuthentified], provider);
+router.use('/product', [isAuthentified], product);
 router.use('/params', [isAuthentified], params);
 registerApi(
   {

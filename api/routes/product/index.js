@@ -1,23 +1,22 @@
 import express from 'express';
 import { registerApi, schema } from '../../apiExplorer';
-import sql from '../../database/database-layer';
+import db from '../../core/db';
 import productSchema from '../../schemas/productSchema';
-import providerSchema from '../../schemas/providerSchema';
 const router = express.Router();
 
 export const getProduct = async (productCode) => {
   console.log(productCode);
-  const request = new sql.Request();
-  request.input('productCode', sql.VarChar, productCode.substring(0,12));
-  return request.query(
+  return db.raw(
     `
   SELECT   Code_EAN+CodeEPSMA as eanCode, Désignation as name,Identifiant as id
   FROM K_30  K
   LEFT JOIN FPR_TIERS T ON cast(T.Ident as varchar) = reverse(left(reverse([Identifiant]), charindex('.', reverse([Identifiant])) - 1))
-  where Code_EAN+CodeEPSMA = @productCode
-`,
+  where Code_EAN+CodeEPSMA = :productCode
+`,{
+  productCode: productCode.substring(0,12)
+}
   )
-    .then((r) => r?.recordset[0]);
+    .then((r) => r[0]);
 };
 
 registerApi(
@@ -51,22 +50,20 @@ registerApi(
     returns: productSchema,
   },
   async (data, returns, { res }) => {
-    const request = new sql.Request();
-
-    request.input('productCode', sql.VarChar, data.productCode.substring(6, 12));
-    request.input('EANCode', sql.VarChar, data.productCode.substring(0, 6));
-    request.input('idProduct', sql.VarChar, data.producrID);
-
-    await request
-      .query(
+    await db
+      .raw(
         `
-        UPDATE K_30 SET CodeEPSMA=@productCode
+        UPDATE K_30 SET CodeEPSMA=:productCode
         FROM K_30  K
         LEFT JOIN FPR_TIERS T ON cast(T.Ident as varchar) = reverse(left(reverse([Identifiant]), charindex('.', reverse([Identifiant])) - 1))
-        where T.Code_EAN =@EANCode AND K.Id = @idProduce+'.'+cast(T.Ident as varchar)
-      `,
+        where T.Code_EAN =:EANCode AND K.Id = :idProduct+'.'+cast(T.Ident as varchar)
+      `,{
+        productCode: data.productCode.substring(6, 12),
+        EANCode: data.productCode.substring(0, 6),
+        idProduct :data.producrID,
+      }
       )
-      .then((r) => r?.recordset[0]);
+      .then((r) => r[0]);
 
     const product = await getProduct(data.productCode);
     if (!product) return res.status(404).end();

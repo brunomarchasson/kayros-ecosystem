@@ -1,17 +1,26 @@
-import { reduce } from "lodash";
 
+module.exports = {
+  mockRequest: (data) => {
+    const req = {}
+    req.body = jest.fn().mockReturnValue(req)
+    req.params = jest.fn().mockReturnValue(req)
+    req.data = data ?? { }
+    req.currentUser = {
 
-export const mockedResponse = () => {
-  const res = {};
-  res.status = (s) => {
-      res._status= s;
+    }
+    return req
+  },
+
+  mockResponse: () => {
+    const res = {}
+    res.send = jest.fn().mockReturnValue(res)
+    res.status = jest.fn().mockImplementation((s) => {
+      res._status = s;
       return res
-  };
-  res.json = (s) => {
-      return res
-  };
-  res.send = jest.fn().mockReturnValue(res);
-  res.sendResult = jest.fn()
-  return res;
-};
-
+    })
+    res.sendResult = jest.fn()
+    res.json = jest.fn().mockReturnValue(res)
+    return res
+  },
+  // mockNext: () => jest.fn()
+}

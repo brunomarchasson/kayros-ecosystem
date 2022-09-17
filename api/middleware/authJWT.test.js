@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import authorizationMiddleware from './authJWT';
 import {verifyToken} from "../core/jwt";
-import { mockedResponse } from '../utils/testUtils';
+import { mockResponse } from '../utils/testUtils';
 
 jest.mock('../core/jwt')
 jest.mock('../core/db')
@@ -18,21 +18,21 @@ jest.mock('../core/db')
 
 describe('Authorization middleware', () => {
     let mockRequest;
-    let mockResponse;
+    let res;
     let nextFunction = jest.fn();
 
     beforeEach(() => {
         mockRequest = {
 
         };
-        mockResponse = mockedResponse()
+        res = mockResponse()
     });
     test('without headers', async () => {
-        await authorizationMiddleware(mockRequest , mockResponse , nextFunction);
+        await authorizationMiddleware(mockRequest , res , nextFunction);
 
-        expect(mockResponse._status).toBe(403)
+        expect(res._status).toBe(403)
         expect(nextFunction).not.toBeCalled();
-        expect(mockResponse.send).toBeCalled()
+        expect(res.send).toBeCalled()
     });
 
     test('without "authorization" header', async () => {
@@ -43,11 +43,11 @@ describe('Authorization middleware', () => {
             headers: {
             }
         }
-        await authorizationMiddleware(mockRequest , mockResponse, nextFunction);
+        await authorizationMiddleware(mockRequest , res, nextFunction);
 
-        expect(mockResponse._status).toBe(403)
+        expect(res._status).toBe(403)
         expect(nextFunction).not.toBeCalled();
-        expect(mockResponse.send).toBeCalled()
+        expect(res.send).toBeCalled()
 
     });
 
@@ -58,9 +58,9 @@ describe('Authorization middleware', () => {
             }
         }
         verifyToken.mockRejectedValueOnce('')
-        await authorizationMiddleware(mockRequest, mockResponse , nextFunction);
-        expect(mockResponse._status).toBe(401)
-        expect(mockResponse.send).toBeCalled()
+        await authorizationMiddleware(mockRequest, res , nextFunction);
+        expect(res._status).toBe(401)
+        expect(res.send).toBeCalled()
         expect(nextFunction).not.toBeCalled();
     });
     test('with "authorization" header', async () => {
@@ -69,9 +69,9 @@ describe('Authorization middleware', () => {
                 'x-access-token': 'XXX'
             }
         }
-        await authorizationMiddleware(mockRequest, mockResponse , nextFunction);
+        await authorizationMiddleware(mockRequest, res , nextFunction);
 
-        expect(mockResponse.send).not.toBeCalled()
+        expect(res.send).not.toBeCalled()
         expect(nextFunction).toBeCalledTimes(1);
     });
 });

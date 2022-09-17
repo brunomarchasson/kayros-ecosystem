@@ -17,12 +17,3 @@ export async function createToken(user) {
 }
 
 export const verifyToken = jest.fn().mockResolvedValue({user})
-
-export function decodeToken(token) {
-  return {user}
-}
-
-// export async function getPrivateKey() {
-//   if (!privateKeyPromise) privateKeyPromise = importJWK(env.PRIVATE_KEY);
-//   return await privateKeyPromise;
-// }

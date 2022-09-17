@@ -1,6 +1,7 @@
 import tokenControler from "./tokenController";
 import db from "../core/db";
-import { mockedResponse } from "../utils/testUtils";
+import { mockResponse } from "../utils/testUtils";
+// import { mockedResponse } from "../utils/testUtils";
 
 jest.mock("../core/db.js");
 jest.mock("../core/jwt.js");
@@ -18,7 +19,7 @@ const req = {
 describe("token Controller", function () {
   describe("get", function () {
     it("should return current user", async () => {
-      const res = mockedResponse();
+      const res = mockResponse();
 
       const dbResult = {
         Type_Ident_F: "X",
@@ -49,7 +50,7 @@ describe("token Controller", function () {
       });
     });
     it("should return 400 if user not existscurrent user", async () => {
-      const res = mockedResponse();
+      const res = mockResponse();
       db.raw.mockResolvedValue([]);
 
       await tokenControler.get(req, res);
@@ -58,12 +59,12 @@ describe("token Controller", function () {
   });
   describe("login", function () {
     it("should reject if no credentials", async () => {
-      const res = mockedResponse();
+      const res = mockResponse();
       await tokenControler.login(req, res);
       expect(res._status).toBe(400);
     });
     it("should reject if bad credentials", async () => {
-      const res = mockedResponse();
+      const res = mockResponse();
       db.raw.mockResolvedValue([]);
 
       await tokenControler.login(
@@ -80,7 +81,7 @@ describe("token Controller", function () {
       expect(res._status).toBe(400);
     });
     it("accept login", async () => {
-      const res = mockedResponse();
+      const res = mockResponse();
 
       const reqData = {
         customerId: 111,
@@ -115,7 +116,7 @@ describe("token Controller", function () {
       });
     });
     it("should return 400 if user not exists current user", async () => {
-      const res = mockedResponse();
+      const res = mockResponse();
       db.raw.mockResolvedValue([]);
 
       await tokenControler.get(req, res);

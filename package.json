@@ -64,7 +64,8 @@
     "zx": "^6.2.2"
   },
   "devDependencies": {
-    "@jest/types": "^28.1.0"
+    "@jest/types": "^28.1.0",
+    "eslint-plugin-jest": "^27.0.4"
   },
   "resolutions": {
     "@rollup/plugin-commonjs@npm:^22.0.0": "^21.1.0",

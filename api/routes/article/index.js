@@ -1,7 +1,7 @@
 import express from 'express';
 import { registerApi, schema } from '../../apiExplorer';
 import articleSchema from '../../schemas/articleSchema';
-import articleControler from '../../controller/articleController';
+import articleControler from '../../controller/article.controller';
 
 const router = express.Router();
 

@@ -1,13 +1,13 @@
 import db from "../core/db.js";
 
 
-const get = async (data, returns) => {
+const get = async (req, res) => {
   const gpaoParams = await db
-    .query('SELECT * FROM TAB_GPAO_PARAM')
-    .then((r) => r.recordset[0]);
+    .raw('SELECT * FROM TAB_GPAO_PARAM')
+    .then((r) => r[0]);
   const socParams = await db
-    .query('SELECT DATE_INVENTAIRE,INVENTAIRE_TERMINE FROM TAB_GEN_SOC')
-    .then((r) => r.recordset[0]);
+    .raw('SELECT DATE_INVENTAIRE,INVENTAIRE_TERMINE FROM TAB_GEN_SOC')
+    .then((r) => r[0]);
 
   const params = {
     isGpao: gpaoParams.TOP_GESTION_GPAO,
@@ -18,7 +18,7 @@ const get = async (data, returns) => {
     inventoryClosed: socParams.INVENTAIRE_TERMINE,
   };
 
-  returns(params);
+  res.sendResult(params);
 };
 
 

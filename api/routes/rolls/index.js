@@ -1,12 +1,12 @@
 import express from 'express';
 import parse from 'date-fns/parse';
 import { registerApi, schema } from '../../apiExplorer';
-import sql from '../../database/database-layer';
 import rollSchema from '../../schemas/rollSchema';
 import { getProduct } from '../product';
 import rollRoutes from './roll';
-import { getRoll, logRoll } from './utils';
+import { getRoll } from './utils';
 import { getProvider } from '../provider';
+import db from '../../core/db';
 
 const router = express.Router();
 
@@ -36,8 +36,6 @@ registerApi(
   },
   async (data, returns, { res }) => {
     try {
-      const request = new sql.Request();
-
       const eanProvider = data.productIdCode.substring(0, 6);
       const eanProduct = data.productIdCode.substring(6, 12);
       const eanIdRoll = data.rollIdCode.substring(9, 19);
@@ -51,38 +49,36 @@ registerApi(
         : null;
       const product = await getProduct(data.productIdCode);
       const provider = await getProvider(eanProvider);
+      const idArticle = product.id.split('.')[0]
 
+      const idx = await db
+        .raw(
+          'SELECT cast(coalesce(MAX(Indice),0)+1 as varchar)  AS idx FROM F_BOBINES_STK  WHERE Séq_Article = :idArticle',
+          { idArticle })
+        .then((r) => r[0].index);
 
-      request.input('user', sql.VarChar, data.currentUser);
-      request.input('idArticle', sql.VarChar, product.id.split('.')[0]);
-
-      const idx = await request
-        .query(
-          'SELECT cast(coalesce(MAX(Indice),0)+1 as varchar)  AS idx FROM F_BOBINES_STK  WHERE Séq_Article = @idArticle',
-        )
-        .then((r) => r.recordset[0].index);
-
-      request.input('idx', sql.VarChar, idx);
-      request.input('eanProvider', sql.VarChar, eanProvider);
-      request.input('idProvider', sql.VarChar, provider.id);
-      request.input('eanProduct', sql.VarChar, eanProduct);
-      request.input('idProduct', sql.VarChar, eanIdRoll);
-      request.input('rollWidth', sql.Int, rollWidth);
-      request.input('OriginalLength', sql.Int, length);
-      request.input('mandrelSize', sql.Int, mandrelSize);
-      request.input('windingDirection', sql.VarChar, windingDirection);
-      request.input('fitting', sql.VarChar, fitting);
-      request.input('bestBeforeDate', sql.Date, bestBefore);
-      request.input('length', sql.Int, data.length);
-      request.input('InventoryMode', sql.VarChar, data.mode);
-      request.input('location', sql.VarChar, data.locatino);
-
-      await request.query(
+      await db.raw(
         `INSERT INTO F_BOBINES_STK
       (Séq_Article, Indice, Préfixe_EAN, Ident_Tiers, EAN_Produit, EAN_Séq_Bob, EAN_Largeur, EAN_Longueur, EAN_Taille_Mandrin, EAN_Enroulage, EAN_Nbre_Raccords, EAN_Date_Fab, Numéro_Cde, Indice_Cde, Indice_Ligne, Indice_Livraison, Code_Etape, Code_Fab, Quantité, Date_Entrée,Date_Etape, Longueur_Initiale, Longueur_Utilisée, Type_Provenance, Prix, Date_Livraison, UTIL,Localisation)
       VALUES
-      (@idArticle, @idx, @eanProvider, @idProvider, @eanProduct, @idProduct, @rollWidth, @OriginalLength, @mandrelSize, @windingDirection, @fitting, @bestBeforeDate, ,NULL,NULL,NULL,NULL,'L',NULL,'1',GETDATE(),GETDATE(),@length, 0, @InventoryMode,CONVERT(money,'0'), ,GETDATE(), @user, @location )
+      (:idArticle, :idx, :eanProvider, :idProvider, :eanProduct, :idProduct, :rollWidth, :OriginalLength, :mandrelSize, :windingDirection, :fitting, :bestBeforeDate, ,NULL,NULL,NULL,NULL,'L',NULL,'1',GETDATE(),GETDATE(),:length, 0, :InventoryMode,CONVERT(money,'0'), ,GETDATE(), user, :location )
         `,
+        {
+          idArticle,
+          idx, eanProvider,
+          idProvider: provider.id,
+          eanProduct,
+          idProduct: eanIdRoll,
+          rollWidth,
+          OriginalLength: length,
+          mandrelSize,
+          windingDirection,
+          fitting,
+          bestBeforeDate: bestBefore,
+          length,
+          InventoryMode: data.mode,
+          location: data.location,
+        }
       );
 
       const roll = await getRoll(data.rollIdCode);
