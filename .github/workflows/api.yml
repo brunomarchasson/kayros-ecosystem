@@ -20,31 +20,38 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: 16.x
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - name: mssql suite
-      # You may pin to the exact commit or the version.
-      # uses: potatoqualitee/mssqlsuite@1304344d887fe83db2f93d9910d4b0bc0624b71a
-      uses: potatoqualitee/mssqlsuite@v1.5.1
-      with:
-        # The apps to install
-        install: sqlengine
-        # The sa password for the SQL instance
-#         sa-password: # optional, default is dbatools.I0
-        # Show the log file for the docker container
-#         show-log: # optional, default is false
-        # Change the collation associated with the SQL Server instance
-#         collation: # optional, default is SQL_Latin1_General_CP1_CI_AS
-        # The version of SQL Server to install in year format
-#         version: # optional, default is 2019
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+        - name: mssql suite
+        # You may pin to the exact commit or the version.
+        # uses: potatoqualitee/mssqlsuite@1304344d887fe83db2f93d9910d4b0bc0624b71a
+        uses: potatoqualitee/mssqlsuite@v1.5.1
+        with:
+          # The apps to install
+          install: sqlengine
+          # The sa password for the SQL instance
+  #         sa-password: # optional, default is dbatools.I0
+          # Show the log file for the docker container
+  #         show-log: # optional, default is false
+          # Change the collation associated with the SQL Server instance
+  #         collation: # optional, default is SQL_Latin1_General_CP1_CI_AS
+          # The version of SQL Server to install in year format
+  #         version: # optional, default is 2019
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      # Install dependencies
+      - name: yarn install
+        run: |
+            yarn config set enableGlobalCache false
+            yarn install
+
+        # Build
+        - run: yarn web:build
+        - run: yarn api:build
+        - run: yarn api;test

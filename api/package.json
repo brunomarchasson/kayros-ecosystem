@@ -10,7 +10,7 @@
     "test": "jest",
     "update-schema": "cross-env BABEL_DISABLE_CACHE=1 babel-node ../scripts/update-schema",
     "deploy": "yarn api:deploy",
-    "api:tsc": "tsc",
+    "api:test": "yarn workspace api run test",
     "api:start": "yarn workspace api run start",
     "api:update-schema": "yarn workspace api run update-schema",
     "api:build": "yarn workspace api run build"
