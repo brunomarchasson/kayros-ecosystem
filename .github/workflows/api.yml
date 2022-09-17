@@ -24,7 +24,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-        - name: mssql suite
+      - name: mssql suite
         # You may pin to the exact commit or the version.
         # uses: potatoqualitee/mssqlsuite@1304344d887fe83db2f93d9910d4b0bc0624b71a
         uses: potatoqualitee/mssqlsuite@v1.5.1
