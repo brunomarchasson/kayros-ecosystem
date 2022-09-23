@@ -261,15 +261,15 @@ module.exports = function config(env, options) {
       isEnvProduction &&
         new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
       !isDevServer &&
-        new CopyWebpackPlugin({
-          patterns: [
-            {
-              from: "./public",
-              filter: (filename) =>
-                filename !== path.resolve(__dirname, "public/index.html"),
-            },
-          ],
-        }),
+        // new CopyWebpackPlugin({
+        //   patterns: [
+        //     {
+        //       from: "./public",
+        //       filter: (filename) =>
+        //         filename !== path.resolve(__dirname, "public/index.html"),
+        //     },
+        //   ],
+        // }),
       isDevServer && new webpack.HotModuleReplacementPlugin(),
       isDevServer && new ReactRefreshWebpackPlugin(),
       new WebpackManifestPlugin({ fileName: "assets.json", publicPath: "/" }),
@@ -288,39 +288,39 @@ module.exports = function config(env, options) {
    */
   const proxyConfig = {
     ...appConfig,
-    name: "workers",
-    entry: "./workers/proxy",
-    output: {
-      path: path.resolve(__dirname, "dist"),
-      filename: "proxy.js",
-      uniqueName: "proxy",
-    },
-    performance: {
-      maxAssetSize: 1000 * 1024,
-      maxEntrypointSize: 1000 * 1024,
-    },
-    devtool: false,
-    target: "browserslist:last 2 Chrome versions",
-    plugins: [
-      new webpack.DefinePlugin(
-        envVars.reduce(
-          (acc, name) => ({ ...acc, [`process.env.${name}`]: `${name}` }),
-          {},
-        ),
-      ),
-      new IgnoreAsyncImportsPlugin(),
-      new webpack.IgnorePlugin({
-        resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/,
-      }),
-      options.analyze && new BundleAnalyzerPlugin(),
-    ].filter(Boolean),
-    optimization: {
-      ...appConfig.optimization,
-      splitChunks: {},
-      runtimeChunk: false,
-      minimize: false,
-    },
+    // name: "workers",
+    // entry: "./workers/proxy",
+    // output: {
+    //   path: path.resolve(__dirname, "dist"),
+    //   filename: "proxy.js",
+    //   uniqueName: "proxy",
+    // },
+    // performance: {
+    //   maxAssetSize: 1000 * 1024,
+    //   maxEntrypointSize: 1000 * 1024,
+    // },
+    // devtool: false,
+    // target: "browserslist:last 2 Chrome versions",
+    // plugins: [
+    //   new webpack.DefinePlugin(
+    //     envVars.reduce(
+    //       (acc, name) => ({ ...acc, [`process.env.${name}`]: `${name}` }),
+    //       {},
+    //     ),
+    //   ),
+    //   new IgnoreAsyncImportsPlugin(),
+    //   new webpack.IgnorePlugin({
+    //     resourceRegExp: /^\.\/locale$/,
+    //     contextRegExp: /moment$/,
+    //   }),
+    //   options.analyze && new BundleAnalyzerPlugin(),
+    // ].filter(Boolean),
+    // optimization: {
+    //   ...appConfig.optimization,
+    //   splitChunks: {},
+    //   runtimeChunk: false,
+    //   minimize: false,
+    // },
   };
 
   /**
@@ -348,5 +348,5 @@ module.exports = function config(env, options) {
     ],
   };
 
-  return isDevServer ? { ...appConfig, devServer } : [appConfig, proxyConfig];
+  return isDevServer ? { ...appConfig, devServer } : [appConfig];
 };
