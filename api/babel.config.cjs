@@ -23,7 +23,7 @@ module.exports = function config(api) {
     presets: [
       [
         "@babel/preset-env",
-        {targets: { node: "16", esmodules: false }}
+        {targets: { node: "16" }}
         // isNodeEnv ? { targets: { node: "16", esmodules: false } } : {},
       ],
     ],
