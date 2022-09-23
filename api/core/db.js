@@ -1,4 +1,5 @@
-import chalk from "chalk";
+// import chalk from "chalk";
+const chalk  = require("chalk");
 import knex from "knex";
 import config from "./dbConfig";
 
