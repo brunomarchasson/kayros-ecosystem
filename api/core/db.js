@@ -1,10 +1,10 @@
-// import chalk from "chalk";
-const chalk  = require("chalk");
+import chalk from "chalk";
+// const chalk  = require("chalk");
 import knex from "knex";
 import config from "./dbConfig";
 
 const db = knex(config);
-
+console.log('CONFIG', config.connection)
 process.once("SIGTERM", function () {
   db.destroy();
 });

@@ -8,7 +8,6 @@ class Repository {
   }
 
   registerRepositories() {
-    console.log('registerRepositories')
     this.user = new UserRepository();
   }
 }
