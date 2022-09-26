@@ -9,32 +9,39 @@
  * @returns {import("@babel/core").TransformOptions}
  */
 module.exports = function config(api) {
-  api.cache(true);
-  // const isNodeEnv = api.caller((caller) =>
-  //   [
-  //     "babel-jest",
-  //     "@babel/register",
-  //     "@babel/cli",
-  //     "@babel/node",
-  //   ].includes(caller?.name || ""),
-  // );
+  // api.cache(true);
+  const isNodeEnv = api.caller((caller) =>
+    [
+      "babel-jest",
+      "@babel/register",
+      "@babel/cli",
+      "@babel/node",
+    ].includes(caller?.name || ""),
+  );
 
   return {
     presets: [
       [
         "@babel/preset-env",
-        {targets: { node: "16" }}
-        // isNodeEnv ? { targets: { node: "16", esmodules: false } } : {},
+        // {targets: { node: "16" }}
+        isNodeEnv ? { targets: { node: "16", esmodules: false } } : {},
       ],
     ],
 
     "plugins": [
+      "@babel/plugin-proposal-private-methods",
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-object-rest-spread",
+      "babel-plugin-relay",
       [
-        "@babel/plugin-transform-runtime",
+        "babel-plugin-import",
         {
-          "regenerator": true
-        }
-      ]
+          libraryName: "lodash",
+          libraryDirectory: "",
+          camel2DashComponentName: false,
+        },
+        "lodash",
+      ],
     ]
 
     // ignore: api.env() === "test" ? [] : ["**/__tests__/**", "**/*.test.ts"],

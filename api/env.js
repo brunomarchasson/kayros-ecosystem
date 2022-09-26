@@ -9,8 +9,6 @@ import { bool, cleanEnv, json, num, str, url } from "envalid";
  * @see https://github.com/af/envalid
  */
 
-console.log(process.env)
-console.log(process.env.NODE_ENV)
 export default cleanEnv(process.env, {
   // GOOGLE_CLOUD_PROJECT: str(),
   // GOOGLE_CLOUD_REGION: str(),
