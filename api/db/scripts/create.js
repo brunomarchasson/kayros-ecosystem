@@ -29,13 +29,15 @@ export default async function createDatabase() {
 `).then((r) =>{
   if(r[0].res)
     console.log('DATABASE CREATED !')
-  else
+  else{
+
     console.log('DATABASE ALREADY EXISTS !')
+    process.exitCode = 1;
+  }
 
 });
 }
 
-console.log('rrr')
 if (basename(process.argv[1]) === "create.js") {
   envars.config({ env: minimist(process.argv.slice(2)).env ?? 'test'  });
   createDatabase().then(()=>{

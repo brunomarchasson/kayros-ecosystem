@@ -5,9 +5,12 @@ export default  {
   roots: [
     '<rootDir>/test/e2e'
   ],
+  "setupFiles": [
+    "envars/config",
+    "<rootDir>/test/e2e/setupTests.js"
+  ],
   // "setupFiles": [
     // "test/e2e/setupTests.js",
-    // "<rootDir>/../../utils/setupTests.js"
   // ],
   // preset: '@trendyol/jest-testcontainers',
   // "modulePathIgnorePatterns": [
