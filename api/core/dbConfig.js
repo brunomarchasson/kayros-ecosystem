@@ -1,5 +1,4 @@
 import envars from "envars";
-console.log('APP_ENV',process.env.APP_ENV)
 envars.config();
 const config = {
   client:  process.env.DB_CLIENT,

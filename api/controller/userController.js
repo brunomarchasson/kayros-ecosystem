@@ -29,9 +29,7 @@ const login = async (req, res) => {
   email: 'toto@toto.com',
   language: 'fr',
  }
- console.log('rrr')
   const user = dbConfig.mocked ? mocked : null
-console.log('x', user)
   if (!user) {
     return res.status(400).json({ error: 'bad credentials' });
   }
@@ -45,7 +43,6 @@ console.log('x', user)
       },
     }
   );
-  console.log('t', token)
   res.sendResult({
     user: user,
     success: true,

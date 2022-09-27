@@ -34,10 +34,10 @@ class UserRepository extends RepositoryBase {
   }
 
   async getWithCreds( customerId, email, password) {
-    if(email === 'sdf')
+    if(email === 'toto@toto.com')
     return {
       id: 123,
-      email: 'toto@tt.com'
+      email: 'toto@toto.com'
     }
 
     // return this.usersCollection.find(user => user._id == id);
