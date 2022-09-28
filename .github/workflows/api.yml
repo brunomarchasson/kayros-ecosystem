@@ -64,7 +64,7 @@ jobs:
     - name: yarn install
       run: |
           yarn config set enableGlobalCache false
-          yarn install
+          yarn
     - run: yarn test:e2e:run
 
 
