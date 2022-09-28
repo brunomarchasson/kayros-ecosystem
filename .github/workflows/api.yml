@@ -47,6 +47,8 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
+    env:
+      APP_ENV: test
     steps:
     - uses: actions/checkout@v2
     - name: Build the docker-compose stack
