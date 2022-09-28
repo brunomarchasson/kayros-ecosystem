@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  db:
+    container_name: integrationTesting-mssql
+    environment:
+      - SA_PASSWORD=yourStrong(!)Password
+      - ACCEPT_EULA='true'
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - "1434:1433"
+    expose:
+      - 1434
+    # command: dockerize
+    #     -wait tcp://db:31434 -wait tcp://myapp:8000 -timeout 10s
+    #     bash -c "node db/init.js && yarn test:e2e"
+  myapp:
+    build:
+      context: "../../.."
+      dockerfile: "./api/test/e2e/app.Dockerfile"
+    image: myapp
+    command: dockerize
+      -wait tcp://db:1433 -timeout 20s
+      bash -c "yarn db:create && yarn start"
+    environment:
+      - APP_ENV=test
+      - DB_HOST=db
+      - DB_PORT=1433
+      - DB_PWD=yourStrong(!)Password
+      - DB_NAME=dbTest
+    expose:
+      - 8000
+    depends_on:
+      - db
+  myapp-tests:
+    build:
+      context: "../../.."
+      dockerfile: "./api/test/e2e/app.Dockerfile"
+    image: myapp
+    command: dockerize
+      -wait tcp://db:1433 -wait tcp://myapp:8000 -timeout 20s
+      bash -c "yarn test:e2e:run"
+    environment:
+      - APP_ENV=test
+      - DB_HOST=db
+      - DB_PORT=1433
+      - DB_PWD=yourStrong(!)Password
+      - DB_NAME=dbTest
+    depends_on:
+      - db
+      - myapp
