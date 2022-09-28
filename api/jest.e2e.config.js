@@ -7,15 +7,18 @@ export default  {
   ],
   "setupFiles": [
     "envars/config",
-    "<rootDir>/test/e2e/setupTests.js"
+    // "<rootDir>/test/e2e/setupTests.js"
   ],
   // "setupFiles": [
-    // "test/e2e/setupTests.js",
+  //   "test/e2e/setupTests.js",
   // ],
   // preset: '@trendyol/jest-testcontainers',
   // "modulePathIgnorePatterns": [
   //   "<rootDir>/test/e2e",
   // ],
+  "modulePathIgnorePatterns": [
+    // "<rootDir>/node_modules",
+  ],
   "transformIgnorePatterns": [],
   "transform": {
     "^.*[\\\\\\/](api|db)[\\\\\\/].*\\.(js|ts)$": "babel-jest",
