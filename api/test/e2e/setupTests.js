@@ -1,9 +1,9 @@
 import config from "../../core/dbConfig.js";
-import createDatabase from "../../db/scripts/create";
+// import createDatabase from "../../db/scripts/create";
 
 console.log("RUNNING TEST ON DB " + config.connection.database);
 
-beforeAll();
-createDatabase();
+// beforeAll();
+// createDatabase();
 // Set the current working directory (CWD)
 // process.chdir(path.dirname(__dirname));

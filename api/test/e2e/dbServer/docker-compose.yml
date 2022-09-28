@@ -1,12 +1,9 @@
 version: "3"
 
 services:
-  # mssqldata:
-  #   image: mcr.microsoft.com/mssql/server
-  #   entrypoint: /bin/bash
   mssql:
     environment:
-      - SA_PASSWORD=yourStrong(!)Password
+      - SA_PASSWORD=*yourStrong(!)Password01
       - ACCEPT_EULA='true'
     image: mcr.microsoft.com/mssql/server
     ports:

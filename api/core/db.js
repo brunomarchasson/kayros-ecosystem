@@ -3,13 +3,13 @@ import chalk from "chalk";
 import knex from "knex";
 import config from "./dbConfig";
 
+console.log(config)
 const db = knex(config);
 process.once("SIGTERM", function () {
   db.destroy();
 });
 
 export { db };
-
 const versionCmd = config.client === 'mssql' ? 'select @@version as v' : "SELECT VERSION() as v"
 db.raw(versionCmd)
   .then((version) => {
@@ -21,5 +21,5 @@ db.raw(versionCmd)
     console.log(chalk.red('DB ERROR', err));
     throw err;
   })
-  
+
 export default db;
