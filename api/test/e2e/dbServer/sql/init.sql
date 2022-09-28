@@ -4,5 +4,3 @@ BEGIN
 END
 
 CREATE DATABASE testDB;
-GO;
-USE testDB;
