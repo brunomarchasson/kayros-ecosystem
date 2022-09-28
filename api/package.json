@@ -80,6 +80,7 @@
     "@trendyol/jest-testcontainers": "^2.1.1",
     "cross-env": "^7.0.3",
     "cross-spawn": "^7.0.3",
+    "frisby": "^2.1.3",
     "prettier": "^2.6.2",
     "rollup": "^2.75.5",
     "rollup-plugin-copy": "^3.4.0",
