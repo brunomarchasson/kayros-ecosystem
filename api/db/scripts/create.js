@@ -15,6 +15,7 @@ import config from "../../core/dbConfig.js";
  */
 export default async function createDatabase() {
   const DB_NAME = config.connection.database;
+
   delete config.connection.database
   let db = knex(config);
 

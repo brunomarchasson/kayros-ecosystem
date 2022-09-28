@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: "../../../.."
+      dockerfile: "api/test/e2e/dbServer/app.Dockerfile"
+    image: kayros-api
+    command: dockerize
+      -wait tcp://db:1433 -timeout 20s
+      bash -c "yarn db:create && yarn start"
+    # volumes:
+    # - /var/opt/mssql
+    # we copy our scripts onto the container
+    # - ../../../:/usr/src/app
+
+    # command: /bin/bash
+    environment:
+      - APP_ENV=test
+      - DB_HOST=mssql
+      - DB_PORT=1433
+      - DB_PWD=yourStrong(!)Password
+      - DB_NAME=testDB
+    expose:
+      - 8000
+    # depends_on:
+    # - mssql
