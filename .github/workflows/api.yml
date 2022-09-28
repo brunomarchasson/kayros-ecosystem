@@ -52,7 +52,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the docker-compose stack
-      run: docker-compose -f docker-compose.yml -f docker-compose.api.yml up --build  mssql api
+      run: docker-compose -f docker-compose.yml -f docker-compose.api.yml up -d --build  mssql api
       working-directory: ./api/test/e2e/dbServer
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
