@@ -41,8 +41,8 @@ jobs:
   e2e-tests:
     defaults:
       run:
-        shell: bash
-        working-directory: api
+        # shell: bash
+        working-directory: ./api
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -51,7 +51,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the docker-compose stack
       run: docker-compose up -d  mssql
-      working-directory: api/test/e2e/dbServer
+      working-directory: ./api/test/e2e/dbServer
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
