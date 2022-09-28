@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "e2e-tests" ]
     paths:
       - "api/**"
   pull_request:
@@ -14,7 +14,7 @@ on:
       - "api/**"
 
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,12 +34,31 @@ jobs:
 
       # Build
       - run: yarn test
-  e2e:
+  e2e-tests:
+    defaults:
+      run:
+        shell: bash
+        working-directory: api
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
     - uses: actions/checkout@v2
-    - name: Build the stack
-      run: docker run --network container:webapp-frontend
-    - name: Test
-      run: docker run --network container:webapp-frontend appropriate/curl -s --retry 10 --retry-connrefused http://localhost:5000/
+    - name: Build the docker-compose stack
+      run: docker-compose up -d  mssql
+      working-directory: ./test/e2e/dbServer
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    # Install dependencies
+    - name: yarn install
+      run: |
+          yarn config set enableGlobalCache false
+          yarn install
+    - run: yarn test
+
 
