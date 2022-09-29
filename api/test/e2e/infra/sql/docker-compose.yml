@@ -9,9 +9,7 @@ services:
     ports:
       - "1434:1433"
     volumes:
-      # - /var/opt/mssql
-      # we copy our scripts onto the container
-      - ./sql:/usr/src/app
+      - ./volume:/usr/src/app
     working_dir: /usr/src/app
     command: sh -c ' chmod +x ./entrypoint.sh; ./entrypoint.sh & /opt/mssql/bin/sqlservr;'
     # don't use this if you don't want to persit data between docker up and down

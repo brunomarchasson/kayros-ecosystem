@@ -1,20 +1,18 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Node.js CI
 
 on:
   push:
     branches: [ "e2e-tests" ]
-    # paths:
-    #   - "api/**"
+    paths:
+      - "api/**"
   pull_request:
     branches: [ "main" ]
     paths:
       - "api/**"
 
 jobs:
-  tests:
+  unit-tests:
     defaults:
         run:
           shell: bash
@@ -37,7 +35,7 @@ jobs:
             yarn install
 
       # Build
-      - run: yarn test
+      - run: yarn test:unit
   e2e-tests:
     defaults:
       run:
@@ -52,8 +50,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the docker-compose stack
-      run: docker-compose -f docker-compose.yml -f docker-compose.api.yml up -d --build  mssql api
-      working-directory: ./api/test/e2e/dbServer
+      run: docker-compose -f sql/docker-compose.yml -f api/docker-compose.yml up -d --build  mssql api
+      working-directory: ./api/test/e2e/infra
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -65,6 +63,6 @@ jobs:
       run: |
           yarn config set enableGlobalCache false
           yarn
-    - run: yarn test:e2e:run
+    - run: yarn test:e2e
 
 
