@@ -4,7 +4,7 @@ services:
   api:
     build:
       context: "../../../.."
-      dockerfile: "api/test/e2e/dbServer/app.Dockerfile"
+      dockerfile: "api/test/e2e/infra/app/Dockerfile"
     image: kayros-api
     # entrypoint: tail -f /dev/null
 
