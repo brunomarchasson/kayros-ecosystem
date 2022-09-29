@@ -3,7 +3,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "e2e-tests" ]
+    branches: [ "main" ]
     paths:
       - "api/**"
   pull_request:
