@@ -14,7 +14,7 @@ services:
     volumes:
     # - /var/opt/mssql
     # we copy our scripts onto the container
-      - ../../../..:/usr/app
+      - ../../../../..:/usr/app
 
     command: yarn start
     environment:
