@@ -3,7 +3,7 @@ version: "3"
 services:
   api:
     build:
-      context: "../../../.."
+      context: "../../../../.."
       dockerfile: "api/test/e2e/infra/app/Dockerfile"
     image: kayros-api
     # entrypoint: tail -f /dev/null
@@ -14,7 +14,7 @@ services:
     volumes:
     # - /var/opt/mssql
     # we copy our scripts onto the container
-      - ../../../../..:/usr/app
+      - ../../../..:/usr/app
 
     command: yarn start
     environment:
