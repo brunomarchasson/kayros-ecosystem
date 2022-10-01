@@ -1,0 +1,42 @@
+
+name: e2e tests
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "api/**"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "api/**"
+
+jobs:
+  e2e-tests:
+    defaults:
+      run:
+        # shell: bash
+        working-directory: ./api
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    env:
+      APP_ENV: test
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the docker-compose stack
+      run: docker-compose -f sql/docker-compose.yml -f app/docker-compose.yml up -d --build  mssql api
+      working-directory: ./api/test/e2e/infra
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    # Install dependencies
+    - name: yarn install
+      run: |
+          yarn config set enableGlobalCache false
+          yarn
+    - run: yarn test:e2e

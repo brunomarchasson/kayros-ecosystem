@@ -1,0 +1,6 @@
+IF EXISTS(SELECT * FROM sys.databases WHERE name = 'testDB')
+BEGIN
+  DROP DATABASE testDB;
+END
+
+CREATE DATABASE testDB;

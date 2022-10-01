@@ -19,6 +19,7 @@ import pkg from "./package.json";
 const isWatch = process.env.ROLLUP_WATCH === "true";
 const args = minimist(process.argv.slice(-2));
 
+
 // Load environment variables
 envars.config({ env: args.env });
 
@@ -101,7 +102,7 @@ const config = {
     isWatch &&
       run({
         execArgv: [
-          "--require=../.pnp.cjs",
+          // "--require=.pnp.cjs",
           "--require=source-map-support/register",
           "--no-warnings",
         ],
