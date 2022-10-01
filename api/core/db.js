@@ -56,4 +56,10 @@ db.raw(versionCmd)
 //       console.info('sql ready');
 //     });
 // }
+// function afterCreate(connection, callback) {
+//   connection.on("error", connectionError);
+//   callback(null, connection);
+// }
+
+// db.client.pool.config.afterCreate = afterCreate;
 export default db;

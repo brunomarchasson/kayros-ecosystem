@@ -3,5 +3,11 @@
       "title": "Connexion",
       "translated-text": "C'est du français"
   },
-  "form-error-required": "le champ '{{ fieldName }}' est obligatoire"
+  "form-error-required": "le champ '{{ fieldName }}' est obligatoire",
+  "quotation": {
+    "help": "Votre demande de devis sera chiffrée pour la quantité totale renseignée qui pourra être répartie en plusieurs références (modèles différents de même format).",
+    "alert": "Attention: Pour toute demande spécifique, (telle que étiquette avec coupe mi-chair, en planches, en bande continue ...) votre demande de chiffrage doit être directement faite auprès du service commercial",
+    "quantity": "Quantité totale à deviser",
+    "references": "Nombre de références"
+  }
 }

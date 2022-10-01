@@ -22,6 +22,7 @@ const getAll = async (req, res) => {
   const u = req.currentUser;
   const { type } = req.data;
   const params = { type: type ?? null };
+  console.log('params', params)
   const r = await db
     .raw(
       `SELECT distinct  case when Pelli = 1 then 'PEL' else COALESCE(SF.TYPE_ARTICLE,F.TYPE_ARTICLE,G.TYPE_ARTICLE) end  as TypeArticle,
@@ -42,6 +43,7 @@ AND VISIBLE_WEB = 1
       params,
     )
     .then((r) => r.map(formatArticle));
+  console.log(r)
   res.sendResult(r);
 };
 

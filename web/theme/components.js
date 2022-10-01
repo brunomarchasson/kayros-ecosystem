@@ -13,7 +13,8 @@ const createComponents = () => ({
 
   MuiTextField: {
     defaultProps: {
-      // InputLabelProps: { shrink: true },
+    variant: "standard",
+      //  InputLabelProps: { shrink: true },
     },
   },
 

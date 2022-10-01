@@ -3,33 +3,29 @@ import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { formatErrorMessage } from './errors';
+import Switch from '../Switch';
 
-function TextInput({
-  control, name, label, rules, defaultValue,...rest
+function SwitchInput({
+  control, name, label, defaultValue,...rest
 }) {
   return (
     <Controller
       control={ control }
       name={ name }
       defaultValue={ defaultValue }
-      rules={ rules }
       render={ ({ field, fieldState, formState }) => (
-        <TextField
+        <Switch
           { ...field }
           {...rest}
-          error={ fieldState.error }
-          helperText={ formatErrorMessage(label, field, fieldState) }
           label={ label }
-          required={ rules?.required }
-          inputProps={ { required: false,
-          maxlength:rules?.maxLength} }
+
         />
       ) }
     />
   );
 }
 
-TextInput.propTypes = {
+SwitchInput.propTypes = {
   control: PropTypes.object,
   name: PropTypes.string,
   label: PropTypes.string,
@@ -38,4 +34,4 @@ TextInput.propTypes = {
   inputProps: PropTypes.object,
 };
 
-export default TextInput;
+export default SwitchInput;

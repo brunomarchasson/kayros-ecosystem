@@ -36,8 +36,8 @@ export function AuthProvider({ children }) {
     }
   }, [api]);
 
-  const login = (email, password) => api
-    .post('login', { json: { email, password } })
+  const login = (customerId, email, password) => api
+    .post('login', { json: {customerId, email, password } })
     .json()
     .then((res) => {
       localStorage.setItem('token', res.token);
@@ -46,8 +46,9 @@ export function AuthProvider({ children }) {
       i18n.changeLanguage(res?.user?.language);
       setAuthed(true);
     })
-    .catch(() => {
+    .catch((e) => {
       setAuthed(false);
+      throw e;
     });
 
   const logout = () => new Promise((res) => {

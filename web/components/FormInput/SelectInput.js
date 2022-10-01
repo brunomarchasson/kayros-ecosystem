@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
 import { formatErrorMessage } from './errors';
+
 
 
 function SelectInput({
@@ -16,19 +17,26 @@ function SelectInput({
   defaultValue = null,
   inputProps,
 }) {
+
   return (
     <Controller
       control={ control }
       name={ name }
       rules={ rules }
       defaultValue={ defaultValue }
-      render={ ({ field: { ref, onChange, ...field }, fieldState }) => (
+      render={ ({ field: { ref, onChange, ...field }, fieldState }) => {
+
+        console.log('.....', field)
+        return(
         <Autocomplete
           multiple={ multiple }
           options={ options }
           defaultValue={ defaultValue ?? null }
           getOptionLabel={ (option) => option?.label ?? '' }
+          isOptionEqualToValue = {(o,v) => o.value === v.value}
           onChange={ (_, data) => onChange(data) }
+          value={field.value}
+          autoSelect
           renderInput={ (params) => (
             <TextField
               { ...field }
@@ -46,7 +54,7 @@ function SelectInput({
           ) }
           { ...inputProps }
         />
-      ) }
+      )} }
     />
   );
 }

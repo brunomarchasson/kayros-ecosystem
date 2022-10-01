@@ -39,6 +39,7 @@ function NumberInput({
   label,
   rules,
   defaultValue,
+  ...rest
 }) {
   return (
     <Controller
@@ -49,6 +50,7 @@ function NumberInput({
       render={ ({ field, fieldState }) => (
         <TextField
           { ...field }
+          { ...rest }
           label={ label }
           InputProps={ {
             inputComponent: NumberFormatCustom,

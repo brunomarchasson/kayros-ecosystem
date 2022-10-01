@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-
+import Alert from '@mui/material/Alert';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
@@ -15,9 +15,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import SwipeableViews from 'react-swipeable-views';
+// import SwipeableViews from 'react-swipeable-views';
 import { PasswordField } from '../../components/PasswordField';
 import useAuth from '../../hooks/useAuth';
+import Collapse from '@mui/material/Collapse';
 
 const RoundButton = styled(Button)({
   right: '-2rem',
@@ -39,33 +40,39 @@ const StyledDialogContent = styled(DialogContent)`
 `;
 function LoginForm() {
   const [email, setEmail] = useState('');
+  const [error, setError] = useState();
+  const [customerId, setCustomerId] = useState('');
   const { t } = useTranslation();
   const [password, setPassword] = useState('');
-  const [pageIndex, setPageIndex] = useState(0);
+  // const [pageIndex, setPageIndex] = useState(0);
   const loginRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleChangeIndex = () => setPageIndex(1);
+  // const handleChangeIndex = () => setPageIndex(1);
 
   const handleClick = (event) => {
     event.preventDefault();
-    if (pageIndex === 0) {
-      setPageIndex(1);
-      passwordRef.current.focus();
-    } else {
-      login(email, password).then(() => {
+    // if (pageIndex === 0) {
+    //   setPageIndex(1);
+    //   passwordRef.current.focus();
+    // } else {
+      setError(null)
+      login(customerId, email, password).then(() => {
         navigate('/home');
+      }).catch(e=> {
+        console.log(e)
+        setError(e)
       });
-    }
+    // }
   };
 
-  const handleBackClick = (event) => {
-    event.preventDefault();
-    setPageIndex(0);
-    loginRef.current.focus();
-  };
+  // const handleBackClick = (event) => {
+  //   event.preventDefault();
+  //   setPageIndex(0);
+  //   loginRef.current.focus();
+  // };
 
   return (
     <Dialog
@@ -89,12 +96,24 @@ function LoginForm() {
           flexDirection: 'column',
         } }
       >
-        <SwipeableViews
+        {/* <SwipeableViews
           style={ { flex: 1 } }
           index={ pageIndex }
           onChangeIndex={ handleChangeIndex }
-        >
+        > */}
           <StyledDialogContent sx={ { flex: 1 } }>
+            <TextField
+              autoFocus
+              id="customerId"
+              value={ customerId }
+              placeholder="..."
+              fullWidth
+              label="customer_id"
+              autoCorrect="off"
+              autoCapitalize="off"
+              onChange={ ({ target: { value } }) => setCustomerId(value) }
+            />
+
             <TextField
               inputRef={ loginRef }
               autoFocus
@@ -102,16 +121,16 @@ function LoginForm() {
               value={ email }
               placeholder="..."
               fullWidth
-              label="your_login"
+              label="your_email"
               autoCorrect="off"
               autoCapitalize="off"
               onChange={ ({ target: { value } }) => setEmail(value) }
             />
 
             { /* <button onClick={handleLogin}>Log in</button> */ }
-          </StyledDialogContent>
+          {/* </StyledDialogContent> */}
 
-          <StyledDialogContent sx={ { flex: 1 } }>
+          {/* <StyledDialogContent sx={ { flex: 1 } }>
             { pageIndex === 1 && (
               <Stack direction="row" alignItems="center" gap={ 1 }>
                 <IconButton
@@ -128,7 +147,7 @@ function LoginForm() {
                   { email }
                 </Typography>
               </Stack>
-            ) }
+            ) } */}
 
             <PasswordField
               inputRef={ passwordRef }
@@ -142,14 +161,17 @@ function LoginForm() {
 
             { /* <button onClick={handleLogin}>Log in</button> */ }
           </StyledDialogContent>
-        </SwipeableViews>
-        <DialogActions sx={ { position: 'relative', height: '6rem' } }>
+        {/* </SwipeableViews> */}
+        <DialogActions sx={ { position: 'relative', height: '5rem' } }>
           <RoundButton type="submit" variant="contained" onClick={ handleClick }>
             <ArrowForwardIcon />
           </RoundButton>
           { /* <Button onClick={ handleLogin }>LogIn</Button> */ }
           { /* <Button onClick={handleClose}>Subscribe</Button> */ }
         </DialogActions>
+        <Collapse in={error}>
+        <Alert severity="error">erreur de connexion</Alert>
+        </Collapse>
       </form>
     </Dialog>
   );

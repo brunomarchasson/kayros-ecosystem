@@ -25,6 +25,7 @@ registerApi(
     method: 'post',
     description: 'Process login in app',
     params: schema().object({
+      customerId: schema().string().required().description('CustomerId'),
       email: schema().string().required().description('Account'),
       password: schema().string().required().description('Account password'),
     }),
