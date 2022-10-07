@@ -1,10 +1,9 @@
-const express = require('express')
-const cors = require('cors');
-const helmet = require('helmet');
-const {setupLogging} = require("./logging");
-const apiConfig = require('./apiConfig');
-
-const { createProxyMiddleware } = require('http-proxy-middleware');
+import  express from 'express'
+import  cors from 'cors'
+import  helmet from 'helmet'
+import  {setupLogging} from "./logging"
+import  apiConfig from './apiConfig'
+import  { createProxyMiddleware } from 'http-proxy-middleware';
 
 const app = express()
 const port = 3001;
@@ -19,11 +18,11 @@ const customRouter = function (req) {
 
   console.log(apiConfig[ApiId])
   return apiConfig[ApiId]
- return 'http://localhost:8080'; // protocol + host
+//  return 'http://localhost:8000'; // protocol + host
 };
 
 const options = {
-  target: 'http://localhost:8080',
+  target: 'http://localhost:8000',
   router: customRouter,
   on: {proxyReq: function onProxyReq(proxyReq, req, res) {
     // add custom header to request

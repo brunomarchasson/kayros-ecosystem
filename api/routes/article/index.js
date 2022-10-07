@@ -13,6 +13,7 @@ registerApi(
     description: 'gat all articles',
     params: schema().object({
       type: schema().string().description('article Type'),
+      extra: schema().boolean().description('include extra data'),
       date: schema().string().description('last sync date'),
     }),
     returns: schema().array(articleSchema),
@@ -27,6 +28,7 @@ registerApi(
     description: 'get article',
     params: schema().object({
       id: schema().number().description('articleId'),
+      extra: schema().boolean().description('include extra data'),
     }),
     returns: articleSchema,
   },

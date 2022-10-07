@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Radio, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -19,6 +19,8 @@ import VarnishSelect from './VarnishSelect';
 import LaminationSelect from './LaminationSelect';
 import Switch from '../../components/Switch';
 import SwitchInput from '../../components/FormInput/SwitchInput';
+import RadioInput from '../../components/FormInput/RadioInput';
+import OutForm from './OutForm';
 
 let renderCount = 0;
 
@@ -28,16 +30,16 @@ const objOptions = [
   { value: 67, label: 'C' },
 ];
 
-function Row(p) {
+export function Row(p) {
   return (
     <Stack
       direction="row"
       alignItems="center"
-      gap={1}
-      sx={{
+      gap={ 1 }
+      sx={ {
         '& >*': { flex: 1 },
-      }}
-      {...p}
+      } }
+      { ...p }
     />
   );
 }
@@ -50,7 +52,7 @@ function QuotationForm() {
     formState: { errors },
   } = useForm();
   const { t } = useTranslation();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => console.log('DATA', data);
   const watchShape = watch('shape');
   const watchWidth = watch('width');
   const watchHeight = watch('height');
@@ -61,7 +63,7 @@ function QuotationForm() {
   console.log('renderCount', renderCount, errors);
   return (
     <Box
-      sx={{
+      sx={ {
         flex: 1,
         display: 'flex',
         alignItems: 'center',
@@ -69,173 +71,183 @@ function QuotationForm() {
         '& h2, h3 ': {
           scrollMarginTop: '16px',
         },
-      }}
+      } }
     >
       <Paper
         component="form"
         autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{
+        onSubmit={ handleSubmit(onSubmit) }
+        sx={ {
           padding: '1rem 3rem',
           display: 'flex',
           flexDirection: 'column',
           gap: 1,
           width: 600,
-        }}
+        } }
       >
         <h2 id="start">Demande de devis</h2>
         <Row>
           <TextInput
-            control={control}
+            control={ control }
             name="label"
             label="label"
-            rules={{
+            rules={ {
               maxLength: 100,
               required: true,
-            }}
+            } }
           />
-        </Row>
-        <Row>
-          <TextInput control={control} name="reference" rules={{
-            maxLength: 50,
-          }}
-
-            label="reference" />
-        </Row>
-        <Row>
-          <NumberInput
-            rules={{
-              required: true,
-            }}
-            sx={{
-              maxWidth: '50%'
-            }}
-            // maxWidth={20}
-            control={control}
-            name="quantyty1"
-            label={t('quotation.quantity')}
-          />
-          {/* <NumberInput control={control} name="quantyty2" label="quantyty2" /> */}
-          {/* <NumberInput control={control} name="quantyty2" label="quantyty3" /> */}
         </Row>
         <Row>
           <TextInput
-            control={control}
-            name="references"
-            label={t('quotation.references')}
-            sx={{
-              maxWidth: '50%'
-            }}
-            rules={{
-              required: true,
-            }}
+            control={ control }
+            name="reference"
+            rules={ {
+              maxLength: 50,
+            } }
+
+            label="reference"
           />
-          <InfoPopOver text={t('quotation.help')} />
+        </Row>
+        <Row>
+          <NumberInput
+            rules={ {
+              required: true,
+            } }
+            sx={ {
+              maxWidth: '50%',
+            } }
+            // maxWidth={20}
+            control={ control }
+            name="quantyty1"
+            label={ t('quotation.quantity') }
+          />
+          { /* <NumberInput control={control} name="quantyty2" label="quantyty2" /> */ }
+          { /* <NumberInput control={control} name="quantyty2" label="quantyty3" /> */ }
+        </Row>
+        <Row>
+          <TextInput
+            control={ control }
+            name="references"
+            label={ t('quotation.references') }
+            sx={ {
+              maxWidth: '50%',
+            } }
+            rules={ {
+              required: true,
+            } }
+          />
+          <InfoPopOver text={ t('quotation.help') } />
         </Row>
         <Alert severity="warning">
-          {t('quotation.alert')}
+          { t('quotation.alert') }
         </Alert>
         <h2 id="definition">Label definition</h2>
-        <Stack direction="row" >
-          <Stack direction="column" gap={1} flex={1}>
+        <Stack direction="row">
+          <Stack direction="column" gap={ 1 } flex={ 1 }>
             <Row>
               <SelectInput
-                control={control}
+                control={ control }
                 name="shape"
                 label="shape"
-                rules={{
+                rules={ {
                   required: true,
-                }}
-                options={[
+                } }
+                options={ [
                   { value: 0, label: 'Ronde' },
                   { value: 1, label: 'Ovale' },
                   { value: 2, label: 'Rectangle' },
                   { value: 3, label: 'Spécial' },
-                ]}
+                ] }
               />
             </Row>
             <Row>
               <NumberInput
-                control={control}
-                rules={{
+                control={ control }
+                rules={ {
                   required: true,
-                }}
+                } }
                 name="width"
-                label={watchShape?.value === 0 ? 'diameter' : 'width'}
+                label={ watchShape?.value === 0 ? 'diameter' : 'width' }
               />
-              {watchShape?.value !== 0 && (
+              { watchShape?.value !== 0 && (
                 <NumberInput
-                  control={control}
-                  rules={{
+                  control={ control }
+                  rules={ {
                     required: true,
-                  }}
+                  } }
                   name="height"
                   label="height"
                 />
-              )}
+              ) }
             </Row>
           </Stack>
-          <Box sx={{ width: 180 }}>
+          <Box sx={ { width: 180 } }>
             <LabelImage
-              style={{ maxWidth: 200, maxHeight: 200 }}
-              shape={watchShape}
-              width={watchWidth}
-              height={watchHeight}
+              style={ { maxWidth: 200, maxHeight: 200 } }
+              shape={ watchShape }
+              width={ watchWidth }
+              height={ watchHeight }
             />
           </Box>
         </Stack>
         <h2 id="backing">backing</h2>
         <ArticleSelect
           type="SUP"
-          control={control}
-          rules={{
+          control={ control }
+          rules={ {
             required: true,
-          }}
+          } }
           name="backing"
           label="backing"
         />
         <h2 id="printing">printing</h2>
         <SelectInput
-          control={control}
+          control={ control }
           name="printProcess"
           label="printProcess"
-          options={[
+          options={ [
             { value: 103, label: 'Flexo UV' },
             { value: 106, label: 'numérique ' },
-          ]}
+          ] }
         />
-        <SelectColor control={control}
+        <SelectColor
+          control={ control }
           name="print"
           label="print"
-          process={watchPrintProcess} />
+          process={ watchPrintProcess }
+        />
 
-        <GlidingSelect control={control} />
+        <GlidingSelect control={ control } />
 
-        <VarnishSelect control={control} />
-        <LaminationSelect control={control} />
-        <SwitchInput control={control}
+        <VarnishSelect control={ control } />
+        <LaminationSelect control={ control } />
+        <SwitchInput
+          control={ control }
           name="blackSpot"
-          label="blackSpot" />
-        <SwitchInput control={control}
+          label="blackSpot"
+        />
+        <SwitchInput
+          control={ control }
           name="perforation"
-          label="perforation" />
+          label="perforation"
+        />
 
         <h2 id="finish">finish</h2>
-        
+        <OutForm control={ control } watch={ watch } />
         <Row>
-          <OutputDirection
-            control={control}
+          {/* <OutputDirection
+            control={ control }
             name="out"
-            rules={{
+            rules={ {
               required: true,
-            }}
-          />
+            } }
+          /> */}
         </Row>
         <h2 id="packaging">packaging</h2>
 
         <Button type="submit">Submit</Button>
       </Paper>
-      { /* </form> */}
+      { /* </form> */ }
     </Box>
   );
 }

@@ -1,5 +1,6 @@
 import UserRepository from './userRepository';
 import db from "../core/db.js";
+import ArticleRepository from './article.repository';
 
 class Repository {
   constructor() {
@@ -9,6 +10,7 @@ class Repository {
 
   registerRepositories() {
     this.user = new UserRepository();
+    this.article = new ArticleRepository();
   }
 }
 

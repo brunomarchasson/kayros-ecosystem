@@ -2,7 +2,7 @@ import { schema } from '../apiExplorer';
 
 export const articleSchema = schema().object({
   id: schema().number(),
-  TypeArticle: schema().string().oneOf(['SUP', 'PEL', 'DORC', 'DORF', 'VER', 'MAN']),
+  TypeArticle: schema().string(),//.oneOf(['SUP', 'PEL', 'DORC', 'DORF', 'VER', 'MAN']),
   Designation: schema().string(),
   Famille:schema().string(),
   SousFamille:schema().string(),

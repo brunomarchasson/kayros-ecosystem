@@ -9,7 +9,6 @@
   "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
   "jest.jestCommandLine": "yarn jest",
   "jestrunner.enableYarnPnpSupport": true,
-  "jestrunner.yarnPnpCommand": "yarn-4.0.0-rc.6.cjs",
   "files.associations": {
     ".terraformrc": "terraform"
   },
@@ -19,13 +18,9 @@
     ".eslintcache": true,
     ".git": true,
     ".gitattributes": true,
-    ".gitignore": true,
     ".husky": true,
-    ".pnp.cjs": true,
-    ".pnp.loader.mjs": true,
     ".prettierignore": true,
     ".yarn": true,
-    ".yarnrc.yml": true,
     "LICENSE": true,
     "yarn.lock": true
   },

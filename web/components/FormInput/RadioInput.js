@@ -4,8 +4,9 @@ import { Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { formatErrorMessage } from './errors';
 import Switch from '../Switch';
+import Radios from '../Radios';
 
-function SwitchInput({
+function RadioInput({
   control, name, label, defaultValue, ...rest
 }) {
   return (
@@ -14,18 +15,17 @@ function SwitchInput({
       name={ name }
       defaultValue={ defaultValue }
       render={ ({ field, fieldState, formState }) => (
-        <Switch
+        <Radios
           { ...field }
           { ...rest }
           label={ label }
-
         />
       ) }
     />
   );
 }
 
-SwitchInput.propTypes = {
+RadioInput.propTypes = {
   control: PropTypes.object,
   name: PropTypes.string,
   label: PropTypes.string,
@@ -34,4 +34,4 @@ SwitchInput.propTypes = {
   inputProps: PropTypes.object,
 };
 
-export default SwitchInput;
+export default RadioInput;

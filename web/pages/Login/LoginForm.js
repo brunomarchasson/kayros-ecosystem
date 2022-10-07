@@ -16,9 +16,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 // import SwipeableViews from 'react-swipeable-views';
+import Collapse from '@mui/material/Collapse';
 import { PasswordField } from '../../components/PasswordField';
 import useAuth from '../../hooks/useAuth';
-import Collapse from '@mui/material/Collapse';
 
 const RoundButton = styled(Button)({
   right: '-2rem',
@@ -50,29 +50,16 @@ function LoginForm() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // const handleChangeIndex = () => setPageIndex(1);
-
   const handleClick = (event) => {
     event.preventDefault();
-    // if (pageIndex === 0) {
-    //   setPageIndex(1);
-    //   passwordRef.current.focus();
-    // } else {
-      setError(null)
-      login(customerId, email, password).then(() => {
-        navigate('/home');
-      }).catch(e=> {
-        console.log(e)
-        setError(e)
-      });
-    // }
+    setError(null);
+    login(customerId, email, password).then(() => {
+      navigate('/home');
+    }).catch((e) => {
+      console.log(e);
+      setError(e);
+    });
   };
-
-  // const handleBackClick = (event) => {
-  //   event.preventDefault();
-  //   setPageIndex(0);
-  //   loginRef.current.focus();
-  // };
 
   return (
     <Dialog
@@ -96,81 +83,50 @@ function LoginForm() {
           flexDirection: 'column',
         } }
       >
-        {/* <SwipeableViews
-          style={ { flex: 1 } }
-          index={ pageIndex }
-          onChangeIndex={ handleChangeIndex }
-        > */}
-          <StyledDialogContent sx={ { flex: 1 } }>
-            <TextField
-              autoFocus
-              id="customerId"
-              value={ customerId }
-              placeholder="..."
-              fullWidth
-              label="customer_id"
-              autoCorrect="off"
-              autoCapitalize="off"
-              onChange={ ({ target: { value } }) => setCustomerId(value) }
-            />
+        <StyledDialogContent sx={ { flex: 1 } }>
+          <TextField
+            autoFocus
+            id="customerId"
+            value={ customerId }
+            placeholder="..."
+            fullWidth
+            label="customer_id"
+            autoCorrect="off"
+            autoCapitalize="off"
+            onChange={ ({ target: { value } }) => setCustomerId(value) }
+          />
 
-            <TextField
-              inputRef={ loginRef }
-              autoFocus
-              id="email"
-              value={ email }
-              placeholder="..."
-              fullWidth
-              label="your_email"
-              autoCorrect="off"
-              autoCapitalize="off"
-              onChange={ ({ target: { value } }) => setEmail(value) }
-            />
+          <TextField
+            inputRef={ loginRef }
+            autoFocus
+            id="email"
+            value={ email }
+            placeholder="..."
+            fullWidth
+            label="your_email"
+            autoCorrect="off"
+            autoCapitalize="off"
+            onChange={ ({ target: { value } }) => setEmail(value) }
+          />
 
-            { /* <button onClick={handleLogin}>Log in</button> */ }
-          {/* </StyledDialogContent> */}
+          <PasswordField
+            inputRef={ passwordRef }
+            id="password"
+            type="password"
+            fullWidth
+            label="your_password"
+            value={ password }
+            onChange={ ({ target: { value } }) => setPassword(value) }
+          />
 
-          {/* <StyledDialogContent sx={ { flex: 1 } }>
-            { pageIndex === 1 && (
-              <Stack direction="row" alignItems="center" gap={ 1 }>
-                <IconButton
-                  size="small"
-                  edge="start"
-                  color="inherit"
-                  aria-label="menu"
-                  onClick={ handleBackClick }
-                >
-                  <ArrowBackIcon />
-                </IconButton>
-                <Avatar sx={ { width: 24, height: 24 } } />
-                <Typography variant="h6" component="div" sx={ { flexGrow: 1 } }>
-                  { email }
-                </Typography>
-              </Stack>
-            ) } */}
-
-            <PasswordField
-              inputRef={ passwordRef }
-              id="password"
-              type="password"
-              fullWidth
-              label="your_password"
-              value={ password }
-              onChange={ ({ target: { value } }) => setPassword(value) }
-            />
-
-            { /* <button onClick={handleLogin}>Log in</button> */ }
-          </StyledDialogContent>
-        {/* </SwipeableViews> */}
+        </StyledDialogContent>
         <DialogActions sx={ { position: 'relative', height: '5rem' } }>
           <RoundButton type="submit" variant="contained" onClick={ handleClick }>
             <ArrowForwardIcon />
           </RoundButton>
-          { /* <Button onClick={ handleLogin }>LogIn</Button> */ }
-          { /* <Button onClick={handleClose}>Subscribe</Button> */ }
         </DialogActions>
-        <Collapse in={error}>
-        <Alert severity="error">erreur de connexion</Alert>
+        <Collapse in={ error } sx={ { marginTop: 2 } }>
+          <Alert severity="error">erreur de connexion</Alert>
         </Collapse>
       </form>
     </Dialog>

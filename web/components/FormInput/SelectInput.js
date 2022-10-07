@@ -5,8 +5,6 @@ import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
 import { formatErrorMessage } from './errors';
 
-
-
 function SelectInput({
   control,
   name,
@@ -17,25 +15,21 @@ function SelectInput({
   defaultValue = null,
   inputProps,
 }) {
-
   return (
     <Controller
       control={ control }
       name={ name }
       rules={ rules }
       defaultValue={ defaultValue }
-      render={ ({ field: { ref, onChange, ...field }, fieldState }) => {
-
-        console.log('.....', field)
-        return(
+      render={ ({ field: { ref, onChange, ...field }, fieldState }) => (
         <Autocomplete
           multiple={ multiple }
           options={ options }
           defaultValue={ defaultValue ?? null }
           getOptionLabel={ (option) => option?.label ?? '' }
-          isOptionEqualToValue = {(o,v) => o.value === v.value}
+          isOptionEqualToValue={ (o, v) => o.value === v.value }
           onChange={ (_, data) => onChange(data) }
-          value={field.value}
+          value={ field.value }
           autoSelect
           renderInput={ (params) => (
             <TextField
@@ -54,7 +48,7 @@ function SelectInput({
           ) }
           { ...inputProps }
         />
-      )} }
+      ) }
     />
   );
 }

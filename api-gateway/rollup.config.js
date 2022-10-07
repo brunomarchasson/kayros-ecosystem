@@ -19,8 +19,9 @@ import pkg from "./package.json";
 const isWatch = process.env.ROLLUP_WATCH === "true";
 const args = minimist(process.argv.slice(-2));
 
+
 // Load environment variables
-envars.config({ env: args.env });
+// envars.config({ env: args.env });
 
 /**
  * Rollup bundler configuration.
@@ -34,8 +35,8 @@ const config = {
   output: {
     dir: "./dist",
     format: "es",
-    sourcemap: true,
-    chunkFileNames: "[name].chunk.js",
+    // sourcemap: true,
+    // chunkFileNames: "[name].chunk.js",
   },
 
   plugins: [
@@ -44,38 +45,38 @@ const config = {
       runOnce: true,
     }),
 
-    copy({
-      targets: [
-        {
-          src: "views/**",
-          dest: "./dist/views",
-        },
-        {
-          src: "package.json",
-          dest: "./dist",
-          copyOnce: true,
-          transform(content) {
-            const pkg = JSON.parse(content.toString());
-            delete pkg.scripts;
-            delete pkg.devDependencies;
-            delete pkg.envars;
-            delete pkg.babel;
-            return JSON.stringify(pkg, null, "  ");
-          },
-        },
-        {
-          src: ["../.yarnrc.yml", "../yarn.lock"],
-          dest: "./dist",
-          copyOnce: true,
-        },
-        {
-          src: ["../.yarn/releases"],
-          dest: "./dist/.yarn",
-          copyOnce: true,
-        },
-      ],
-      copyOnce: true,
-    }),
+    // copy({
+    //   targets: [
+    //     {
+    //       src: "views/**",
+    //       dest: "./dist/views",
+    //     },
+    //     {
+    //       src: "package.json",
+    //       dest: "./dist",
+    //       copyOnce: true,
+    //       transform(content) {
+    //         const pkg = JSON.parse(content.toString());
+    //         delete pkg.scripts;
+    //         delete pkg.devDependencies;
+    //         delete pkg.envars;
+    //         delete pkg.babel;
+    //         return JSON.stringify(pkg, null, "  ");
+    //       },
+    //     },
+    //     {
+    //       src: ["../.yarnrc.yml", "../yarn.lock"],
+    //       dest: "./dist",
+    //       copyOnce: true,
+    //     },
+    //     {
+    //       src: ["../.yarn/releases"],
+    //       dest: "./dist/.yarn",
+    //       copyOnce: true,
+    //     },
+    //   ],
+    //   copyOnce: true,
+    // }),
 
     nodeResolve({
       extensions: [".ts", ".tsx", ".mjs", ".js", ".json", ".node"],
@@ -99,13 +100,14 @@ const config = {
       }),
 
     isWatch &&
-      run({
-        execArgv: [
-          "--require=../.pnp.cjs",
-          "--require=source-map-support/register",
-          "--no-warnings",
-        ],
-      }),
+      run(),
+      // {
+        // execArgv: [
+          // "--require=.pnp.cjs",
+          //"--require=source-map-support/register",
+          // "--no-warnings",
+        // ],
+      // }),
 
     !isWatch && {
       name: "yarn",
@@ -133,10 +135,10 @@ const config = {
     },
   ],
 
-  external: [...Object.keys(pkg.dependencies), /^node:/].filter(
-    // Bundle modules that do not properly support ES
-    (dep) => !["@sendgrid/mail", "http-errors"].includes(dep),
-  ),
+  // external: [...Object.keys(pkg.dependencies), /^node:/].filter(
+  //   // Bundle modules that do not properly support ES
+  //   (dep) => !["@sendgrid/mail", "http-errors"].includes(dep),
+  // ),
 
   // Suppress warnings in 3rd party libraries
   onwarn(warning, warn) {

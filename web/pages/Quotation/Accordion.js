@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import ArticleSelect from '../../components/FormInput/ArticleSelect';
 
 export const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
+  <MuiAccordion disableGutters elevation={ 0 } square { ...props } />
 ))(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   '&:before': {
@@ -21,7 +21,7 @@ export const Accordion = styled((props) => (
 
 export const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
-    {...props}
+    { ...props }
   />
 ))(({ theme }) => ({
   padding: 0,
@@ -32,7 +32,7 @@ export const AccordionSummary = styled((props) => (
   flexDirection: 'row-reverse',
   '& .MuiAccordionSummary-content': {
     margin: '0 1rem',
-    flex:1,
+    flex: 1,
   },
 }));
 
