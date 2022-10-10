@@ -2,14 +2,9 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import Alert from '@mui/material/Alert';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -55,7 +50,7 @@ function LoginForm() {
     login(customerId, email, password).then(() => {
       navigate('/home');
     }).catch((e) => {
-      console.log(e);
+      console.error(e);
       setError(e);
     });
   };

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Controller, useController } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 const Select = React.forwardRef(({
   multiple,
@@ -18,7 +16,6 @@ const Select = React.forwardRef(({
   ...rest
 }, ref) => {
   const [currentOption, setCurrentOption] = useState(null);
-  const { t } = useTranslation();
 
   const handleChange = (_, o) => {
     setCurrentOption(o);
@@ -58,6 +55,7 @@ const Select = React.forwardRef(({
           label={ label }
           helperText={ helperText }
           InputProps={ {
+            ...inputProps,
             required: false,
             ...params.InputProps,
           } }
@@ -77,6 +75,10 @@ Select.propTypes = {
   inputProps: PropTypes.object,
   multiple: PropTypes.bool,
   options: PropTypes.array,
+  value: PropTypes.any,
+  onChange: PropTypes.func,
+  helperText: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 export default Select;

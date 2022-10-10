@@ -4,8 +4,6 @@ import Paper from '@mui/material/Paper';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import CountrySelect from '../../components/FormInput/CountrySelect';
-import PostCode from '../../components/FormInput/PostCode';
 import { useApi } from '../../hooks/api';
 import BackingSection from './sections/Backing';
 import DeliverySection from './sections/Delivery';
@@ -49,9 +47,6 @@ function QuotationForm() {
   });
   const {
     handleSubmit,
-    control,
-    watch,
-    formState: { errors },
   } = form;
   const { api } = useApi();
 
@@ -60,18 +55,15 @@ function QuotationForm() {
   const onSubmit = async (data) => {
     try {
       const formatedData = data;
-      const r = await api.post('quotation', { json: formatedData }).json();
-      console.log('RES', r);
+      console.log(data);
+      await api.post('quotation', { json: formatedData }).json();
     } catch (e) {
-      console.error('ERR');
       console.error(e);
     }
   };
 
-
-  const watchPrintProcess = watch('printProcess');
-
   renderCount++;
+  console.log(renderCount);
 
   return (
     <Box

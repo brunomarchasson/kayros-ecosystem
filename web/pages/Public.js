@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function Public(props) {
+function Public() {
   return (
     <div>Public</div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Alert from '@mui/material/Alert';
 import { useTranslation } from 'react-i18next';
 import NumberInput from '../../../components/FormInput/NumberInput';
@@ -9,10 +10,7 @@ import { Row } from '../components/Row';
 
 function DescritionSection({ form }) {
   const {
-    handleSubmit,
     control,
-    watch,
-    formState: { errors },
   } = form;
   const { t } = useTranslation();
 
@@ -75,6 +73,8 @@ function DescritionSection({ form }) {
   );
 }
 
-DescritionSection.propTypes = {};
+DescritionSection.propTypes = {
+  form: PropTypes.object,
+};
 
 export default DescritionSection;

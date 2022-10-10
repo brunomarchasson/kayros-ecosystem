@@ -1,41 +1,38 @@
 import React from 'react';
-import Alert from '@mui/material/Alert';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Box, Stack } from '@mui/material';
-import NumberInput from '../../../components/FormInput/NumberInput';
-import TextInput from '../../../components/FormInput/TextInput';
-import InfoPopOver from '../../../components/InfoPopOver';
-import { Row } from '../components/Row';
-import LabelImage from '../components/LabelImage';
-import SelectInput from '../../../components/FormInput/SelectInput';
-import ArticleSelect from '../../../components/FormInput/ArticleSelect';
-import SelectColor from '../../../components/SelectColor';
-import GlidingSelect from '../components/GlidingSelect';
-import VarnishSelect from '../components/VarnishSelect';
-import LaminationSelect from '../components/LaminationSelect';
-import SwitchInput from '../../../components/FormInput/SwitchInput';
-import CountrySelect from '../../../components/FormInput/CountrySelect';
-import PostCode from '../../../components/FormInput/PostCode';
+import { useController } from 'react-hook-form';
+import { CountrySelect } from '../../../components/FormInput/CountrySelect';
+import { PostCode } from '../../../components/FormInput/PostCode';
 
 function DeliverySection({ form }) {
-  const {
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors },
-  } = form;
+  const { control } = form;
   const { t } = useTranslation();
-  const watchPrintProcess = watch('printProcess');
+
+  const { field: postcodeField } = useController({
+    name: 'postcode',
+    control,
+  });
+  const { field: countryField } = useController({
+    name: 'country',
+    control,
+  });
 
   return (
     <>
       <h2 id="delivery">{ t('quotation.titles.delivery') }</h2>
-      <CountrySelect label={ t('quotation.delivery.country') } />
-      <PostCode />
+      <CountrySelect
+        label={ t('quotation.delivery.country') }
+        { ...countryField }
+        onChange={ (_, o) => countryField.onChange(o) }
+      />
+      <PostCode { ...postcodeField } />
     </>
   );
 }
 
-DeliverySection.propTypes = {};
+DeliverySection.propTypes = {
+  form: PropTypes.object,
+};
 
 export default DeliverySection;

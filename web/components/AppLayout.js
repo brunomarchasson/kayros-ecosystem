@@ -89,7 +89,7 @@ function AppLayout(props) {
           <Box sx={ { display: { xs: 'none', sm: 'block' } } }>
             { navItems.map((item) => (
               <Button
-                key={ item }
+                key={ item.route }
                 component={ RouterLink }
                 to={ `/${item.route}` }
                 sx={ { color: '#fff' } }

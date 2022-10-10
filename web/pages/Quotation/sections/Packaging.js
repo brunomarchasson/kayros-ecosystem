@@ -1,8 +1,6 @@
-import Collapse from '@mui/material/Collapse';
 import React, { useState } from 'react';
-// import Accordion from '@mui/material/Accordion';
-// import AccordionSummary from '@mui/material/AccordionSummary';
-// import AccordionDetails from '@mui/material/AccordionDetails';
+import PropTypes from 'prop-types';
+import Collapse from '@mui/material/Collapse';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -15,10 +13,7 @@ import { Row } from '../components/Row';
 
 function PackagingSection({ form }) {
   const {
-    handleSubmit,
     control,
-    watch,
-    formState: { errors },
   } = form;
   const [packagingType, setPackagingType] = useState('Bo');
   const [winding, setWinding] = useState(0);
@@ -142,6 +137,8 @@ function PackagingSection({ form }) {
   );
 }
 
-PackagingSection.propTypes = {};
+PackagingSection.propTypes = {
+  form: PropTypes.object,
+};
 
 export default PackagingSection;

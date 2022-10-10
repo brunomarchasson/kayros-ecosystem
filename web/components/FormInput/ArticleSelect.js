@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Autocomplete } from '@mui/material';
-import TextField from '@mui/material/TextField';
-
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useApi } from '../../hooks/api';
 import SelectInput from './SelectInput';
 import Select from '../Select';
-
-
-
 
 
 const andFilters = (...fns) => (item) => fns.reduce((acc, cur) => acc && cur(item), item);
@@ -32,7 +27,7 @@ function ArticleSelect({ type, ...props }) {
   };
 
   useEffect(() => {
-    const filterFunc = Object.entries(filters).filter(([_, v]) => v).map(([k, v]) => (i) => i[k] === v);
+    const filterFunc = Object.entries(filters).filter(([, v]) => v).map(([k, v]) => (i) => i[k] === v);
     const p = andFilters(...filterFunc);
     const filtered = articles.filter((i) => p(i));
     setOptions(filtered.map(({ id: value, Designation: label }) => ({ value, label })));
@@ -65,7 +60,6 @@ function ArticleSelect({ type, ...props }) {
       .then(() => setLoading(false));
   }, [type]);
 
-  console.log(options);
   return (
     <>
       { renderFilters() }
@@ -74,6 +68,8 @@ function ArticleSelect({ type, ...props }) {
   );
 }
 
-ArticleSelect.propTypes = {};
+ArticleSelect.propTypes = {
+  type: PropTypes.string,
+};
 
 export default ArticleSelect;

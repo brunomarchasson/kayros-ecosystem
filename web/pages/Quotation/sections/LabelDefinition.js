@@ -1,10 +1,8 @@
 import React from 'react';
-import Alert from '@mui/material/Alert';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Box, Stack } from '@mui/material';
 import NumberInput from '../../../components/FormInput/NumberInput';
-import TextInput from '../../../components/FormInput/TextInput';
-import InfoPopOver from '../../../components/InfoPopOver';
 import { Row } from '../components/Row';
 import LabelImage from '../components/LabelImage';
 import SelectInput from '../../../components/FormInput/SelectInput';
@@ -12,10 +10,8 @@ import SelectInput from '../../../components/FormInput/SelectInput';
 
 function LabelDefinitionSection({ form }) {
   const {
-    handleSubmit,
     control,
     watch,
-    formState: { errors },
   } = form;
   const { t } = useTranslation();
   const watchShape = watch('shape');
@@ -73,6 +69,8 @@ function LabelDefinitionSection({ form }) {
   );
 }
 
-LabelDefinitionSection.propTypes = {};
+LabelDefinitionSection.propTypes = {
+  form: PropTypes.object,
+};
 
 export default LabelDefinitionSection;

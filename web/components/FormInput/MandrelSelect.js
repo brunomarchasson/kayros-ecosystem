@@ -14,7 +14,6 @@ function MandrelInput({ ...props }) {
       .get('article', { searchParams: { type: 'MAN' } })
       .json()
       .then((r) => {
-        console.log('r', r);
         setOptions(
           r.map(({ id: value, SousFamille: label }) => ({ value, label })),
         );

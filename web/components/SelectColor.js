@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useController, useForm } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import SelectInput from './FormInput/SelectInput';
 
@@ -43,6 +43,8 @@ function SelectColor({ process, ...rest }) {
   );
 }
 
-SelectColor.propTypes = {};
+SelectColor.propTypes = {
+  process: PropTypes.number,
+};
 
 export default SelectColor;

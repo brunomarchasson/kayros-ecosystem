@@ -1,17 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Radio from '@mui/material/Radio';
-import Collapse from '@mui/material/Collapse';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Input from '@mui/material/Input';
-import FormLabel from '@mui/material/FormLabel';
-// import Accordion from '@mui/material/Accordion';
-// import AccordionSummary from '@mui/material/AccordionSummary';
-// import AccordionDetails from '@mui/material/AccordionDetails';
-import { useController, useForm } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ArticleSelect from '../../../components/FormInput/ArticleSelect';
 import { Accordion, AccordionDetails, AccordionSummary } from './Accordion';
@@ -69,6 +58,9 @@ function GlidingSelect({ control, label }) {
   );
 }
 
-GlidingSelect.propTypes = {};
+GlidingSelect.propTypes = {
+  control: PropTypes.object,
+  label: PropTypes.string,
+};
 
 export default GlidingSelect;

@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import TextField from '@mui/material/TextField';
 
-function Home(props) {
+function Home() {
   return (
     <div>
       Home
