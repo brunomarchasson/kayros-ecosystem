@@ -5,11 +5,11 @@ import React, { useState } from 'react';
 // import AccordionDetails from '@mui/material/AccordionDetails';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useController } from 'react-hook-form';
-import ChuckInput from '../../components/FormInput/MandrelSelect';
+import MandrelInput from '../../components/FormInput/MandrelSelect';
 import NumberInput from '../../components/FormInput/NumberInput';
 import { OUTPUT_ICONS } from '../../components/FormInput/OutDirection/OutputIcon';
 import Radios from '../../components/Radios';
-import { Row } from './QuotationForm';
+import { Row } from './Row';
 
 
 function OutForm({ control }) {
@@ -65,43 +65,8 @@ function OutForm({ control }) {
           { value: 'Pa', label: 'paravents' },
         ] }
       />
-      { /* <Collapse
-        in={ packagingType === 'Bo' }
-        sx={ {
-          '& .MuiCollapse-wrapperInner': {
-            display: 'flex',
-            flexDirection: 'column',
-          },
-        } }
-      >
-        <Radios
-          label="winding"
-          value={ winding }
-          onChange={ handleChangeWinding }
-          options={ [
-            { value: 0, label: 'inner' },
-            { value: 1, label: 'external' },
-          ] }
-        />
-      </Collapse> */ }
-      { /* <ToggleButtonGroup
-        value={ direction }
-        size="large"
-        exclusive
-        sx={ { alignSelf: 'center' } }
-        onChange={ handleChangeDirection }
-      >
-        { OUTPUT_ICONS.filter((i) => i.type === packagingType && (packagingType == 'Pa' || i.winding === winding) && i.direction != null).map((B) => (
-          <ToggleButton value={ B.direction } sx={ { padding: 1 } }>
-            <B.icon sx={ { width: 100, height: 100 } } />
-          </ToggleButton>
-        )) }
-      </ToggleButtonGroup> */ }
       <Collapse
         sx={ {
-          // gap:1,
-          // display: 'flex',
-          // flexDirection: 'column',
           '& .MuiCollapse-wrapperInner': {
             display: 'flex',
             flexDirection: 'column',
@@ -129,7 +94,7 @@ function OutForm({ control }) {
           onChange={ handleChangeDirection }
         >
           { OUTPUT_ICONS.filter((i) => i.type === 'Bo' && i.winding === winding && i.direction != null).map((B) => (
-            <ToggleButton value={ B.direction } sx={ { padding: 1 } }>
+            <ToggleButton key={ B.direction } value={ B.direction } sx={ { padding: 1 } }>
               <B.icon sx={ { width: 100, height: 100 } } />
             </ToggleButton>
           )) }
@@ -139,7 +104,7 @@ function OutForm({ control }) {
           <NumberInput control={ control } name="quantityPerSpool" label="quantity per spool" />
           <NumberInput control={ control } name="maxDiameter" label="max diameter" />
         </Row>
-        <ChuckInput control={ control } name="chuckDiameter" label="chuck diameter" />
+        <MandrelInput control={ control } name="mandrel" label="mandrel" />
       </Collapse>
 
       <Collapse in={ packagingType === 'Pa' }>
@@ -151,11 +116,17 @@ function OutForm({ control }) {
           onChange={ handleChangeDirection }
         >
           { OUTPUT_ICONS.filter((i) => i.type === 'Pa' && i.direction != null).map((B) => (
-            <ToggleButton value={ B.direction } sx={ { padding: 1 } }>
+            <ToggleButton key={ B.direction } value={ B.direction } sx={ { padding: 1 } }>
               <B.icon sx={ { width: 100, height: 100 } } />
             </ToggleButton>
           )) }
         </ToggleButtonGroup>
+        <NumberInput control={ control } name="numberAbreast" label="number abreast" />
+
+        <NumberInput control={ control } name="labelPerfanfold" label="number labels per fanfolf" />
+
+        <NumberInput control={ control } name="fanfoldPerPack" label="number fanfold per pack" />
+
       </Collapse>
 
     </>

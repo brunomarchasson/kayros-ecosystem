@@ -5,7 +5,6 @@ import productSchema from '../../schemas/productSchema';
 const router = express.Router();
 
 export const getProduct = async (productCode) => {
-  console.log(productCode);
   return db.raw(
     `
   SELECT   Code_EAN+CodeEPSMA as eanCode, Désignation as name,Identifiant as id

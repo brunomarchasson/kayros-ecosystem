@@ -1,9 +1,8 @@
 import express from 'express';
-import token from './token';
 import params from './params.route';
 import roll from './rolls';
-import loginRoutes from './login';
 import articleRoutes from './article';
+import quotationRoutes from './quotation';
 import provider from './provider';
 import product from './product';
 import isAuthentified from '../middleware/authJWT';
@@ -11,10 +10,9 @@ import { apiExplorerRoutes, registerApi, schema } from '../apiExplorer';
 
 const router = express.Router();
 
-router.use('/login', loginRoutes);
-router.use('/token', token);
 router.use('/apiExplorer', apiExplorerRoutes);
-router.use('/article', articleRoutes);
+router.use('/article', [isAuthentified], articleRoutes);
+router.use('/quotation', [isAuthentified], quotationRoutes);
 router.use('/roll', [isAuthentified], roll);
 router.use('/provider', [isAuthentified], provider);
 router.use('/product', [isAuthentified], product);

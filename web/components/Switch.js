@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
@@ -9,28 +9,27 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-function Switch({ label, value, onChange }) {
-  return (
-    <FormControlLabel
-      // value=""
-      sx={{
+const Switch = React.forwardRef(({ label, value, onChange }, ref) => (
+  <FormControlLabel
+    // value=""
+    sx={ {
+      flex: 1,
+      marginLeft: 0,
+      '& .MuiFormControlLabel-label': {
         flex: 1,
-        marginLeft: 0,
-        '& .MuiFormControlLabel-label': {
-          flex: 1
-        }
-      }}
-      control={
-        <MuiSwitch
-          checked={value}
-          onChange={onChange}
-        />}
-      label={label}
-      labelPlacement="start"
-    />
-  )
-}
+      },
+    } }
+    control={ (
+      <MuiSwitch
+        checked={ value }
+        onChange={ onChange }
+      />
+    ) }
+    label={ label }
+    labelPlacement="start"
+  />
+));
 
-Switch.propTypes = {}
+Switch.propTypes = {};
 
-export default Switch
+export default Switch;

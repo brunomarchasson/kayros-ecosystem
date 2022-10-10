@@ -22,7 +22,7 @@ function TextInput({
           label={ label }
           required={ rules?.required }
           inputProps={ { required: false,
-          maxlength:rules?.maxLength} }
+          maxLength:rules?.maxLength} }
         />
       ) }
     />

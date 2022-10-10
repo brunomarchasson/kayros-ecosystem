@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import { useTranslation } from 'react-i18next';
 import { useApi } from '../../hooks/api';
 import SelectInput from './SelectInput';
+import Select from '../Select';
 
 
 const FILTERS = {
@@ -21,6 +22,7 @@ function ArticleSelect({ type, ...props }) {
   const [articles, setArticles] = useState([]);
   const [filters, setFilters] = useState({});
   const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { api } = useApi();
   const { t } = useTranslation();
 
@@ -38,37 +40,35 @@ function ArticleSelect({ type, ...props }) {
   const renderFilters = () => (FILTERS[type] ?? []).map((f) => {
     const o = [...new Set(articles.map((item) => item[f.key]))].map((l) => ({ value: l, label: l }));
     return (
-      <Autocomplete
+      <Select
+        key={ f.key }
         options={ o }
-        getOptionLabel={ (option) => option?.label ?? '' }
-        onChange={ (_, data) => handleFilterChange(f)(data) }
-        renderInput={ (params) => (
-          <TextField
-            { ...params }
-            label={ t(f.labelKey) }
-          />
-        ) }
+        value={ filters[f] ?? null }
+        onChange={ (data) => handleFilterChange(f)(data) }
+        label={ t(f.labelKey) }
       />
     );
   });
 
   useEffect(() => {
+    setLoading(true);
     api
       .get('article', { searchParams: { type } })
       .json()
       .then((r) => {
-        console.log(r);
         setArticles(r);
         setOptions(
-          r.map(({ id: value, Designation: label }) => ({ value, label })),
+          r.map(({ id: value, Designation: label }) => ({ id: value, value, label })),
         );
-      });
+      })
+      .then(() => setLoading(false));
   }, [type]);
 
+  console.log(options);
   return (
     <>
       { renderFilters() }
-      <SelectInput { ...props } options={ options } />
+      <SelectInput { ...props } loading={ loading } options={ options } />
     </>
   );
 }

@@ -53,3 +53,53 @@
 // *     {
 // *       "error": "NoAccessRight"
 // *     }
+
+import express from 'express';
+import { registerApi, schema } from '../../apiExplorer';
+import {quotationSchema, quotationResultSchema} from '../../schemas/quotationSchema';
+import quotationControler from '../../controller/quotation.controller';
+
+const router = express.Router();
+
+registerApi(
+  {
+    router,
+    route: '/',
+    method: 'get',
+    description: 'gat all articles',
+    params: schema().object({
+      type: schema().string().description('article Type'),
+      extra: schema().boolean().description('include extra data'),
+      date: schema().string().description('last sync date'),
+    }),
+    returns: schema().array(quotationSchema),
+  },
+  quotationControler.getAll
+);
+registerApi(
+  {
+    router,
+    route: '/:id',
+    method: 'get',
+    description: 'get article',
+    params: schema().object({
+      id: schema().number().description('articleId'),
+      extra: schema().boolean().description('include extra data'),
+    }),
+    returns: quotationSchema,
+  },
+  quotationControler.get
+);
+registerApi(
+  {
+    router,
+    route: '/',
+    method: 'post',
+    description: 'create quotation',
+    params: quotationSchema,
+    returns: quotationResultSchema,
+  },
+  quotationControler.post
+);
+
+export default router;

@@ -2,20 +2,22 @@ import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { childrenProps } from '../proptypes';
 import { useApi } from './api';
+import config from '../config';
 
 const authContext = React.createContext();
 
 export function AuthProvider({ children }) {
   const [authed, setAuthed] = React.useState(null);
   const [user, setUser] = useState({});
-  const { api, setJWT } = useApi();
+  const { api,apiId,  setJWT } = useApi();
   const { i18n } = useTranslation();
   React.useEffect(() => {
     const existingToken = localStorage.getItem('token');
     if (existingToken) {
       // setJWT(existingToken)
       api
-        .get('login', {
+        .get('token', {
+          prefixUrl: `${config.api.origin}/${apiId}/auth/`,
           headers: {
             'x-access-token': existingToken,
           },
@@ -37,7 +39,9 @@ export function AuthProvider({ children }) {
   }, [api]);
 
   const login = (customerId, email, password) => api
-    .post('login', { json: {customerId, email, password } })
+    .post('token', {
+      prefixUrl: `${config.api.origin}/${apiId}/auth/`,
+      json: {customerId, email, password } })
     .json()
     .then((res) => {
       localStorage.setItem('token', res.token);

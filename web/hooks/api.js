@@ -49,6 +49,7 @@ export function ApiProvider({ children, apiId }) {
         JWT,
         setJWT,
         api,
+        apiId,
         setNetworkError,
       } }
     >

@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Controller } from 'react-hook-form';
+import { Controller, useController } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
 import { formatErrorMessage } from './errors';
+import Select from '../Select';
 
 function SelectInput({
   control,
@@ -13,40 +14,54 @@ function SelectInput({
   label,
   rules,
   defaultValue = null,
+  loading,
   inputProps,
 }) {
+  // const [currentOption, setCurrentOption] = useState(null);
+  // console.log(name, currentOption);
+  // const {
+  //   field,
+  //   fieldState,
+  // } = useController({
+  //   name,
+  //   control,
+  //   rules,
+  //   defaultValue,
+  // });
+
+  // if (name === 'shape') console.log(field.value, currentOption);
+  // const handleChange = (_, o) => {
+  //   setCurrentOption(o);
+  // };
+
+  // useEffect(() => {
+  //   field.onChange(currentOption?.value);
+  // }, [currentOption]);
+
+  // useEffect(() => {
+  //   setCurrentOption(options.find((o) => o.value === field.value) ?? null);
+  // }, [field.value]);
+
+
   return (
+
     <Controller
       control={ control }
       name={ name }
       rules={ rules }
       defaultValue={ defaultValue }
-      render={ ({ field: { ref, onChange, ...field }, fieldState }) => (
-        <Autocomplete
+      render={ ({ field, fieldState }) => (
+        <Select
+          loading={loading }
+          { ...field }
+          error={ fieldState.error }
+          helperText={ formatErrorMessage(label, field, fieldState) }
+          label={ label }
+          required={ rules?.required }
           multiple={ multiple }
           options={ options }
           defaultValue={ defaultValue ?? null }
-          getOptionLabel={ (option) => option?.label ?? '' }
-          isOptionEqualToValue={ (o, v) => o.value === v.value }
-          onChange={ (_, data) => onChange(data) }
-          value={ field.value }
           autoSelect
-          renderInput={ (params) => (
-            <TextField
-              { ...field }
-              { ...params }
-              inputRef={ ref }
-              label={ label }
-              required={ rules?.required }
-              error={ fieldState.error }
-              helperText={ formatErrorMessage(label, field, fieldState) }
-              InputProps={ {
-                required: false,
-                ...params.InputProps,
-              } }
-            />
-          ) }
-          { ...inputProps }
         />
       ) }
     />

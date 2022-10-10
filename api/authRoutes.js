@@ -2,6 +2,7 @@ import express from 'express';
 import { registerApi, schema } from './apiExplorer';
 import tokenController from './controller/tokenController';
 import { credentialSchema } from './schemas/credentialsSchema';
+import isAuthentified from './middleware/authJWT';
 
 const router = express.Router();
 
@@ -11,11 +12,8 @@ registerApi(
     route: '/token',
     method: 'get',
     description: 'renew token',
-    params: schema().object({
-      user: schema().string().required().description('Account'),
-      password: schema().string().required().description('Account password'),
-    }),
     returns: credentialSchema,
+    middleware: [isAuthentified],
   },
   tokenController.get
 );

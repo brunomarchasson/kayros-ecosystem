@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Alert from '@mui/material/Alert';
 import { useForm } from 'react-hook-form';
+import { Api } from '@mui/icons-material';
 import ArticleSelect from '../../components/FormInput/ArticleSelect';
 import NumberInput from '../../components/FormInput/NumberInput';
 import OutputDirection from '../../components/FormInput/OutDirection/OutputDirection';
@@ -21,28 +22,39 @@ import Switch from '../../components/Switch';
 import SwitchInput from '../../components/FormInput/SwitchInput';
 import RadioInput from '../../components/FormInput/RadioInput';
 import OutForm from './OutForm';
+import PostCode from '../../components/FormInput/PostCode';
+import { Row } from './Row';
+import CountrySelect from '../../components/FormInput/CountrySelect';
+import { useApi } from '../../hooks/api';
 
 let renderCount = 0;
 
-const objOptions = [
-  { value: 65, label: 'A' },
-  { value: 66, label: 'B' },
-  { value: 67, label: 'C' },
-];
-
-export function Row(p) {
-  return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      gap={ 1 }
-      sx={ {
-        '& >*': { flex: 1 },
-      } }
-      { ...p }
-    />
-  );
-}
+const defaultValues = {
+  label: 'grte',
+  reference: 'aa',
+  quantyty1: '100000',
+  references: '1',
+  shape: 1,
+  width: '100',
+  backing: 114,
+  printProcess: 103,
+  print: '3P',
+  varnish: 19749,
+  mandrel: 11649,
+  gliddingType: '801',
+  blackSpot: true,
+  perforation: true,
+  numberAbreast: '1',
+  quantityPerSpool: '100',
+  maxDiameter: '100',
+  height: '100',
+  winding: 1,
+  output: 1,
+  packagingType: 'Bo',
+  labelPerfanfold: '10',
+  fanfoldPerPack: '10',
+  lamination: 577,
+};
 function QuotationForm() {
   // const {stepsRef} = useContext(QuotationContext)
   const {
@@ -50,9 +62,26 @@ function QuotationForm() {
     control,
     watch,
     formState: { errors },
-  } = useForm();
+
+  } = useForm({
+    defaultValues,
+  });
+  const { api } = useApi();
+
   const { t } = useTranslation();
-  const onSubmit = (data) => console.log('DATA', data);
+
+  const onSubmit = async (data) => {
+    console.log('DATA', data);
+    try {
+      const formatedData = data;
+      const r = await api.post('quotation', { json: formatedData }).json();
+      console.log('RES', r);
+    } catch (e) {
+      console.error('ERR');
+      console.error(e);
+    }
+  };
+
   const watchShape = watch('shape');
   const watchWidth = watch('width');
   const watchHeight = watch('height');
@@ -104,7 +133,6 @@ function QuotationForm() {
             rules={ {
               maxLength: 50,
             } }
-
             label="reference"
           />
         </Row>
@@ -167,9 +195,9 @@ function QuotationForm() {
                   required: true,
                 } }
                 name="width"
-                label={ watchShape?.value === 0 ? 'diameter' : 'width' }
+                label={ watchShape === 0 ? 'diameter' : 'width' }
               />
-              { watchShape?.value !== 0 && (
+              { watchShape !== 0 && (
                 <NumberInput
                   control={ control }
                   rules={ {
@@ -232,19 +260,12 @@ function QuotationForm() {
           label="perforation"
         />
 
-        <h2 id="finish">finish</h2>
+        <h2 id="packaging">finish</h2>
         <OutForm control={ control } watch={ watch } />
-        <Row>
-          {/* <OutputDirection
-            control={ control }
-            name="out"
-            rules={ {
-              required: true,
-            } }
-          /> */}
-        </Row>
-        <h2 id="packaging">packaging</h2>
 
+        <h2 id="delivery">packaging</h2>
+        <CountrySelect />
+        <PostCode />
         <Button type="submit">Submit</Button>
       </Paper>
       { /* </form> */ }

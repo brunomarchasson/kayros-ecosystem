@@ -9,7 +9,9 @@ class UserRepository extends RepositoryBase {
 
   format(dbData) {
     if (!dbData) return null
+    console.log(dbData)
     return {
+      "idOrganisation": dbData.Code_Société,
       "type": dbData.Type_Ident_F,
       "ident": dbData.Ident,
       "rangCorr": dbData.Rang_Corr,
@@ -19,14 +21,13 @@ class UserRepository extends RepositoryBase {
   }
 
   async get(type, ident, rang) {
-    console.log(type, ident, rang)
     const r = await db
-    .request()
-    .input('type', sql.Char, type)
-    .input('ident', sql.Int, ident)
-    .input('rang', sql.Int, rang)
+      .request()
+      .input('type', sql.Char, type)
+      .input('ident', sql.Int, ident)
+      .input('rang', sql.Int, rang)
       .query(
-        `SELECT C.Type_Ident_F, C.Ident, C.Rang_Corr, M.Adr_E_Mail
+        `SELECT C.Code_Société, C.Type_Ident_F, C.Ident, C.Rang_Corr, M.Adr_E_Mail
     FROM FMAIL_DCT M
     LEFT JOIN F_CORRES_DCT C ON C.TYPE_IDENT_F = M.TYPE_IDENT_F AND C.IDENT= M.IDENT AND C.Rang_Corr  =M.Indice
     LEFT JOIN FMAIL_DCT_APPLICATIONS A ON A.Code_Société = C.Code_Société AND A.Type_Ident_F = C.Type_Ident_F AND A.Ident = C.Ident AND A.Rang_Corr = C.Rang_Corr
@@ -47,12 +48,12 @@ class UserRepository extends RepositoryBase {
       return res.status(400).json({ error: "bad credentials" });
     }
     const r = await db
-    .request()
-    .input('ident', sql.Int, customerId)
-    .input('email', sql.VarChar, email)
-    .input('pwd', sql.VarChar, password)
+      .request()
+      .input('ident', sql.Int, customerId)
+      .input('email', sql.VarChar, email)
+      .input('pwd', sql.VarChar, password)
       .query(
-        `SELECT C.Type_Ident_F, C.Ident, C.Rang_Corr, M.Adr_E_Mail
+        `SELECT C.Code_Société, C.Type_Ident_F, C.Ident, C.Rang_Corr, M.Adr_E_Mail
   FROM FMAIL_DCT M
   LEFT JOIN F_CORRES_DCT C ON C.Code_Société = M.Code_Société AND C.TYPE_IDENT_F = M.TYPE_IDENT_F AND C.IDENT= M.IDENT AND C.Rang_Corr  =M.Indice
   LEFT JOIN FMAIL_DCT_APPLICATIONS A ON A.Code_Société = C.Code_Société AND A.Type_Ident_F = C.Type_Ident_F AND A.Ident = C.Ident AND A.Rang_Corr = C.Rang_Corr
@@ -60,7 +61,6 @@ class UserRepository extends RepositoryBase {
       )
       .then((r) => r.recordset[0])
       .catch(console.error)
-    console.log(r)
     return this.format(r)
 
   }

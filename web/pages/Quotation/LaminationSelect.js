@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
@@ -13,35 +13,32 @@ import Switch from '../../components/Switch';
 
 
 function LaminationSelect({ control }) {
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(false);
   const handleChange = (event, checked) => {
     setChecked(checked ?? event.target.checked);
   };
   return (
-    <Accordion expanded={checked}
-     >
-      <AccordionSummary
-      >
-       <Switch
-          value={checked}
+    <Accordion expanded={ checked }>
+      <AccordionSummary>
+        <Switch
+          value={ checked }
           label="lamination"
-          onChange={handleChange}
+          onChange={ handleChange }
         />
 
       </AccordionSummary>
       <AccordionDetails>
         <ArticleSelect
-          type={"PEL"}
-          control={control}
+          type="PEL"
+          control={ control }
           name="lamination"
           label="lamination"
         />
       </AccordionDetails>
     </Accordion>
   );
-
 }
 
-LaminationSelect.propTypes = {}
+LaminationSelect.propTypes = {};
 
-export default LaminationSelect
+export default LaminationSelect;

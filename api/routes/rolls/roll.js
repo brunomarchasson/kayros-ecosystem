@@ -113,7 +113,6 @@ registerApi(
     if (!roll) {
       return res.status(404).end();
     }
-    console.log(data)
     if (data.length >= roll.length) {
 
       await db.raw(

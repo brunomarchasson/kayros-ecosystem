@@ -26,14 +26,16 @@ function SelectColor({ process, ...rest }) {
     control: rest.control,
   });
 
+  console.log('process', process, PROCESS_OPTIONS[process])
   useEffect(() => {
-    if (!(PROCESS_OPTIONS[process?.value] ?? []).find((o) => o.value === field?.value?.value)) {
+    if (!(PROCESS_OPTIONS[process] ?? []).find((o) => o.value === field?.value)) {
       field.onChange(null);
     }
   }, [process]);
   return (
     <SelectInput
-      options={ PROCESS_OPTIONS[process?.value] || [] }
+      options={ PROCESS_OPTIONS[process] || [] }
+      value = {field.value}
       { ...rest }
     />
   );
