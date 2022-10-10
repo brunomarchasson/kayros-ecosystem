@@ -1,0 +1,44 @@
+{
+  "login": {
+    "translated-text": "C'est du français"
+  },
+  "login-error": "",
+  "quotation": {
+    "packaging": {
+      "abrease": ""
+    },
+    "perforatoin": "",
+    "printOptoins": {
+      "1P": "",
+      "2P": "",
+      "3P": "",
+      "4P": "",
+      "4Q": "",
+      "4Q+B": "",
+      "6H": "",
+      "6H+B": ""
+    },
+    "printOptoins1P": "",
+    "printOptoins2P": "",
+    "printOptoins3P": "",
+    "printOptoins4P": "",
+    "printOptoins4Q": "",
+    "printOptoins4Q+B": "",
+    "printOptoins6H": "",
+    "printOptoins6H+B": "",
+    "printProcess": {
+      "digital": "",
+      "flexo": ""
+    }
+  },
+  "quotations": {
+    "packaging": {
+      "labelsPerFanFold": ""
+    }
+  },
+  "quotayion": {
+    "packaging": {
+      "qtyPerSpool": ""
+    }
+  }
+}

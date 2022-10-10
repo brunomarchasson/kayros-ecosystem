@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
-import ArticleSelect from '../../components/FormInput/ArticleSelect';
+import ArticleSelect from '../../../components/FormInput/ArticleSelect';
 
 export const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={ 0 } square { ...props } />

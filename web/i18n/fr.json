@@ -1,13 +1,95 @@
 {
-  "login": {
-      "title": "Connexion",
-      "translated-text": "C'est du français"
+  "articles": {
+    "fam": "famille",
+    "sfam": "sous-famille"
   },
+  "city": "ville",
   "form-error-required": "le champ '{{ fieldName }}' est obligatoire",
+  "login": {
+    "customer_id": "numéro client",
+    "email": "email",
+    "login-error": "erreur de connexion",
+    "password": "mot de passe",
+    "title": "connexion"
+  },
+  "menu": {
+    "home": "Accueil",
+    "quotation": "Devis"
+  },
+  "postcode": "code postal",
   "quotation": {
-    "help": "Votre demande de devis sera chiffrée pour la quantité totale renseignée qui pourra être répartie en plusieurs références (modèles différents de même format).",
     "alert": "Attention: Pour toute demande spécifique, (telle que étiquette avec coupe mi-chair, en planches, en bande continue ...) votre demande de chiffrage doit être directement faite auprès du service commercial",
+    "backing": "support",
+    "blackSpot": "spot",
+    "computeButton": "calculer",
+    "delivery": {
+      "country": "pays"
+    },
+    "diameter": "diamètre",
+    "glidding": "dorrure",
+    "gliddings": {
+      "cold": "à froid",
+      "hot": "à chaud",
+      "none": "aucune"
+    },
+    "height": "avance",
+    "help": "Votre demande de devis sera chiffrée pour la quantité totale renseignée qui pourra être répartie en plusieurs références (modèles différents de même format).",
+    "label": "désignation",
+    "lamination": "pelliculage",
+    "packaging": {
+      "abreast": "nombre de front",
+      "fanFoldsPerPack": "paravents par paquet",
+      "labelsPerFanFold": "étiquettes par paravent",
+      "mandrelDiameter": "diamètre du mandrin",
+      "maxDiameter": "diamètre maxi",
+      "qtyPerSpool": "étiquettes par rouleau",
+      "winding": "sens de sortie",
+      "windings": {
+        "external": "exterieur",
+        "inner": "interieur"
+      }
+    },
+    "packagingType": "type",
+    "packagingTypes": {
+      "bo": "bobineaux",
+      "pa": "paravents"
+    },
+    "perforation": "perforation",
+    "print": "impression",
+    "printOptions": {
+      "1P": "1 couleur Pantone",
+      "2P": "2 couleurs Pantone",
+      "3P": "3 couleurs Pantone",
+      "4P": "4 couleurs Pantone",
+      "4Q": "4 couleurs Quadri",
+      "4Q+B": "4 couleurs Quadri + un blanc couvrant",
+      "6H": "6 couleurs Hexa",
+      "6H+B": "6 couleurs Hexa + un blanc couvrant"
+    },
+    "printProcess": "process",
+    "printProcesses": {
+      "digital": "numérique",
+      "flexo": "fléxo UV"
+    },
     "quantity": "Quantité totale à deviser",
-    "references": "Nombre de références"
+    "reference": "référence",
+    "references": "Nombre de références",
+    "shape": "forme",
+    "titles": {
+      "backing": "support",
+      "delivery": "livraison",
+      "labelDefinition": "définition de l'étiquette",
+      "packaging": "conditionnement",
+      "print": "impression",
+      "start": "demande de prix"
+    },
+    "varnish": "vernis",
+    "width": "laize"
+  },
+  "shape": {
+    "oval": "ovale",
+    "rectangle": "rectangle",
+    "round": "ronde",
+    "special": "Spéciale"
   }
 }

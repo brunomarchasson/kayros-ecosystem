@@ -39,7 +39,6 @@ function AppRoutes() {
   return (
     <Routes>
       { /* <Route path="/login" element={<Login />} /> */ }
-      <Route path="/home" element={ <Home /> } />
       <Route
         path="/quotation"
         element={ (
@@ -48,6 +47,7 @@ function AppRoutes() {
           </RequireAuth>
         ) }
       />
+      <Route path="/home" element={ <Home /> } />
       <Route
         path="/"
         element={ (

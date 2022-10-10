@@ -5,17 +5,25 @@ import React, { useState } from 'react';
 // import AccordionDetails from '@mui/material/AccordionDetails';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useController } from 'react-hook-form';
-import MandrelInput from '../../components/FormInput/MandrelSelect';
-import NumberInput from '../../components/FormInput/NumberInput';
-import { OUTPUT_ICONS } from '../../components/FormInput/OutDirection/OutputIcon';
-import Radios from '../../components/Radios';
-import { Row } from './Row';
+import { useTranslation } from 'react-i18next';
+import MandrelInput from '../../../components/FormInput/MandrelSelect';
+import NumberInput from '../../../components/FormInput/NumberInput';
+import { OUTPUT_ICONS } from '../../../components/FormInput/OutDirection/OutputIcon';
+import Radios from '../../../components/Radios';
+import { Row } from '../components/Row';
 
 
-function OutForm({ control }) {
+function PackagingSection({ form }) {
+  const {
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+  } = form;
   const [packagingType, setPackagingType] = useState('Bo');
   const [winding, setWinding] = useState(0);
   const [direction, setDirection] = useState(0);
+  const { t } = useTranslation();
 
   const {
     field: windingField,
@@ -56,13 +64,14 @@ function OutForm({ control }) {
 
   return (
     <>
+      <h2 id="packaging">{ t('quotation.titles.packaging') }</h2>
       <Radios
-        label="condType"
+        label={ t('quotation.packagingType') }
         value={ packagingType }
         onChange={ handleChangePackagingType }
         options={ [
-          { value: 'Bo', label: 'rouleaux' },
-          { value: 'Pa', label: 'paravents' },
+          { value: 'Bo', label: t('quotation.packagingTypes.bo') },
+          { value: 'Pa', label: t('quotation.packagingTypes.pa') },
         ] }
       />
       <Collapse
@@ -78,12 +87,12 @@ function OutForm({ control }) {
       >
 
         <Radios
-          label="winding"
+          label={ t('quotation.packaging.winding') }
           value={ winding }
           onChange={ handleChangeWinding }
           options={ [
-            { value: 0, label: 'inner' },
-            { value: 1, label: 'external' },
+            { value: 0, label: t('quotation.packaging.windings.inner') },
+            { value: 1, label: t('quotation.packaging.windings.external') },
           ] }
         />
         <ToggleButtonGroup
@@ -99,12 +108,12 @@ function OutForm({ control }) {
             </ToggleButton>
           )) }
         </ToggleButtonGroup>
-        <NumberInput control={ control } name="numberAbreast" label="number abreast" />
+        <NumberInput control={ control } name="numberAbreast" label={ t('quotation.packaging.abreast') } />
         <Row>
-          <NumberInput control={ control } name="quantityPerSpool" label="quantity per spool" />
-          <NumberInput control={ control } name="maxDiameter" label="max diameter" />
+          <NumberInput control={ control } name="quantityPerSpool" label={ t('quotation.packaging.qtyPerSpool') } />
+          <NumberInput control={ control } name="maxDiameter" label={ t('quotation.packaging.maxDiameter') } />
         </Row>
-        <MandrelInput control={ control } name="mandrel" label="mandrel" />
+        <MandrelInput control={ control } name="mandrel" label={ t('quotation.packaging.mandrelDiameter') } />
       </Collapse>
 
       <Collapse in={ packagingType === 'Pa' }>
@@ -121,11 +130,11 @@ function OutForm({ control }) {
             </ToggleButton>
           )) }
         </ToggleButtonGroup>
-        <NumberInput control={ control } name="numberAbreast" label="number abreast" />
+        <NumberInput control={ control } name="numberAbreast" label={ t('quotation.packaging.abreast') } />
 
-        <NumberInput control={ control } name="labelPerfanfold" label="number labels per fanfolf" />
+        <NumberInput control={ control } name="labelPerfanfold" label={ t('quotation.packaging.labelsPerFanFold') } />
 
-        <NumberInput control={ control } name="fanfoldPerPack" label="number fanfold per pack" />
+        <NumberInput control={ control } name="fanfoldPerPack" label={ t('quotation.packaging.fanFoldsPerPack') } />
 
       </Collapse>
 
@@ -133,6 +142,6 @@ function OutForm({ control }) {
   );
 }
 
-OutForm.propTypes = {};
+PackagingSection.propTypes = {};
 
-export default OutForm;
+export default PackagingSection;

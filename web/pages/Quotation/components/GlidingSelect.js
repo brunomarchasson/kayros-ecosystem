@@ -12,14 +12,15 @@ import FormLabel from '@mui/material/FormLabel';
 // import AccordionSummary from '@mui/material/AccordionSummary';
 // import AccordionDetails from '@mui/material/AccordionDetails';
 import { useController, useForm } from 'react-hook-form';
-import ArticleSelect from '../../components/FormInput/ArticleSelect';
+import { useTranslation } from 'react-i18next';
+import ArticleSelect from '../../../components/FormInput/ArticleSelect';
 import { Accordion, AccordionDetails, AccordionSummary } from './Accordion';
-import Radios from '../../components/Radios';
+import Radios from '../../../components/Radios';
 
 
-function GlidingSelect({ control }) {
+function GlidingSelect({ control, label }) {
   const [value, setValue] = useState('');
-
+  const { t } = useTranslation();
   const {
     field,
   } = useController({
@@ -46,13 +47,13 @@ function GlidingSelect({ control }) {
         id="panel1bh-header"
       >
         <Radios
-          label="glidding"
+          label={ label }
           onChange={ handleChange }
           value={ value }
           options={ [
-            { value: '', label: 'Aucune ' },
-            { value: 801, label: 'à froid ' },
-            { value: 802, label: 'à chaud ' },
+            { value: '', label: t('quotation.gliddings.none') },
+            { value: 801, label: t('quotation.gliddings.cold') },
+            { value: 802, label: t('quotation.gliddings.hot') },
           ] }
         />
       </AccordionSummary>
@@ -61,7 +62,7 @@ function GlidingSelect({ control }) {
           type={ value === 801 ? 'DORF' : 'DORC' }
           control={ control }
           name="glidding"
-          label="glidding"
+          label={ label }
         />
       </AccordionDetails>
     </Accordion>

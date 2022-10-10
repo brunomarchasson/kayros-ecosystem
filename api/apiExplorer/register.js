@@ -1,3 +1,4 @@
+const { nextDay } = require('date-fns');
 const util = require('util');
 const validateSchemaMW = require('./middleWare');
 const ValidationError = require('./SchemaGenerators/ValidationError');
@@ -26,7 +27,7 @@ const registerApi = (
     return null;
   };
 
-  const handler = (req, res) => inputHandler(
+  const handler = (req, res, next) => inputHandler(
     req,
     res,
   )
@@ -37,7 +38,7 @@ const registerApi = (
         req,
         res,
         // (data) => resultHandler(req, res, data),
-      )},
+      ).catch(e => next(e))},
     );
 
   const s = router[method](

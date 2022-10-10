@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Controller, useController } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import { Autocomplete } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const Select = React.forwardRef(({
   multiple,
@@ -17,8 +18,7 @@ const Select = React.forwardRef(({
   ...rest
 }, ref) => {
   const [currentOption, setCurrentOption] = useState(null);
-
-  if(label === "mandrel") console.log('mandrel',loading, options, value)
+  const { t } = useTranslation();
 
   const handleChange = (_, o) => {
     setCurrentOption(o);
@@ -29,19 +29,16 @@ const Select = React.forwardRef(({
   }, [currentOption]);
 
   useEffect(() => {
-    if(!loading){
-      console.log('value', value, options)
+    if (!loading) {
       setCurrentOption(options.find((o) => o.value === value) ?? null);
     }
-  }, [value, loading ]);
-
-  if(label === "mandrel") console.log('currentOption', currentOption)
+  }, [value, loading]);
 
   return (
     <Autocomplete
       // ref={ ref }
       multiple={ multiple }
-      loading={loading}
+      loading={ loading }
       options={ options }
       defaultValue={ defaultValue ?? null }
       getOptionLabel={ (option) => option?.label ?? '' }
@@ -51,14 +48,13 @@ const Select = React.forwardRef(({
       autoSelect
       renderOption={ (props, option) => (
         <li { ...props } key={ option.value }>
-          { option.label }
+          { option?.label }
         </li>
       ) }
       renderInput={ (params) => (
         <TextField
           { ...params }
           inputRef={ ref }
-
           label={ label }
           helperText={ helperText }
           InputProps={ {

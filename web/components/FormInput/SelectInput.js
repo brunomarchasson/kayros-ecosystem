@@ -17,31 +17,6 @@ function SelectInput({
   loading,
   inputProps,
 }) {
-  // const [currentOption, setCurrentOption] = useState(null);
-  // console.log(name, currentOption);
-  // const {
-  //   field,
-  //   fieldState,
-  // } = useController({
-  //   name,
-  //   control,
-  //   rules,
-  //   defaultValue,
-  // });
-
-  // if (name === 'shape') console.log(field.value, currentOption);
-  // const handleChange = (_, o) => {
-  //   setCurrentOption(o);
-  // };
-
-  // useEffect(() => {
-  //   field.onChange(currentOption?.value);
-  // }, [currentOption]);
-
-  // useEffect(() => {
-  //   setCurrentOption(options.find((o) => o.value === field.value) ?? null);
-  // }, [field.value]);
-
 
   return (
 

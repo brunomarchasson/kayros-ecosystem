@@ -8,12 +8,7 @@ import SelectInput from './SelectInput';
 import Select from '../Select';
 
 
-const FILTERS = {
-  SUP: [
-    { labelKey: 'articles.fam', key: 'Famille' },
-    { labelKey: 'articles.sfam', key: 'SousFamille' },
-  ],
-};
+
 
 
 const andFilters = (...fns) => (item) => fns.reduce((acc, cur) => acc && cur(item), item);
@@ -26,8 +21,14 @@ function ArticleSelect({ type, ...props }) {
   const { api } = useApi();
   const { t } = useTranslation();
 
+  const FILTERS = {
+    SUP: [
+      { label: t('articles.fam'), key: 'Famille' },
+      { label: t('articles.sfam'), key: 'SousFamille' },
+    ],
+  };
   const handleFilterChange = (f) => (v) => {
-    setFilters((cur) => ({ ...cur, [f.key]: v?.value }));
+    setFilters((cur) => ({ ...cur, [f.key]: v }));
   };
 
   useEffect(() => {
@@ -45,7 +46,7 @@ function ArticleSelect({ type, ...props }) {
         options={ o }
         value={ filters[f] ?? null }
         onChange={ (data) => handleFilterChange(f)(data) }
-        label={ t(f.labelKey) }
+        label={ f.label }
       />
     );
   });

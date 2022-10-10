@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Autocomplete, Box, TextField } from '@mui/material';
 import ky from 'ky';
+import { useTranslation } from 'react-i18next';
 import useDebounceEffect from '../../hooks/useDebounceEffect';
 import Select from '../Select';
 
@@ -10,6 +11,7 @@ function PostCode(props) {
   const [cities, setCities] = useState([]);
   const [city, setCity] = useState('');
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   useDebounceEffect(() => {
     setLoading(true);
@@ -21,25 +23,24 @@ function PostCode(props) {
   }, 300, [postcode]);
 
   useEffect(() => {
-    console.log(cities)
+    console.log(cities);
     setCity(cities[0]?.value);
   }, [cities]);
-  console.log('city', city)
-  console.log(cities, city)
   return (
     <Box>
 
-      <TextField onChange={ (event) => setPostcode(event.target.value) } value={ postcode } />
+      <TextField onChange={ (event) => setPostcode(event.target.value) } value={ postcode } label={ t('postcode') } />
       <Select
         options={ cities }
-        onChange={ ( data) => {
-          setCity(data)} }
+        onChange={ (data) => {
+          setCity(data);
+        } }
         value={ city }
         loading={ loading }
         disableClearable
-        label="city"
+        label={ t('city') }
       />
-      {/* <Autocomplete
+      { /* <Autocomplete
         getOptionLabel={ (option) => option?.label ?? '' }
         isOptionEqualToValue={ (o, v) => o.value === v.value }
         // autoSelect
@@ -53,7 +54,7 @@ function PostCode(props) {
             } }
           />
         ) }
-      /> */}
+      /> */ }
     </Box>
   );
 }

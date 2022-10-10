@@ -26,7 +26,7 @@ i18n
   .init({
     resources,
     lng: defaultLanguage,
-
+    returnEmptyString: false,
     keySeparator: '.', // to support nested translations
 
     interpolation: {

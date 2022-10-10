@@ -7,22 +7,22 @@ import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
-import ArticleSelect from '../../components/FormInput/ArticleSelect';
+import ArticleSelect from '../../../components/FormInput/ArticleSelect';
 import { Accordion, AccordionDetails, AccordionSummary } from './Accordion';
-import Switch from '../../components/Switch';
+import Switch from '../../../components/Switch';
 
 
-function LaminationSelect({ control }) {
+function LaminationSelect({ control, label }) {
   const [checked, setChecked] = useState(false);
-  const handleChange = (event, checked) => {
-    setChecked(checked ?? event.target.checked);
+  const handleChange = (event, c) => {
+    setChecked(c ?? event.target.checked);
   };
   return (
     <Accordion expanded={ checked }>
       <AccordionSummary>
         <Switch
           value={ checked }
-          label="lamination"
+          label={ label }
           onChange={ handleChange }
         />
 
@@ -32,7 +32,7 @@ function LaminationSelect({ control }) {
           type="PEL"
           control={ control }
           name="lamination"
-          label="lamination"
+          label={ label }
         />
       </AccordionDetails>
     </Accordion>

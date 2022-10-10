@@ -22,19 +22,19 @@ function Headings({ headings, activeId }) {
     >
       { headings.map((heading) => (
         <Step key={ heading.id }>
-          <StepButton color="inherit">
-            <a
-              href={ `#${heading.id}` }
-              onClick={ (e) => {
-                e.preventDefault();
-                document.querySelector(`#${heading.id}`).scrollIntoView({
-                  behavior: 'smooth',
-                });
-              } }
-            >
+          <a
+            href={ `#${heading.id}` }
+            onClick={ (e) => {
+              e.preventDefault();
+              document.querySelector(`#${heading.id}`).scrollIntoView({
+                behavior: 'smooth',
+              });
+            } }
+          >
+            <StepButton color="inherit">
               { heading.title }
-            </a>
-          </StepButton>
+            </StepButton>
+          </a>
         </Step>
       )) }
     </Stepper>

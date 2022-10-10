@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 function Shape({
   shape, width, height, r,
@@ -65,8 +66,9 @@ Shape.propTypes = {
 };
 
 function LabelImage({ shape = 2 }) {
+  const { t } = useTranslation();
   const h = 120;
-  const w = shape?.value === 0 ? 120 : 180;
+  const w = shape === 0 ? 120 : 180;
   const r = 5;
   return (
     <svg
@@ -99,7 +101,7 @@ function LabelImage({ shape = 2 }) {
           <polyline points="0 0,10 3.5, 0 7" stroke="#000" />
         </marker>
       </defs>
-      <Shape shape={ shape?.value } width={ w } height={ h } r={ r } />
+      <Shape shape={ shape } width={ w } height={ h } r={ r } />
       <line
         x1="-5"
         y1="0"
@@ -110,7 +112,7 @@ function LabelImage({ shape = 2 }) {
         markerStart="url(#startarrow)"
       />
       <text x="-10" y={ h / 2 } dy="5" textAnchor="end" fill="#000">
-        height
+        { t('quotation.height') }
       </text>
       <line
         x1="0"
@@ -122,7 +124,7 @@ function LabelImage({ shape = 2 }) {
         markerStart="url(#startarrow)"
       />
       <text x={ w / 2 } y={ h + 10 } dy="10" textAnchor="middle" fill="#000">
-        width
+        { t('quotation.width') }
       </text>
     </svg>
   );

@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function Public(props) {
   return (
     <div>Public</div>
-  )
+  );
 }
 
-Public.propTypes = {}
+Public.propTypes = {};
 
-export default Public
+export default Public;

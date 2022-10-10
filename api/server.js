@@ -13,6 +13,14 @@ app.use('/auth', authRoutes);
 app.get('/hello', (req, resp) => {
     return resp.send('HELLO WORLD FROM API!');
 })
-
+app.use((err, req, res, next) => {
+  console.error("ERROR FROM MM")
+  console.error("ERROR FROM MM")
+  console.error("ERROR FROM MM")
+  console.error("ERROR FROM MM")
+  console.error("ERROR FROM MM")
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
 export default app
 

@@ -44,7 +44,6 @@ function LoginForm() {
   const [customerId, setCustomerId] = useState('');
   const { t } = useTranslation();
   const [password, setPassword] = useState('');
-  // const [pageIndex, setPageIndex] = useState(0);
   const loginRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
@@ -90,7 +89,7 @@ function LoginForm() {
             value={ customerId }
             placeholder="..."
             fullWidth
-            label="customer_id"
+            label={ t('login.customer_id') }
             autoCorrect="off"
             autoCapitalize="off"
             onChange={ ({ target: { value } }) => setCustomerId(value) }
@@ -103,7 +102,7 @@ function LoginForm() {
             value={ email }
             placeholder="..."
             fullWidth
-            label="your_email"
+            label={ t('login.email') }
             autoCorrect="off"
             autoCapitalize="off"
             onChange={ ({ target: { value } }) => setEmail(value) }
@@ -114,7 +113,7 @@ function LoginForm() {
             id="password"
             type="password"
             fullWidth
-            label="your_password"
+            label={ t('login.password') }
             value={ password }
             onChange={ ({ target: { value } }) => setPassword(value) }
           />
@@ -126,7 +125,7 @@ function LoginForm() {
           </RoundButton>
         </DialogActions>
         <Collapse in={ error } sx={ { marginTop: 2 } }>
-          <Alert severity="error">erreur de connexion</Alert>
+          <Alert severity="error">{ t('login.login-error') }</Alert>
         </Collapse>
       </form>
     </Dialog>
