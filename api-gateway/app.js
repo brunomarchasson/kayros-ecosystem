@@ -23,15 +23,16 @@ const customRouter = function (req) {
 };
 
 const options = {
-  target: 'http://localhost:8000',
+  target: 'http://xxx:8000',
   router: customRouter,
+  changeOrigin: true,
   on: {proxyReq: function onProxyReq(proxyReq, req, res) {
     // add custom header to request
     proxyReq.setHeader('x-access-token', req.headers['x-access-token'])
 
   }},
   pathRewrite: {
-    '^\/[^\/]*/' : '' //remove /ApiId
+    '^\/[^\/]*/' : '/' //remove /ApiId
   }
 };
 
