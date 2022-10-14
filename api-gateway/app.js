@@ -1,9 +1,10 @@
-import  express from 'express'
-import  cors from 'cors'
-import  helmet from 'helmet'
-import  {setupLogging} from "./logging"
-import  apiConfig from './apiConfig'
-import  { createProxyMiddleware } from 'http-proxy-middleware';
+// use strict
+const express = require ( 'express');
+const cors = require ( 'cors');
+const helmet = require ( 'helmet');
+const {setupLogging} = require ( "./logging");
+const apiConfig = require ( './apiConfig');
+const { createProxyMiddleware } =require ('http-proxy-middleware');
 
 const app = express()
 const port = 3001;
