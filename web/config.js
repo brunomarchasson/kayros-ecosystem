@@ -13,7 +13,7 @@ const config = {
   },
   api: {
     origin: `${process.env.API_ORIGIN}`,
-  }
+  },
 };
-
+console.log('config', config);
 export default config;
