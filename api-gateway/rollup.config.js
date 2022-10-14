@@ -34,7 +34,7 @@ const config = {
 
   output: {
     dir: "./dist",
-    format: "cjs",
+    format: "es",
     // sourcemap: true,
     // chunkFileNames: "[name].chunk.js",
   },
