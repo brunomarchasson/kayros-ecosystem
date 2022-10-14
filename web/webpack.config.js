@@ -237,9 +237,7 @@ module.exports = function config(env, options) {
         envVars.reduce(
           (acc, name) => ({
             ...acc,
-            [`process.env.${name}`]: isEnvProduction
-              ? `window.env.${name}`
-              : JSON.stringify(process.env[name]),
+            [`process.env.${name}`]: JSON.stringify(process.env[name]),
           }),
           {},
         ),
