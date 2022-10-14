@@ -2,14 +2,9 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import Alert from '@mui/material/Alert';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -44,7 +39,6 @@ function LoginForm() {
   const [customerId, setCustomerId] = useState('');
   const { t } = useTranslation();
   const [password, setPassword] = useState('');
-  // const [pageIndex, setPageIndex] = useState(0);
   const loginRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
@@ -56,7 +50,7 @@ function LoginForm() {
     login(customerId, email, password).then(() => {
       navigate('/home');
     }).catch((e) => {
-      console.log(e);
+      console.error(e);
       setError(e);
     });
   };
@@ -90,7 +84,7 @@ function LoginForm() {
             value={ customerId }
             placeholder="..."
             fullWidth
-            label="customer_id"
+            label={ t('login.customer_id') }
             autoCorrect="off"
             autoCapitalize="off"
             onChange={ ({ target: { value } }) => setCustomerId(value) }
@@ -103,7 +97,7 @@ function LoginForm() {
             value={ email }
             placeholder="..."
             fullWidth
-            label="your_email"
+            label={ t('login.email') }
             autoCorrect="off"
             autoCapitalize="off"
             onChange={ ({ target: { value } }) => setEmail(value) }
@@ -114,7 +108,7 @@ function LoginForm() {
             id="password"
             type="password"
             fullWidth
-            label="your_password"
+            label={ t('login.password') }
             value={ password }
             onChange={ ({ target: { value } }) => setPassword(value) }
           />
@@ -126,7 +120,7 @@ function LoginForm() {
           </RoundButton>
         </DialogActions>
         <Collapse in={ error } sx={ { marginTop: 2 } }>
-          <Alert severity="error">erreur de connexion</Alert>
+          <Alert severity="error">{ t('login.login-error') }</Alert>
         </Collapse>
       </form>
     </Dialog>

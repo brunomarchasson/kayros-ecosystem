@@ -14,11 +14,11 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import * as React from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import { childrenProps } from '../proptypes';
 
 const drawerWidth = 240;
-const navItems = ['home', 'quotation'];
 
 
 function ListItemLink(props) {
@@ -34,6 +34,8 @@ function AppLayout(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { logout } = useAuth();
+  const { t } = useTranslation();
+  const navItems = [{ route: 'home', label: t('menu.home') }, { route: 'quotation', label: t('menu.quotation') }];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -49,7 +51,7 @@ function AppLayout(props) {
       <Divider />
       <List>
         { navItems.map((item) => (
-          <ListItemLink key={ item } to={ `/${item}` } primary={ item } />
+          <ListItemLink key={ item.route } to={ `/${item.route}` } primary={ item } />
         )) }
       </List>
     </Box>
@@ -87,12 +89,12 @@ function AppLayout(props) {
           <Box sx={ { display: { xs: 'none', sm: 'block' } } }>
             { navItems.map((item) => (
               <Button
-                key={ item }
+                key={ item.route }
                 component={ RouterLink }
-                to={ `/${item}` }
+                to={ `/${item.route}` }
                 sx={ { color: '#fff' } }
               >
-                { item }
+                { item.label }
               </Button>
             )) }
           </Box>

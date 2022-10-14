@@ -1,6 +1,95 @@
 {
+  "articles": {
+    "fam": "",
+    "sfam": ""
+  },
+  "city": "",
+  "form-error-required": "",
   "login": {
-    "title": "login",
-    "translated-text": "C'est du français"
-}
+    "customer_id": "",
+    "email": "",
+    "login-error": "",
+    "password": "",
+    "title": "login"
+  },
+  "menu": {
+    "home": "",
+    "quotation": ""
+  },
+  "postcode": "",
+  "quotation": {
+    "alert": "",
+    "backing": "",
+    "blackSpot": "",
+    "computeButton": "",
+    "delivery": {
+      "country": ""
+    },
+    "diameter": "",
+    "glidding": "",
+    "gliddings": {
+      "cold": "",
+      "hot": "",
+      "none": ""
+    },
+    "height": "",
+    "help": "",
+    "label": "",
+    "lamination": "",
+    "packaging": {
+      "abreast": "",
+      "fanFoldsPerPack": "",
+      "labelsPerFanFold": "",
+      "mandrelDiameter": "",
+      "maxDiameter": "",
+      "qtyPerSpool": "",
+      "winding": "",
+      "windings": {
+        "external": "",
+        "inner": ""
+      }
+    },
+    "packagingType": "",
+    "packagingTypes": {
+      "bo": "",
+      "pa": ""
+    },
+    "perforation": "",
+    "print": "",
+    "printOptions": {
+      "1P": "",
+      "2P": "",
+      "3P": "",
+      "4P": "",
+      "4Q": "",
+      "4Q+B": "",
+      "6H": "",
+      "6H+B": ""
+    },
+    "printProcess": "",
+    "printProcesses": {
+      "digital": "",
+      "flexo": ""
+    },
+    "quantity": "",
+    "reference": "",
+    "references": "",
+    "shape": "",
+    "titles": {
+      "backing": "",
+      "delivery": "",
+      "labelDefinition": "",
+      "packaging": "",
+      "print": "",
+      "start": ""
+    },
+    "varnish": "",
+    "width": ""
+  },
+  "shape": {
+    "oval": "",
+    "rectangle": "",
+    "round": "",
+    "special": ""
+  }
 }

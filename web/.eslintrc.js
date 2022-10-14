@@ -25,6 +25,7 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
     curly: ['error', 'multi-line'],
     indent: [
       'error',

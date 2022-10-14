@@ -126,7 +126,7 @@ describe("token Controller", function () {
     });
     it("should return 400 if user not exists current user", async () => {
       const res = mockResponse();
-      db.raw.mockResolvedValue([]);
+      db.query.mockResolvedValue([]);
 
       await tokenControler.get(req, res);
       expect(res._status).toBe(400);

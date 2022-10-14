@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import FormControlLabel from '@mui/material/FormControlLabel';
-import ArticleSelect from '../../components/FormInput/ArticleSelect';
 
 export const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={ 0 } square { ...props } />

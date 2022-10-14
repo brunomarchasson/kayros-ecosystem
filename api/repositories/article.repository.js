@@ -45,7 +45,7 @@ class ArticleRepository extends RepositoryBase {
       `
       )
       .then((r) => r.recordset.map(this.format))
-      .catch(console.error)
+      // .catch(console.error)
 
     return r
   }

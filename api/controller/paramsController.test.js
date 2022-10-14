@@ -21,9 +21,9 @@ describe("param Controller", function () {
     it("should return params", async () => {
       const res = mockResponse();
 
-      db.raw.mockResolvedValue([])
-      .mockResolvedValueOnce([gpaoParams])
-      .mockResolvedValueOnce([socParams]);
+      db.query.mockResolvedValue({recordset: []})
+      .mockResolvedValueOnce({recordset: [gpaoParams]})
+      .mockResolvedValueOnce({recordset: [socParams]});
 
       await paramControler.get(null, res);
 

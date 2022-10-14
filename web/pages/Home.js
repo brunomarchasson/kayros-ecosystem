@@ -1,15 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import TextField from '@mui/material/TextField';
-function Home(props) {
+import React from 'react';
+
+function Home() {
   return (
-    <div>Home
-    <TextField></TextField>
-    <TextField></TextField>
+    <div>
+      Home
     </div>
-  )
+  );
 }
 
-Home.propTypes = {}
+Home.propTypes = {};
 
-export default Home
+export default Home;

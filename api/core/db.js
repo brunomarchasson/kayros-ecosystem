@@ -3,9 +3,10 @@ import chalk from "chalk";
 import sql from 'mssql';
 import sqlConfig from "./dbConfig";
 
-sql.on('error', err => {
-  console.error(err);
-})
+// sql.on('error', err => {
+//   console.error(err);
+//   throw err;
+// })
 
 
 const db = await sql.connect(sqlConfig).then(p => {
