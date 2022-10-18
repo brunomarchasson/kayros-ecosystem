@@ -1,20 +1,29 @@
 import db from "../core/db";
 import sql from 'mssql'
+import path from 'path'
 import RepositoryBase from "./repositoryBase";
 
 import { exec } from "child_process";
 import util from 'util';
+import { throws } from "assert";
 
 const Pexec = util.promisify(exec);
 
 async function calDev(id) {
   try {
-
-    const { stdout, stderr } = await Pexec('pwd');
+    console.log('id', id)
+    const cmd = path.resolve('bin/Calcul_Dev.exe') + ' "' + id + '"'
+    console.log(cmd)
+    const { stdout, stderr } = await Pexec(cmd, { cwd: path.resolve('bin') });
     console.log('stdout:', stdout);
     console.log('stderr:', stderr);
+    console.log(stdout)
+    if (stdout !== "ok") {
+      throw new Error(stderr)
+    }
   } catch (e) {
     console.error(e); // should contain code (exit code) and signal (that caused the termination).
+    throw e
   }
 }
 
@@ -25,14 +34,14 @@ const getArticleSupplier = (id) => {
     .then(r => r.recordset[0].Ident)
 }
 
-const getQuotationId = async (id) => {
+const getQuotationId = async (id, { transaction }) => {
   if (id) {
-    return db.request()
+    return db.request(transaction)
       .input('id', sql.Int, id)
-      .query('SELECT coalesce(MAX(Ind_Devis),0)+1 as index FROM FDC_DEVIS WHERE Code_Devis = @id')
+      .query('SELECT coalesce(MAX(Ind_Devis),0)+1 as index FROM FDC_DEVIS  WHERE Code_Devis = @id')
       .then((r) => ({ id, index: r.recordset[0].index }))
   }
-  return db.query('SELECT coalesce(MAX(Code_Devis),0)+1 as id FROM FDC_DEVIS')
+  return db.request(transaction).query('SELECT coalesce(MAX(Code_Devis),0)+1 as id FROM FDC_DEVIS')
     .then(r => ({ id: r.recordset[0].id, index: 0 }))
 }
 
@@ -48,7 +57,7 @@ const insert = async (data, { transaction }) => {
       console.log('q=>', q)
       return req.query(q)
     })
-    )
+  )
 }
 
 const upsert = async (obj, { transaction }) => {
@@ -67,7 +76,7 @@ const upsert = async (obj, { transaction }) => {
       BEGIN TRAN
         UPDATE ${tableName} WITH (UPDLOCK, SERIALIZABLE)
          SET ${Object.keys(data).map(name => `${name} = @${name}`).join(', ')}
-       WHERE ${Object.keys(key).map(name => `${name} = @${name}`).join(' AND ')} }
+       WHERE ${Object.keys(key).map(name => `${name} = @${name}`).join(' AND ')}
 
       IF (@@ROWCOUNT = 0)
       BEGIN
@@ -75,11 +84,11 @@ const upsert = async (obj, { transaction }) => {
       END
       COMMIT
       `;
-      console.log('q =>' ,q)
+      console.log('q =>', q)
       return req.query(q)
 
     })
-    )
+  )
 }
 class QuotationRepository extends RepositoryBase {
   constructor() {
@@ -101,12 +110,13 @@ class QuotationRepository extends RepositoryBase {
     const transaction = new sql.Transaction()
 
     await transaction.begin()
+    console.log('BEGIN')
+    const { id, index } = await getQuotationId(data.basisId, {transaction})
+    const newId = `${id} / ${index}`
     try {
 
 
 
-      const { id, index } = await getQuotationId(data.basisId)
-      const newId = `${id} / ${index}`
 
       console.log('------------------------------------------------------')
       console.log(newId)
@@ -131,23 +141,18 @@ class QuotationRepository extends RepositoryBase {
           Devis_en_Ligne: 1
         }
       }, { transaction })
-      console.log('rr')
       const columns = await db.request(transaction).query(`
 SELECT CAST(A.name AS VARCHAR) AS colName FROM SYSCOLUMNS A WITH(NOLOCK)
         LEFT JOIN SYSOBJECTS B ON B.[id] = A.[id] WHERE B.[name] = 'K_13' ORDER BY A.colid
 
-`).then(r => r.recordset.map(({colName})=> colName))
-console.log('cols', columns)
-const q =`INSERT INTO K_13 SELECT ${columns.map(c => c === 'Identifiant' ? `'${newId}'` : c).join(', ')} FROM K_13 WHERE Identifiant = @basisId`
-console.log(q)
-console.log(data.basisId)
+`).then(r => r.recordset.map(({ colName }) => colName))
+      const q = `INSERT INTO K_13 SELECT ${columns.map(c => c === 'Identifiant' ? `'${newId}'` : c).join(', ')} FROM K_13 WHERE Identifiant = @basisId`
 
       //insert K13 from default
       await db.request(transaction)
-      .input('basisId', data.basisId ?? '1')
-      .query(`INSERT INTO K_13 SELECT ${columns.map(c => c === 'Identifiant' ? `'${newId}'` : c).join(', ')} FROM K_13 WHERE Identifiant = @basisId`)
+        .input('basisId', data.basisId ?? '1')
+        .query(`INSERT INTO K_13 SELECT ${columns.map(c => c === 'Identifiant' ? `'${newId}'` : c).join(', ')} FROM K_13 WHERE Identifiant = @basisId`)
 
-console.log('po')
       await upsert({
         K_13: {
           key: { identifiant: newId },
@@ -167,7 +172,7 @@ console.log('po')
             DEV_NvPelli: 0,
             DEV_CondType: data.packagingType,
             DEV_CondEtiqFront: data.numberAbreast,
-            DEV_DiamMandrin: data.mandrelDiameter,
+            DEV_DiamMandrin: data.mandrelDiameter ?? 76,
             DEV_CondEtiqFeuil: data.labelPerfanfold,
             DEV_CondPlaPqt: data.fanfoldPerPack,
             DEV_CondEtiqPqt: data.fanfoldPerPack,
@@ -177,14 +182,13 @@ console.log('po')
             DEV_CondSensSortie: data.output,
             DEV_PaysLivr: data.country,
             DEV_CPLivr: data.postcode,
-            DEV_NbLivraison : 1,
+            DEV_NbLivraison: 1,
             DEV_GammePF: 'NC',
             ... (data.lamination && ({ DEV_PresPelli: 1, DEV_PelliFilm: data.lamination, DEV_FouPelliFilm: await getArticleSupplier(data.lamination) })),
             ... (data.perforation && ({ DEV_AutresDecoupes: 1, DEV_PresPerfo: 1, DEV_NbPerfo: 1, DEV_NbEtiqEntrePerfo: 1 })),
           }
         }
       }, { transaction })
-      console.log('ss')
       const dataType = {
         '4Q': [{ DEV_Nbre: 4, DEV_Type: 0 }],
         '1P': [{ DEV_Nbre: 1, DEV_Type: 2 }],
@@ -196,11 +200,11 @@ console.log('po')
         '6H+B': [{ DEV_Nbre: 6, DEV_Type: 1 }, { DEV_Nbre: 1, DEV_Type: 10 }],
       }
       if (data.print) {
-        await Promise.all((dataType[data.print] || []).forEach((printRow, i) => {
+        await Promise.all((dataType[data.print] || []).map((printRow, i) => {
           insert({
             K_13_Couleurs: {
               Identifiant: newId,
-              indice: i,
+              DEV_indice: i,
               DEV_PQ: data.printProcess,
               DEV_Face: 0,
               DEV_Couv: 100,
@@ -216,7 +220,7 @@ console.log('po')
       if (data.varnish) await insert({
         K_13_Couleurs: {
           Identifiant: newId,
-          indice: 2,
+          DEV_indice: 2,
           DEV_PQ: 103,
           DEV_Type: 6,
           DEV_Matière: data.varnish,
@@ -232,8 +236,8 @@ console.log('po')
       if (data.gliddingType) await insert({
         K_13_Couleurs: {
           Identifiant: newId,
-          indice: 3,
-          DEV_PQ: data.gliddingType,
+          DEV_indice: 3,
+          DEV_PQ: data.gliddingType === 'DORF' ? 801 : 802,
           DEV_Type: 8,
           DEV_Matière: data.gliding,
           DEV_Face: 0,
@@ -248,7 +252,7 @@ console.log('po')
       if (data.blackSpot) await insert({
         K_13_Couleurs: {
           Identifiant: newId,
-          indice: 4,
+          DEV_indice: 4,
           DEV_PQ: 103,
           DEV_Type: 4,
           DEV_Face: 0,
@@ -263,42 +267,51 @@ console.log('po')
 
 
       await transaction.commit()
+    console.log('COMMIT')
+
     } catch (e) {
       console.error(e)
+    console.log('BEGIN')
+
       await transaction.rollback()
+      throw e;
     }
-    await calDev()
-    //exec CalDev
+    await calDev(newId)
 
-    //read K_13_SOL_PQN
 
-    // read FDC_DEVIS_RES
+    const realQuantities = await db.request()
+      .input('id', newId)
+      .query('SELECT N, max(DEV_NbEtiqFab) as NbEtiqFab FROM K_13_SOL_PQN where Identifiant = @id GROUP BY N order by N')
+      .then((r) => (r.recordset.map(q => parseFloat(q.NbEtiqFab, 10))))
 
-    //read K_13_FraisDev
+    const prices = await db.request()
+      .input('id', newId)
+      .query('SELECT * FROM FDC_DEVIS_RES WHERE Identifiant = @id')
+      .then((r) => (r.recordset.map((q, idx) => {
+        const p = realQuantities[idx] ? Math.round(parseFloat(q.DEV_PV, 10) / (realQuantities[idx] / 1000) *100)/100: null;
+        return ({
+        quantity: realQuantities[idx],
+        pricePerThousand: p,
+      })})))
 
-    const r = await db
-      .request()
-      .input('type', sql.Char, type)
-      .input('id', sql.Int, id)
-      .query(
-        `SELECT distinct  case when Pelli = 1 then 'PEL' else COALESCE(SF.TYPE_ARTICLE,F.TYPE_ARTICLE,G.TYPE_ARTICLE) end  as TypeArticle,
-        A.SEQ_ARTICLE as id, A.DESIGNATION , F.Famille, SF.Sous_Famille,TYPE_MAJ, DATE_MAJ
-        FROM TAB_ARTICLES A
-        LEFT JOIN FDCT_ARTICLES fa on fa.Type_Ident_F ='T' and fa.Séq_Article = A.SEQ_ARTICLE
-        LEFT JOIN TAB_GAM_ARTICLES G   ON G.CODE_GAMME= A.GAMME
-      LEFT JOIN TAB_FAM_ARTICLES F  ON F.CODE_GAMME = A.GAMME AND F.CODE_FAMILLE = A.FAMILLE
-      LEFT JOIN TAB_SFAM_ART SF  ON SF.CODE_GAMME = A.GAMME AND SF.CODE_FAMILLE = A.FAMILLE AND SF.CODE_SOUS_FAMILLE=  A.SOUS_FAMILLE
-      LEFT JOIN K_30 K30  ON K30.Identifiant = concat(cast(A.SEQ_ARTICLE as VARCHAR(50)) , '.',cast(fa.Ident  as VARCHAR(50)) )
-      LEFT JOIN TAB_WEB_ARTICLES W  ON W.SEQ_ARTICLE = A.SEQ_ARTICLE
-      WHERE
-      (@type is null or ( case when Pelli = 1 then 'PEL' else COALESCE(SF.TYPE_ARTICLE,F.TYPE_ARTICLE,G.TYPE_ARTICLE) end = @type))
-      AND VISIBLE_WEB = 1
-      `
-      )
-      .then((r) => r.recordset.map(this.format))
-      .catch(console.error)
 
-    return r
+
+    const additionalCosts = await db.request()
+      .input('id', newId)
+      .query('SELECT * FROM K_13_FraisDev F LEFT JOIN TAB_FRAIS_SUP S ON S.CODE_Frais = F.DEV_CODEFrais WHERE Identifiant = @id AND DEV_Inc = 0')
+      .then(r => r.recordset.map(c => ({
+        label: c.DESIGNATION,
+        quantity: parseFloat(c.DEV_QteV, 10),
+        unitPrice: parseFloat(c.DEV_PUV, 10),
+      })))
+
+
+    return {
+      id: newId,
+      prices,
+      additionalCosts
+    }
+
   }
 
   async getById(id) {

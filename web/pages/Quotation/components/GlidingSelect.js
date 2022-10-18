@@ -8,7 +8,7 @@ import Radios from '../../../components/Radios';
 
 
 function GlidingSelect({ control, label }) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(0);
   const { t } = useTranslation();
   const {
     field,
@@ -23,7 +23,7 @@ function GlidingSelect({ control, label }) {
     control,
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event, r) => {
     setValue(event.target.value);
     field.onChange(event.target.value);
     gliddingField.onChange(null);
@@ -41,8 +41,8 @@ function GlidingSelect({ control, label }) {
           value={ value }
           options={ [
             { value: '', label: t('quotation.gliddings.none') },
-            { value: 801, label: t('quotation.gliddings.cold') },
-            { value: 802, label: t('quotation.gliddings.hot') },
+            { value: 'DORC', label: t('quotation.gliddings.cold') },
+            { value: 'DORF', label: t('quotation.gliddings.hot') },
           ] }
         />
       </AccordionSummary>

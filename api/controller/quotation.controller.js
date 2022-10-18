@@ -11,7 +11,7 @@ const get = async (req, res, next) => {
 };
 
 const post = async (req, res, next) => {
-  console.log('sdqsd', req.currentUser, req.data)
+  req.setTimeout(0)
   const r  = await repository.quotation.create(req.data)
   res.sendResult(r);
 };

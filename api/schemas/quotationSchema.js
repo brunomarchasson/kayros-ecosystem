@@ -24,7 +24,7 @@ export const quotationSchema = schema().object({
   '4Q+B',
   '6H+B',
   ]),
-  gliddingType: schema().number().oneOf([801,802]).description('801: cold foil, 802:hot foil' ),
+  gliddingType: schema().string().oneOf(['', 'DORC','DORF']).description('DORF: cold foil, DORC:hot foil' ),
   glidding: schema().number(),
   varnish: schema().number(),
   lamination: schema().number(),
@@ -46,9 +46,9 @@ export const quotationSchema = schema().object({
 });
 
 export const quotationResultSchema = schema().object({
-  id: schema().number(),
+  id: schema().string(),
   index: schema().number(),
-  pices: schema().array(schema().object({
+  prices: schema().array(schema().object({
     quantity: schema().number(),
     pricePerThousand: schema().number(),
   })),

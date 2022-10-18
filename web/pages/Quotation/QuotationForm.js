@@ -1,10 +1,12 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import ActionFeedback from '../../components/ActionFeedback';
 import { useApi } from '../../hooks/api';
+import QuotationResult from './QuotationResult';
 import BackingSection from './sections/Backing';
 import DeliverySection from './sections/Delivery';
 import DescritionSection from './sections/Description';
@@ -19,16 +21,12 @@ const defaultValues = {
   reference: 'aa',
   quantyty1: '100000',
   references: '1',
-  shape: 1,
+  shape: 2,
   width: '100',
   backing: 114,
   printProcess: 103,
   print: '3P',
-  varnish: 19749,
   mandrel: 11649,
-  gliddingType: '801',
-  blackSpot: true,
-  perforation: true,
   numberAbreast: '1',
   quantityPerSpool: '100',
   maxDiameter: '100',
@@ -42,6 +40,8 @@ const defaultValues = {
 };
 function QuotationForm() {
   // const {stepsRef} = useContext(QuotationContext)
+  const [promise, setPromise] = useState();
+
   const form = useForm({
     defaultValues,
   });
@@ -56,7 +56,9 @@ function QuotationForm() {
     try {
       const formatedData = data;
       console.log(data);
-      await api.post('quotation', { json: formatedData }).json();
+      console.log("aaaaa");
+      // await api.post('quotation', { json: formatedData }).json();
+      setPromise(() => () => api.post('quotation', { json: formatedData, timeout: false }).json());
     } catch (e) {
       console.error(e);
     }
@@ -99,6 +101,9 @@ function QuotationForm() {
 
         <Button type="submit">{ t('quotation.computeButton') }</Button>
       </Paper>
+      <ActionFeedback promise={ promise } onClose={ () => setPromise(null) }>
+        <QuotationResult onClose={ () => setPromise(null) } />
+      </ActionFeedback>
       { /* </form> */ }
     </Box>
   );

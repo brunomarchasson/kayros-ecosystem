@@ -157,6 +157,17 @@ module.exports = function config(env, options) {
           use: ['@svgr/webpack'],
         },
         {
+          test: /\.css$/i,
+          use: ['style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                modules: true,
+              },
+            }],
+        },
+        {
           oneOf: [
             // TODO: Merge this config once `image/avif` is in the mime-db
             // https://github.com/jshttp/mime-db
