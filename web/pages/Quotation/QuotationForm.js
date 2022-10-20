@@ -1,3 +1,6 @@
+import {
+  Backdrop, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -5,6 +8,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ActionFeedback from '../../components/ActionFeedback';
+import Loader from '../../components/Loader';
 import { useApi } from '../../hooks/api';
 import QuotationResult from './QuotationResult';
 import BackingSection from './sections/Backing';
@@ -40,8 +44,10 @@ const defaultValues = {
 };
 function QuotationForm() {
   // const {stepsRef} = useContext(QuotationContext)
-  const [promise, setPromise] = useState();
-
+  // const [promise, setPromise] = useState();
+  const [result, setResult] = useState();
+  const [computing, setComputing] = useState(false);
+  const [computeError, setComputeError] = useState();
   const form = useForm({
     defaultValues,
   });
@@ -55,10 +61,30 @@ function QuotationForm() {
   const onSubmit = async (data) => {
     try {
       const formatedData = data;
-      console.log(data);
-      console.log("aaaaa");
-      // await api.post('quotation', { json: formatedData }).json();
-      setPromise(() => () => api.post('quotation', { json: formatedData, timeout: false }).json());
+      // const promise = api.post('quotation', { json: formatedData, timeout: false }).json()
+      const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          console.log('rr-');
+          resolve({
+            id: '123 / 0',
+            prices: [{
+              quantity: 12000,
+              pricePerThousand: 12.2,
+            },
+            ],
+            additionalCosts: [
+              { label: 'aaa', quantity: 1, unitPrice: 24.8 },
+              { label: 'bbb', quantity: 2, unitPrice: 30 },
+            ],
+          });
+        }, 3000);
+      });
+      setComputeError(null);
+      setResult(null);
+      setComputing(true);
+      console.log(promise);
+      promise.then(setResult).catch(setComputeError).finally(() => setComputing(false));
+      // setPromise(() => () => api.post('quotation', { json: formatedData, timeout: false }).json());
     } catch (e) {
       console.error(e);
     }
@@ -101,10 +127,42 @@ function QuotationForm() {
 
         <Button type="submit">{ t('quotation.computeButton') }</Button>
       </Paper>
-      <ActionFeedback promise={ promise } onClose={ () => setPromise(null) }>
+
+      { /* <ActionFeedback promise={ promise } onClose={ () => setPromise(null) }>
         <QuotationResult onClose={ () => setPromise(null) } />
-      </ActionFeedback>
+      </ActionFeedback> */ }
       { /* </form> */ }
+      <Backdrop
+        sx={ { color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 } }
+        open={ computing }
+        // onClick={ handleClose }
+      >
+        <Loader />
+      </Backdrop>
+      <Dialog
+        maxWidth="lg"
+        open={ !!(result && !computing) }
+        // onClose={}
+        // aria-labelledby="alert-dialog-title"
+        // aria-describedby="alert-dialog-description"
+      >
+        <QuotationResult result={ result } onClose={ () => setResult(null) } />
+        { /* <DialogTitle id="alert-dialog-title">
+          Use Google's location service?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ handleClose }>Disagree</Button>
+          <Button onClick={ handleClose } autoFocus>
+            Agree
+          </Button>
+        </DialogActions> */ }
+      </Dialog>
     </Box>
   );
 }

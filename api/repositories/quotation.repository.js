@@ -305,7 +305,7 @@ SELECT CAST(A.name AS VARCHAR) AS colName FROM SYSCOLUMNS A WITH(NOLOCK)
         unitPrice: parseFloat(c.DEV_PUV, 10),
       })))
 
-
+        
     return {
       id: newId,
       prices,

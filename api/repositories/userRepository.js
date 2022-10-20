@@ -45,7 +45,8 @@ class UserRepository extends RepositoryBase {
 
   async getWithCreds(customerId, email, password) {
     if (!customerId || !email) {
-      return res.status(400).json({ error: "bad credentials" });
+      console.log('eee')
+      return null;//res.status(400).json({ error: "bad credentials" });
     }
     const r = await db
       .request()

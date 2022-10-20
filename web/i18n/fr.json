@@ -74,6 +74,17 @@
     "quantity": "Quantité totale à deviser",
     "reference": "référence",
     "references": "Nombre de références",
+    "result": {
+      "title": "Votre devis N°{{ id }}",
+      "quit": "fermer",
+      "validate": "valider",
+      "label": "désignation",
+      "quantity": "quantité",
+      "unitPrice": "prix unitaire",
+      "price": "total",
+      "total": "total",
+      "item": "étiquettes"
+    },
     "shape": "forme",
     "titles": {
       "backing": "support",
