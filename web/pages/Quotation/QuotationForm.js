@@ -110,11 +110,11 @@ function QuotationForm() {
         autoComplete="off"
         onSubmit={ handleSubmit(onSubmit) }
         sx={ {
-          padding: '1rem 3rem',
+          padding: {xs: '1rem', sm: '1rem 3rem'},
           display: 'flex',
           flexDirection: 'column',
           gap: 1,
-          width: 600,
+          maxWidth: 600,
         } }
       >
         <DescritionSection form={ form } />
@@ -123,45 +123,20 @@ function QuotationForm() {
         <PrintSection form={ form } />
         <PackagingSection form={ form } />
         <DeliverySection form={ form } />
-
-
         <Button type="submit">{ t('quotation.computeButton') }</Button>
       </Paper>
-
-      { /* <ActionFeedback promise={ promise } onClose={ () => setPromise(null) }>
-        <QuotationResult onClose={ () => setPromise(null) } />
-      </ActionFeedback> */ }
-      { /* </form> */ }
       <Backdrop
         sx={ { color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 } }
         open={ computing }
-        // onClick={ handleClose }
       >
         <Loader />
       </Backdrop>
       <Dialog
         maxWidth="lg"
         open={ !!(result && !computing) }
-        // onClose={}
-        // aria-labelledby="alert-dialog-title"
-        // aria-describedby="alert-dialog-description"
       >
         <QuotationResult result={ result } onClose={ () => setResult(null) } />
-        { /* <DialogTitle id="alert-dialog-title">
-          Use Google's location service?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ handleClose }>Disagree</Button>
-          <Button onClick={ handleClose } autoFocus>
-            Agree
-          </Button>
-        </DialogActions> */ }
+
       </Dialog>
     </Box>
   );

@@ -19,8 +19,8 @@ function LabelDefinitionSection({ form }) {
   return (
     <>
       <h2 id="definition">{ t('quotation.titles.labelDefinition') }</h2>
-      <Stack direction="row">
-        <Stack direction="column" gap={ 1 } flex={ 1 }>
+      <Stack direction="row" flexWrap="wrap" justifyContent="center">
+        <Stack direction="column" gap={ 1 } flex={ 1 } minWidth={ 130 }>
           <Row>
             <SelectInput
               control={ control }
@@ -58,7 +58,7 @@ function LabelDefinitionSection({ form }) {
             ) }
           </Row>
         </Stack>
-        <Box sx={ { width: 180 } }>
+        <Box sx={ { width: 180, alignSelf: 'center' } }>
           <LabelImage
             style={ { maxWidth: 200, maxHeight: 200 } }
             shape={ watchShape }

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Collapse from '@mui/material/Collapse';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  ToggleButton, ToggleButtonGroup, useMediaQuery, useTheme,
+} from '@mui/material';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import MandrelInput from '../../../components/FormInput/MandrelSelect';
@@ -15,6 +17,9 @@ function PackagingSection({ form }) {
   const {
     control,
   } = form;
+  const mobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const iconSize = mobile ? '3rem' : '5rem';
+  console.log(mobile)
   const [packagingType, setPackagingType] = useState('Bo');
   const [winding, setWinding] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -92,14 +97,14 @@ function PackagingSection({ form }) {
         />
         <ToggleButtonGroup
           value={ direction }
-          size="large"
+          size={ mobile ? 'small' : 'large' }
           exclusive
           sx={ { alignSelf: 'center' } }
           onChange={ handleChangeDirection }
         >
           { OUTPUT_ICONS.filter((i) => i.type === 'Bo' && i.winding === winding && i.direction != null).map((B) => (
             <ToggleButton key={ B.direction } value={ B.direction } sx={ { padding: 1 } }>
-              <B.icon sx={ { width: 100, height: 100 } } />
+              <B.icon sx={ { width: iconSize, height: iconSize } } />
             </ToggleButton>
           )) }
         </ToggleButtonGroup>
@@ -111,7 +116,17 @@ function PackagingSection({ form }) {
         <MandrelInput control={ control } name="mandrel" label={ t('quotation.packaging.mandrelDiameter') } />
       </Collapse>
 
-      <Collapse in={ packagingType === 'Pa' }>
+      <Collapse
+        sx={ {
+          '& .MuiCollapse-wrapperInner': {
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
+
+          },
+        } }
+        in={ packagingType === 'Pa' }
+      >
         <ToggleButtonGroup
           value={ direction }
           size="large"
@@ -121,7 +136,7 @@ function PackagingSection({ form }) {
         >
           { OUTPUT_ICONS.filter((i) => i.type === 'Pa' && i.direction != null).map((B) => (
             <ToggleButton key={ B.direction } value={ B.direction } sx={ { padding: 1 } }>
-              <B.icon sx={ { width: 100, height: 100 } } />
+              <B.icon sx={ { width: iconSize, height: iconSize } } />
             </ToggleButton>
           )) }
         </ToggleButtonGroup>

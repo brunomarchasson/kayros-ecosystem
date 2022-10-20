@@ -12,6 +12,7 @@ function Radios({
     <FormControlLabel
       value={ value }
       sx={ {
+        flexDirection: {xs: 'column-reverse', sm: 'row-reverse'},
         flex: 1,
         marginLeft: 0,
         '& .MuiFormControlLabel-label': {

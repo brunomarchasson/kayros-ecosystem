@@ -1,3 +1,4 @@
+import { Box, Paper } from '@mui/material';
 import React, { useState } from 'react';
 import Headings from './Headings';
 import { useHeadingsData } from './useHeadingsData ';
@@ -8,9 +9,10 @@ function TableOfContents() {
   const [activeId, setActiveId] = useState();
   useIntersectionObserver(setActiveId);
   return (
-    <nav
-      style={
+    <Box
+      sx={
         {
+          display: { xs: 'none', sm: 'block' },
           position: 'sticky',
           top: 0, /* How far down the page you want your ToC to live */
           maxHeight: '100%',
@@ -22,7 +24,7 @@ function TableOfContents() {
       aria-label="Table of contents"
     >
       <Headings headings={ nestedHeadings } activeId={ activeId } />
-    </nav>
+    </Box>
   );
 }
 
