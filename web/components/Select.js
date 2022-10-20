@@ -13,6 +13,8 @@ const Select = React.forwardRef(({
   loading,
   defaultValue = null,
   inputProps,
+  error,
+  required,
   ...rest
 }, ref) => {
   const [currentOption, setCurrentOption] = useState(null);
@@ -43,6 +45,7 @@ const Select = React.forwardRef(({
       onChange={ handleChange }
       value={ currentOption }
       autoSelect
+      error={ error }
       renderOption={ (props, option) => (
         <li { ...props } key={ option.value }>
           { option?.label }
@@ -52,8 +55,10 @@ const Select = React.forwardRef(({
         <TextField
           { ...params }
           inputRef={ ref }
+          error={ error }
           label={ label }
           helperText={ helperText }
+          required={ required }
           InputProps={ {
             ...inputProps,
             required: false,

@@ -20,27 +20,37 @@ import PrintSection from './sections/Print';
 
 let renderCount = 0;
 
+// const defaultValues = {
+//   label: 'grte',
+//   reference: 'aa',
+//   quantyty1: '100000',
+//   references: '1',
+//   shape: 2,
+//   width: '100',
+//   backing: 114,
+//   printProcess: 103,
+//   print: '3P',
+//   mandrel: 11649,
+//   numberAbreast: '1',
+//   quantityPerSpool: '100',
+//   maxDiameter: '100',
+//   height: '100',
+//   winding: 1,
+//   output: 1,
+//   packagingType: 'Bo',
+//   labelPerfanfold: '10',
+//   fanfoldPerPack: '10',
+//   lamination: 577,
+// };
 const defaultValues = {
-  label: 'grte',
-  reference: 'aa',
-  quantyty1: '100000',
+
   references: '1',
   shape: 2,
-  width: '100',
-  backing: 114,
-  printProcess: 103,
-  print: '3P',
-  mandrel: 11649,
   numberAbreast: '1',
-  quantityPerSpool: '100',
-  maxDiameter: '100',
-  height: '100',
-  winding: 1,
-  output: 1,
+  winding: 0,
+  output: 0,
   packagingType: 'Bo',
-  labelPerfanfold: '10',
-  fanfoldPerPack: '10',
-  lamination: 577,
+
 };
 function QuotationForm() {
   // const {stepsRef} = useContext(QuotationContext)
@@ -53,11 +63,12 @@ function QuotationForm() {
   });
   const {
     handleSubmit,
+    formState,
   } = form;
   const { api } = useApi();
 
   const { t } = useTranslation();
-
+  console.log(formState.errors);
   const onSubmit = async (data) => {
     try {
       const formatedData = data;
@@ -110,7 +121,7 @@ function QuotationForm() {
         autoComplete="off"
         onSubmit={ handleSubmit(onSubmit) }
         sx={ {
-          padding: {xs: '1rem', sm: '1rem 3rem'},
+          padding: { xs: '1rem', sm: '1rem 3rem' },
           display: 'flex',
           flexDirection: 'column',
           gap: 1,

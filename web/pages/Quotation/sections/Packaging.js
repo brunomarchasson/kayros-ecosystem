@@ -19,7 +19,7 @@ function PackagingSection({ form }) {
   } = form;
   const mobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const iconSize = mobile ? '3rem' : '5rem';
-  console.log(mobile)
+  console.log(mobile);
   const [packagingType, setPackagingType] = useState('Bo');
   const [winding, setWinding] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -30,6 +30,7 @@ function PackagingSection({ form }) {
   } = useController({
     name: 'winding',
     control,
+    rules: { required: true },
   });
 
   const {
@@ -51,12 +52,15 @@ function PackagingSection({ form }) {
     packagingTypeField.onChange(newValue);
   };
   const handleChangeWinding = (event, newValue) => {
+    console.log('handleChangeWinding', newValue)
     const v = parseInt(newValue, 10);
     setWinding(v);
     windingField.onChange(v);
   };
   const handleChangeDirection = (event, newValue) => {
+    if (newValue === null) return;
     const v = parseInt(newValue, 10);
+
 
     setDirection(v);
     directionField.onChange(v);
@@ -108,12 +112,40 @@ function PackagingSection({ form }) {
             </ToggleButton>
           )) }
         </ToggleButtonGroup>
-        <NumberInput control={ control } name="numberAbreast" label={ t('quotation.packaging.abreast') } />
+        <NumberInput
+          control={ control }
+          rules={ {
+            required: ( packagingType === 'Bo'),
+          } }
+          name="numberAbreast"
+          label={ t('quotation.packaging.abreast') }
+        />
         <Row>
-          <NumberInput control={ control } name="quantityPerSpool" label={ t('quotation.packaging.qtyPerSpool') } />
-          <NumberInput control={ control } name="maxDiameter" label={ t('quotation.packaging.maxDiameter') } />
+          <NumberInput
+            control={ control }
+            rules={ {
+              required:  packagingType === 'Bo',
+            } }
+            name="quantityPerSpool"
+            label={ t('quotation.packaging.qtyPerSpool') }
+          />
+          <NumberInput
+            control={ control }
+            rules={ {
+              required:  packagingType === 'Bo',
+            } }
+            name="maxDiameter"
+            label={ t('quotation.packaging.maxDiameter') }
+          />
         </Row>
-        <MandrelInput control={ control } name="mandrel" label={ t('quotation.packaging.mandrelDiameter') } />
+        <MandrelInput
+          control={ control }
+          rules={ {
+            required:  packagingType === 'Bo',
+          } }
+          name="mandrel"
+          label={ t('quotation.packaging.mandrelDiameter') }
+        />
       </Collapse>
 
       <Collapse
@@ -140,11 +172,32 @@ function PackagingSection({ form }) {
             </ToggleButton>
           )) }
         </ToggleButtonGroup>
-        <NumberInput control={ control } name="numberAbreast" label={ t('quotation.packaging.abreast') } />
+        <NumberInput
+          control={ control }
+          rules={ {
+            required:  packagingType === 'Pa',
+          } }
+          name="numberAbreast"
+          label={ t('quotation.packaging.abreast') }
+        />
 
-        <NumberInput control={ control } name="labelPerfanfold" label={ t('quotation.packaging.labelsPerFanFold') } />
+        <NumberInput
+          control={ control }
+          rules={ {
+            required: packagingType === 'Pa',
+          } }
+          name="labelPerfanfold"
+          label={ t('quotation.packaging.labelsPerFanFold') }
+        />
 
-        <NumberInput control={ control } name="fanfoldPerPack" label={ t('quotation.packaging.fanFoldsPerPack') } />
+        <NumberInput
+          control={ control }
+          rules={ {
+            required: packagingType === 'Pa',
+          } }
+          name="fanfoldPerPack"
+          label={ t('quotation.packaging.fanFoldsPerPack') }
+        />
 
       </Collapse>
 

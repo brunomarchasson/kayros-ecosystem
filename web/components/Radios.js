@@ -7,8 +7,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 function Radios({
   label, options, value, onChange,
 }) {
+  console.log(label, value)
   return (
-
     <FormControlLabel
       value={ value }
       sx={ {
