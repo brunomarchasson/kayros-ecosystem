@@ -50,9 +50,11 @@ app.get('/hello', (req, resp) => {
 app.use('/', createProxyMiddleware({
   target: 'http://93.12.25.82:8850',
   changeOrigin: true,
+  secure: false,
+  logLevel: "debug",
 }));
 
-app.use('/:ApiId', myProxy); // add the proxy to express
+// app.use('/:ApiId', myProxy); // add the proxy to express
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
