@@ -46,6 +46,12 @@ app.use(cors());
 app.get('/hello', (req, resp) => {
   return resp.send('HELLO WORLD FROM GATEWAY!');
 })
+
+app.use('/', createProxyMiddleware({
+  target: 'http://93.12.25.82:8850',
+  changeOrigin: true,
+}));
+
 app.use('/:ApiId', myProxy); // add the proxy to express
 
 app.listen(port, () => {
