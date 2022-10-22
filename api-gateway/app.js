@@ -31,6 +31,7 @@ const options = {
     proxyReq.setHeader('x-access-token', req.headers['x-access-token'])
 
   }},
+  logLevel: "debug",
   pathRewrite: {
     '^\/[^\/]*/' : '/' //remove /ApiId
   }
