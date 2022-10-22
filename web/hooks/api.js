@@ -24,18 +24,18 @@ export function ApiProvider({ children, apiId }) {
   const [JWT, setJWT] = useState();
   const api = useMemo(
     () => ky.extend({
-      prefixUrl: `${config.api.origin}/${apiId}/api/`,
+      // prefixUrl: `${config.api.origin}/${apiId}/api/`,
+      prefixUrl: `${config.api.origin}/api`, // `proxy.kayros-artware.com/api/`,
       headers: {
         'x-access-token': JWT,
       },
       hooks: {
         beforeRequest: [
-          (req) => {
-            if (!apiId) {
-              return new Response({}, { status: 401, statusText: 'OK' });
-            }
-            return req;
-          },
+          (req) =>
+            // if (!apiId) {
+            //   return new Response({}, { status: 401, statusText: 'OK' });
+            // }
+            req,
         ],
       },
     }),
