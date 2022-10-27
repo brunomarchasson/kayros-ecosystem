@@ -11,25 +11,24 @@ import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 function Api() {
-  // const [apiId, setApiId] = useState('');
+  const [apiId, setApiId] = useState('');
 
   useEffect(() => {
-    // const parsedData = window.location.pathname.split('/');
-    // const api = parsedData[1];
-    // setApiId(api);
+    const parsedData = window.location.pathname.split('/');
+    const api = parsedData[1];
+    setApiId(api);
   }, [window.location.pathname]);
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={ `/${apiId}` }>
       <I18nextProvider i18n={ i18n }>
-        <App />
-        { /* <App apiId={ apiId } /> */ }
+        <App apiId={ apiId } />
       </I18nextProvider>
     </BrowserRouter>
   );
 }
 root.render(
   // <React.StrictMode>
-  <Api />,
+    <Api />
   // </React.StrictMode>,
 );
 

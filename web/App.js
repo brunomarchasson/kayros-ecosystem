@@ -8,10 +8,9 @@ import AppRoutes, { AuthRoutes } from './Routes';
 import { ThemeProvider } from './theme';
 
 function App({ apiId }) {
-  // if (!apiId) return null;
+  if (!apiId) return null;
   return (
-    // <ApiProvider apiId={ apiId }>
-    <ApiProvider >
+    <ApiProvider apiId={ apiId }>
       <ThemeProvider>
         <CssBaseline />
         <AuthProvider>

@@ -17,8 +17,7 @@ export function AuthProvider({ children }) {
       // setJWT(existingToken)
       api
         .get('token', {
-          prefixUrl: `${config.api.origin}/auth/`,
-          // prefixUrl: `${config.api.origin}/${apiId}/auth/`,
+          prefixUrl: `${config.api.origin}/${apiId}/auth/`,
           headers: {
             'x-access-token': existingToken,
           },
@@ -41,8 +40,7 @@ export function AuthProvider({ children }) {
 
   const login = (customerId, email, password) => api
     .post('token', {
-      // prefixUrl: `${config.api.origin}/${apiId}/auth/`,
-      prefixUrl: `${config.api.origin}/auth/`,
+      prefixUrl: `${config.api.origin}/${apiId}/auth/`,
       json: {customerId, email, password } })
     .json()
     .then((res) => {
