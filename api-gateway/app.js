@@ -39,22 +39,24 @@ const options = {
 };
 
 const myProxy = createProxyMiddleware(options);
+
 app.enable("trust proxy");
 app.disable("x-powered-by");
 // app.use(helmet());
 app.use(cors());
+
 app.get('/hello', (req, resp) => {
   return resp.send('HELLO WORLD FROM GATEWAY!');
 })
 
-app.use('/', createProxyMiddleware({
-  target: 'http://93.12.25.82:8850',
-  changeOrigin: true,
-  secure: false,
-  logLevel: "debug",
-}));
+// app.use('/', createProxyMiddleware({
+//   target: 'http://93.12.25.82:8850',
+//   changeOrigin: true,
+//   secure: false,
+//   logLevel: "debug",
+// }));
 
-// app.use('/:ApiId', myProxy); // add the proxy to express
+app.use('/:ApiId', myProxy); // add the proxy to express
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
