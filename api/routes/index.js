@@ -3,6 +3,7 @@ import params from './params.route';
 import roll from './rolls';
 import articleRoutes from './article';
 import quotationRoutes from './quotation';
+import toolsRoutes from './tools';
 import provider from './provider';
 import product from './product';
 import isAuthentified from '../middleware/authJWT';
@@ -11,6 +12,7 @@ import { apiExplorerRoutes, registerApi, schema } from '../apiExplorer';
 const router = express.Router();
 
 router.use('/apiExplorer', apiExplorerRoutes);
+router.use('/tools', toolsRoutes);
 router.use('/article', [isAuthentified], articleRoutes);
 router.use('/quotation', [isAuthentified], quotationRoutes);
 router.use('/roll', [isAuthentified], roll);
