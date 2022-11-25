@@ -1,11 +1,10 @@
+import sql from 'mssql';
+import path from 'path';
 import db from "../core/db";
-import sql from 'mssql'
-import path from 'path'
 import RepositoryBase from "./repositoryBase";
 
 import { exec } from "child_process";
 import util from 'util';
-import { throws } from "assert";
 
 const Pexec = util.promisify(exec);
 
@@ -98,13 +97,6 @@ class QuotationRepository extends RepositoryBase {
 
 
   async create(data) {
-
-
-    //handle customer
-
-
-
-
     const { currentUser } = data;
 
     const transaction = new sql.Transaction()
@@ -114,14 +106,6 @@ class QuotationRepository extends RepositoryBase {
     const { id, index } = await getQuotationId(data.basisId, {transaction})
     const newId = `${id} / ${index}`
     try {
-
-
-
-
-      console.log('------------------------------------------------------')
-      console.log(newId)
-      console.log('------------------------------------------------------')
-
       await insert({
         FDC_DEVIS: {
           Code_Société: currentUser.idOrganisation,
@@ -305,7 +289,7 @@ SELECT CAST(A.name AS VARCHAR) AS colName FROM SYSCOLUMNS A WITH(NOLOCK)
         unitPrice: parseFloat(c.DEV_PUV, 10),
       })))
 
-        
+
     return {
       id: newId,
       prices,

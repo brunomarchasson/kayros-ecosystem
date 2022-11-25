@@ -1,13 +1,12 @@
 import express from 'express';
-import params from './params.route';
-import roll from './rolls';
-import articleRoutes from './article';
-import quotationRoutes from './quotation';
-import toolsRoutes from './tools';
-import provider from './provider';
-import product from './product';
-import isAuthentified from '../middleware/authJWT';
 import { apiExplorerRoutes, registerApi, schema } from '../apiExplorer';
+import isAuthentified from '../middleware/authJWT';
+import articleRoutes from './article';
+import params from './params.route';
+import product from './product';
+import quotationRoutes from './quotation';
+import roll from './rolls';
+import toolsRoutes from './tools';
 
 const router = express.Router();
 
@@ -16,8 +15,7 @@ router.use('/tools', toolsRoutes);
 router.use('/article', [isAuthentified], articleRoutes);
 router.use('/quotation', [isAuthentified], quotationRoutes);
 router.use('/roll', [isAuthentified], roll);
-router.use('/provider', [isAuthentified], provider);
-router.use('/product', [isAuthentified], product);
+// router.use('/product', [isAuthentified], product);
 router.use('/params', [isAuthentified], params);
 registerApi(
   {
@@ -33,6 +31,7 @@ registerApi(
   async (req, res) => {
     res.sendResult({
       url: process.env.API_ORIGIN,
+      localUrl: process.env.API_LOCAL_ORIGIN,
     });
   },
 );

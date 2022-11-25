@@ -25,7 +25,8 @@ registerApi(
     method: 'post',
     description: 'create an access token',
     params: schema().object({
-      email: schema().string().required().description('Account'),
+      email: schema().string().description('Account'),
+      user: schema().string().description('Account'),
       password: schema().string().required().description('Account password'),
     }),
     returns: credentialSchema,

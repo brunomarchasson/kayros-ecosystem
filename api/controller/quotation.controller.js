@@ -1,5 +1,3 @@
-import db from "../core/db.js";
-import ArticleRepository from "../repositories/article.repository.js";
 import repository from "../repositories/repository.js";
 
 const getAll = async (req, res) => {

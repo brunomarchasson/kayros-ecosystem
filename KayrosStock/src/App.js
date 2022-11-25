@@ -10,7 +10,7 @@ import HomeScreen from './Screen/Home';
 import SettingScreen from './Screen/Settings';
 import {theme} from './theme';
 import {DrawerContent} from './components/Drawer';
-import {ApiProvider} from './hooks/useApi';
+import {ApiProvider, useApi} from './hooks/useApi';
 import {SnackProvider} from './hooks/useSnack';
 import RollCheckScreen from './Screen/RollCheck';
 import RollManagmentScreen from './Screen/RollManagmentScreen';
@@ -23,7 +23,9 @@ const Drawer = createDrawerNavigator();
 
 const MainNavigator = () => {
   const {translate} = useTranslation();
+  const {connected} = useApi()
   const {inventoryClosed} = useData();
+  console.log(connected)
   return (
     <Drawer.Navigator
       drawerContent={DrawerContent}

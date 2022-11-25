@@ -1,4 +1,4 @@
-import db from "../core/db.js";
+import db from "../core/db/index.js";
 
 
 const get = async (req, res) => {

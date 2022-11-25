@@ -42,7 +42,7 @@ const ItemManagmentScreen = ({inventory}) => {
   const save = async () => {
     try {
       if (inventory) {
-        const r = await post('/article/' + item?.id + '/stock/' + newValue);
+        const r = await post('roll/article/' + item?.id + '/stock/' + newValue);
         console.log(r);
       } else {
         const type = 'M-';
@@ -55,7 +55,7 @@ const ItemManagmentScreen = ({inventory}) => {
           snack.error(translate('itemManagment.quantityNotInStock'));
           return;
         }
-        const r = await post('/article/' + item?.id + '/stock/', {type, value});
+        const r = await post('roll/article/' + item?.id + '/stock/', {type, value});
         console.log(r);
       }
       snack.success(translate('itemManagment.saveSuccess'));
