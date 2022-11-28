@@ -9,7 +9,7 @@ import {useTranslation} from './Translation';
 const NetworkContext = React.createContext();
 const {Provider} = NetworkContext;
 const APP_BACKEND = 'appBackend';
-const PORTS = [{from: 4410, to: 4420}];
+const PORTS = [{from: 8850, to: 8855}];
 
 function range(min, max) {
   var len = max - min + 1;
@@ -21,7 +21,9 @@ function range(min, max) {
 }
 const getIPRange = ip => {
   const [ip1, ip2, ip3] = ip.split('.');
-  return [...Array(255).keys()].map(i => `${ip1}.${ip2}.${ip3}.${i}`);
+  return ['10.0.2.2', 'localhost', ...Array(255).keys()].map(
+    i => `${ip1}.${ip2}.${ip3}.${i}`,
+  );
 };
 
 const promiseAny = iterable =>
@@ -66,7 +68,8 @@ export const ApiProvider = ({children, config = null}) => {
   const [networkError, setNetworkError] = useState(false);
   const [apiUrl, setApiUrl] = useState();
   const [JWT, setJWT] = useState();
-  const {addSnack} = useSnack();
+  const [connected, setConnected] = useState(false);
+  const {addSnack, snack} = useSnack();
 
   const setBackEnd = url => {
     AsyncStorage.setItem(APP_BACKEND, url);
@@ -85,10 +88,12 @@ export const ApiProvider = ({children, config = null}) => {
         ...acc,
         ...portsList.map(port => 'http://' + ip + ':' + port + '/api/hello'),
       ]);
+      console.log(urls);
       const s = await promiseAny(
         urls.map(url => fetch(url).then(r => r.json())),
       );
-      setBackEnd(s.url);
+      console.log(s);
+      setBackEnd(s.localUrl);
       addSnack({
         severity: 'success',
         message: translate('api.backendFound'),
@@ -113,19 +118,42 @@ export const ApiProvider = ({children, config = null}) => {
       '-%7B3mk%23%2CDM%23%25*wV6KvuB0%5DKK%7B%7Dmnm010r%3Dxz%24',
     );
     if (apiUrl) {
-      get('token?' + urlencoded.toString())
+      fetch(`${apiUrl}/auth/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: 'PDA',
+          password: '-%7B3mk%23%2CDM%23%25*wV6KvuB0%5DKK%7B%7Dmnm010r%3Dxz%24',
+        }),
+      })
+        .then(response => {
+          setNetworkError(false);
+          return handleError(response);
+        })
+        .then(response => response && response.json().catch(e => ({})))
         .then(res => {
+          console.log('res', res);
+          setConnected(true)
           setJWT(res.token);
         })
-        .catch(e => console.error(e));
+        .catch(error => {
+          console.error('error', error);
+          snack.error(translate('connectionError'),)
+          setNetworkError(error);
+
+          // throw error;
+        });
     }
-  }, [get, apiUrl]);
+  }, [post, apiUrl, snack, translate]);
 
   const fetchUrl = useCallback(
     (endpoint, options) => {
       return fetch(`${apiUrl}/api/${endpoint}`, options)
         .then(response => {
           setNetworkError(false);
+          setConnected(true)
           return handleError(response);
         })
         .then(response => response && response.json().catch(e => ({})))
@@ -210,6 +238,7 @@ export const ApiProvider = ({children, config = null}) => {
         findBackend,
         apiUrl,
         setBackEnd,
+        connected,
       }}>
       {children}
     </Provider>
@@ -244,5 +273,6 @@ export const useApi = () => {
     findBackend: ctx.findBackend,
     apiUrl: ctx.apiUrl,
     setBackEnd: ctx.setBackEnd,
+    connected: ctx.connected,
   };
 };

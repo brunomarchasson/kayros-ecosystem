@@ -1,5 +1,3 @@
-import db from "../core/db.js";
-import ArticleRepository from "../repositories/article.repository.js";
 import repository from "../repositories/repository.js";
 
 const getAll = async (req, res) => {
@@ -9,7 +7,10 @@ const getAll = async (req, res) => {
   res.sendResult(r);
 };
 
-const get = async (req, res, next) => { };
+const get = async (req, res, next) => {
+  const r  =await repository.article.getById(req.data.id)
+  res.sendResult(r);
+ };
 
 export default {
   getAll,

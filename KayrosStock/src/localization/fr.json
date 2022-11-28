@@ -3,6 +3,7 @@
      "backendFound":"server trouvé",
      "notFound":"server introuvable"
   },
+  "connectionError": "impossible de se connected au serveur",
   "bad-password":"mot de passe incirrect",
   "cancel":"annuler",
   "home":{

@@ -13,7 +13,7 @@ export const DataProvider = ({children}) => {
 
   useEffect(() => {
     if (JWT) {
-      get('/provider').then(setProviders);
+      get('roll/provider').then(setProviders);
       get('/params').then(setParams);
     }
   }, [get, JWT]);

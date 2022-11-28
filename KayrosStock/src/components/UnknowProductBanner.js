@@ -35,7 +35,7 @@ function UnknowProductBanner({
   useEffect(() => {
     setArticle(false);
     setLoading(true);
-    get('article/' + curValue)
+    get('roll/article/' + curValue)
       .then(setArticle)
       .finally(() => setLoading(false));
   }, [curValue, get]);
@@ -47,7 +47,7 @@ function UnknowProductBanner({
 
   const handleValidate = async () => {
     console.log('product/' + productIdCode + '/seq/' + curValue);
-    await post('product/' + productIdCode + '/seq/' + curValue);
+    await post('roll/product/' + productIdCode + '/seq/' + curValue);
     setPopupVisible(false);
     onSetProduct();
   };

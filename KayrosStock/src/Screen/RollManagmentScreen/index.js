@@ -68,7 +68,7 @@ const RollManagmentScreen = ({inventory}) => {
   useEffect(() => {
     setProduct(null);
     if (productIdCode) {
-      get('product/' + productIdCode.slice(0, 12))
+      get('roll/product/' + productIdCode.slice(0, 12))
         .then(p => {
           setProduct(p);
           setErrors(cur => ({...cur, unknowProduct: !p}));

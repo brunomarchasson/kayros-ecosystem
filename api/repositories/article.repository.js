@@ -1,5 +1,5 @@
+import sql from 'mssql';
 import db from "../core/db";
-import sql from 'mssql'
 import RepositoryBase from "./repositoryBase";
 
 class ArticleRepository extends RepositoryBase {
