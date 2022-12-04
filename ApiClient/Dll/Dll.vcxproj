@@ -25,7 +25,7 @@
     <ProjectGuid>{630f61ce-3c76-4936-af03-0a89a19fa0f2}</ProjectGuid>
     <RootNamespace>Dll</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Library</ProjectName>
+    <ProjectName>ApiClient</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

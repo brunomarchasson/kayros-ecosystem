@@ -31,7 +31,7 @@ const ItemManagmentScreen = ({inventory}) => {
     if (code) {
       setLoading(true);
       const idItem = code;
-      get('article/' + idItem)
+      get('roll/article/' + idItem)
         .then(a => setItem(a))
         .catch(e => snack.error(e))
         .finally(() => setLoading(false));
