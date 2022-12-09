@@ -8,7 +8,9 @@
     "start": "react-native start",
     "bundle": "cd android && ./gradlew bundleRelease",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "bundle:android": "cd android && ./gradlew clean && ./gradlew assembleRelease -x bundleReleaseJsAndAssets"
   },
   "dependencies": {
     "@brunom/react-native-datalogic-module": "file:../../react-native-datalogic-module",
@@ -21,9 +23,12 @@
     "promise-any-polyfill": "^1.0.1",
     "react": "17.0.2",
     "react-native": "0.67.5",
+    "react-native-device-info": "^10.3.0",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.2.0",
     "react-native-keyevent": "^0.2.8",
     "react-native-localize": "^2.2.0",
+    "react-native-logs": "^5.0.1",
     "react-native-network-info": "^5.2.1",
     "react-native-paper": "^4.11.2",
     "react-native-paper-dropdown": "^1.0.7",

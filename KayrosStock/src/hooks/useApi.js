@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useSnack} from './useSnack';
 import {useTranslation} from './Translation';
+import {LOG} from '../log';
 
 const NetworkContext = React.createContext();
 const {Provider} = NetworkContext;
@@ -21,9 +22,11 @@ function range(min, max) {
 }
 const getIPRange = ip => {
   const [ip1, ip2, ip3] = ip.split('.');
-  return ['10.0.2.2', 'localhost', ...Array(255).keys()].map(
-    i => `${ip1}.${ip2}.${ip3}.${i}`,
-  );
+  return [
+    '10.0.2.2',
+    'localhost',
+    ...[...Array(255).keys()].map(i => `${ip1}.${ip2}.${ip3}.${i}`),
+  ];
 };
 
 const promiseAny = iterable =>
@@ -78,27 +81,55 @@ export const ApiProvider = ({children, config = null}) => {
 
   const findBackend = async () => {
     try {
-      const myIp = await NetworkInfo.getIPAddress();
+      console.log('rr')
+      LOG.info('RECHERCHE du serveur ...');
+      const myIp = await NetworkInfo.getIPV4Address();
+      LOG.info('local ip');
       const ipList = getIPRange(myIp);
       const portsList = PORTS.reduce(
         (acc, cur) => [...acc, ...range(cur.from, cur.to)],
         [],
       );
-      const urls = ipList.reduce((acc, ip) => [
-        ...acc,
-        ...portsList.map(port => 'http://' + ip + ':' + port + '/api/hello'),
-      ]);
-      console.log(urls);
-      const s = await promiseAny(
-        urls.map(url => fetch(url).then(r => r.json())),
-      );
-      console.log(s);
-      setBackEnd(s.localUrl);
-      addSnack({
-        severity: 'success',
-        message: translate('api.backendFound'),
-      });
+      let find = false;
+      for (const port of portsList) {
+        try {
+          LOG.info('searching for port ', port);
+          const urls = ipList.map(
+            ip => 'http://' + ip + ':' + port + '/api/hello',
+          );
+          const s = await promiseAny(
+            urls.map(url => fetch(url).then(r => r.json())),
+          );
+          LOG.info('serveur trouvé', s );
+          setBackEnd(s.localUrl);
+          find = true;
+          break;
+        } catch (e) {}
+      }
+      // const urls = ipList.reduce((acc, ip) => [
+      //   ...acc,
+      //   ...portsList.map(port => 'http://' + ip + ':' + port + '/api/hello'),
+      // ]);
+      // console.log(urls);
+      // const s = await promiseAny(
+      //   urls.map(url => fetch(url).then(r => r.json())),
+      // );
+      // console.log(s);
+      // setBackEnd(s.localUrl);
+      if (find) {
+        addSnack({
+          severity: 'success',
+          message: translate('api.backendFound'),
+        });
+      } else {
+        addSnack({
+          severity: 'error',
+          message: translate('api.notFound'),
+        });
+      }
     } catch (e) {
+      console.error('tt', e)
+      LOG.error(e);
       addSnack({
         severity: 'error',
         message: translate('api.notFound'),
@@ -134,13 +165,12 @@ export const ApiProvider = ({children, config = null}) => {
         })
         .then(response => response && response.json().catch(e => ({})))
         .then(res => {
-          console.log('res', res);
-          setConnected(true)
+          setConnected(true);
           setJWT(res.token);
         })
         .catch(error => {
-          console.error('error', error);
-          snack.error(translate('connectionError'),)
+          LOG.error('error', error);
+          snack.error(translate('connectionError'));
           setNetworkError(error);
 
           // throw error;
@@ -153,12 +183,12 @@ export const ApiProvider = ({children, config = null}) => {
       return fetch(`${apiUrl}/api/${endpoint}`, options)
         .then(response => {
           setNetworkError(false);
-          setConnected(true)
+          setConnected(true);
           return handleError(response);
         })
         .then(response => response && response.json().catch(e => ({})))
         .catch(error => {
-          console.error('error', error);
+          LOG.error(error, 'error');
           setNetworkError(error);
           throw error;
         });

@@ -38,12 +38,10 @@ const ItemManagmentScreen = ({inventory}) => {
     }
   }, [code, get, snack]);
 
-  console.log(item);
   const save = async () => {
     try {
       if (inventory) {
         const r = await post('roll/article/' + item?.id + '/stock/' + newValue);
-        console.log(r);
       } else {
         const type = 'M-';
         const value = newValue;
@@ -56,7 +54,6 @@ const ItemManagmentScreen = ({inventory}) => {
           return;
         }
         const r = await post('roll/article/' + item?.id + '/stock/', {type, value});
-        console.log(r);
       }
       snack.success(translate('itemManagment.saveSuccess'));
       reset();

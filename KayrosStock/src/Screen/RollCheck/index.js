@@ -6,6 +6,7 @@ import ScanerManager from '../../components/ScanerManager';
 import {useTranslation} from '../../hooks/Translation';
 import {useSnack} from '../../hooks/useSnack';
 import {useApi} from '../../hooks/useApi';
+import { LOG } from '../../log';
 
 const RollCheckScreen = () => {
   const {get} = useApi();
@@ -21,7 +22,7 @@ const RollCheckScreen = () => {
       get('roll/' + txt.substring(0, 19))
         .then(r => setRolll(r))
         .catch(e => {
-          console.error(e);
+          LOG.error(e);
           snack.error(translate('error'));
         })
         .finally(() => setLoading(false));

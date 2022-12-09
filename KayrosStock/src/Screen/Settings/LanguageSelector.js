@@ -1,15 +1,16 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {LocalizationContext, useTranslation} from '../../hooks/Translation';
-import {RadioButton, Text} from 'react-native-paper';
+import {List, RadioButton, Text} from 'react-native-paper';
 
 const LanguageSelector = () => {
   const {translate, translations, appLanguage, setAppLanguage} =
     useTranslation();
 
   return (
-    <View style={[styles.container]}>
-      <Text>{translate('settings.language')}</Text>
+    <List.Section
+      title={translate('settings.language')}
+      style={[styles.container]}>
       <RadioButton.Group
         onValueChange={newValue => setAppLanguage(newValue)}
         value={appLanguage}>
@@ -21,7 +22,7 @@ const LanguageSelector = () => {
           />
         ))}
       </RadioButton.Group>
-    </View>
+    </List.Section>
   );
 };
 

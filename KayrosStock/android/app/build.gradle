@@ -1,7 +1,34 @@
 apply plugin: "com.android.application"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 import com.android.build.OutputFile
+import groovy.json.JsonSlurper
+// Read package.json and return `version` field
+def getVersionFromNpm() {
+    //  Read and parse package.json file from project root
+    def inputFile = new File("$rootDir/../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
 
+
+    println ("Version Name: " +  packageJson["version"]);
+    // Return the version, you can get any value this way
+    return packageJson["version"]
+}
+// Convert version name to a version number
+def getNumericVersionFromNpm() {
+
+    def versionName =  getVersionFromNpm()
+    def parts = versionName.split("\\.")
+
+
+    int hotfix = parts[2] as int
+    int minor = parts[1] as int
+    int major = parts[0] as int
+
+    def numericVersion =  major*100000 + minor*1000 + hotfix
+    println('Version Code: ' + numericVersion)
+
+    return numericVersion
+}
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -134,8 +161,8 @@ android {
         applicationId "com.kayrosstock"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode getNumericVersionFromNpm()
+        versionName getVersionFromNpm()
     }
     splits {
         abi {

@@ -18,14 +18,15 @@ import ItemManagmentScreen from './Screen/ItemManagmentScreen';
 import {DataProvider, useData} from './hooks/data/provider';
 import {HotKeysProvider} from './hooks/HotKeys';
 import {DatalogicSDKProvider} from './hooks/DatalogicManager';
+import {LOG} from './log';
 
 const Drawer = createDrawerNavigator();
 
 const MainNavigator = () => {
   const {translate} = useTranslation();
-  const {connected} = useApi()
+  const {connected} = useApi();
   const {inventoryClosed} = useData();
-  console.log(connected)
+  LOG.info(connected);
   return (
     <Drawer.Navigator
       drawerContent={DrawerContent}

@@ -7,6 +7,7 @@ import product from './product';
 import quotationRoutes from './quotation';
 import roll from './rolls';
 import toolsRoutes from './tools';
+import pjson from '../package.json';
 
 const router = express.Router();
 
@@ -25,13 +26,15 @@ registerApi(
     description: 'Service discover',
 
     returns: schema().object({
-      url: schema().string().required(),
+      publicUrl: schema().string().required(),
+      localUrl: schema().string().required(),
     }),
   },
   async (req, res) => {
     res.sendResult({
-      url: process.env.API_ORIGIN,
+      publicUrl: process.env.API_ORIGIN,
       localUrl: process.env.API_LOCAL_ORIGIN,
+      version: pjson.version,
     });
   },
 );

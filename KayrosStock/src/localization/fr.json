@@ -75,6 +75,8 @@
   "settings":{
      "title":"Paramètres",
      "language":"Langue",
+     "server": "serveur",
+     "infos": "infos",
      "languages":{
         "fr":"Français",
         "en":"Anglais"
