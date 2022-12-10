@@ -12,6 +12,7 @@ import {
 import {useTranslation} from '../hooks/Translation';
 import {StyleSheet} from 'react-native';
 import {useApi} from '../hooks/useApi';
+import { LOG } from '../log';
 
 function UnknowProductBanner({
   visible: bannerVisible,
@@ -46,13 +47,12 @@ function UnknowProductBanner({
   //   }
 
   const handleValidate = async () => {
-    console.log('product/' + productIdCode + '/seq/' + curValue);
+    LOG.info('product/' + productIdCode + '/seq/' + curValue);
     await post('roll/product/' + productIdCode + '/seq/' + curValue);
     setPopupVisible(false);
     onSetProduct();
   };
 
-  console.log(article);
   return (
     <>
       <Banner

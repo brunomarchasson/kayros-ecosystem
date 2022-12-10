@@ -9,6 +9,7 @@ import {useData} from '../../hooks/data/provider';
 import {useApi} from '../../hooks/useApi';
 import InputPopup from '../../components/InputPopup';
 import UnknowProductBanner from '../../components/UnknowProductBanner';
+import { LOG } from '../../log';
 
 const RollManagmentScreen = ({inventory}) => {
   const [rollIdCode, setRollIdCode] = useState('');
@@ -73,7 +74,7 @@ const RollManagmentScreen = ({inventory}) => {
           setProduct(p);
           setErrors(cur => ({...cur, unknowProduct: !p}));
         })
-        .catch(e => console.error(e));
+        .catch(e => LOG.error(e));
     } else {
       setErrors(cur => ({...cur, unknowProduct: false}));
     }

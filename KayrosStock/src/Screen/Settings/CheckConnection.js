@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Button} from 'react-native-paper';
+import {ActivityIndicator, Button, IconButton} from 'react-native-paper';
 import {useTranslation} from '../../hooks/Translation';
 import {useApi} from '../../hooks/useApi';
 
@@ -26,17 +26,23 @@ const CheckConnection = () => {
     check();
   }, []);
 
+  if (loading) {
+    return <ActivityIndicator style={styles.activity} animating={true} />;
+  }
   return (
-    <Button
+    <IconButton
       onPress={check}
       loading={loading}
-      style={[
-        connected && styles.connected,
-        !connected && styles.notConnected,
-        loading && styles.loading,
-      ]}>
-      <Text>{translate('test')}</Text>
-    </Button>
+      icon={'radiobox-marked'}
+      color={connected ? 'lime' : 'red'}
+      // style={[
+      //   connected && styles.connected,
+      //   !connected && styles.notConnected,
+      //   loading && styles.loading,
+      // ]}
+    >
+      {/* <Text>{translate('test')}</Text> */}
+    </IconButton>
   );
 };
 
@@ -46,4 +52,8 @@ const styles = StyleSheet.create({
   connected: {backgroundColor: 'green'},
   notConnected: {backgroundColor: 'red'},
   loading: {backgroundColor: 'grey'},
+  activity: {
+    margin: 6,
+    width: 36,
+  },
 });

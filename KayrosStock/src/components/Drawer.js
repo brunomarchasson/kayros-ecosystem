@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import {Avatar, Title, Drawer} from 'react-native-paper';
+import {Avatar, Title, Drawer, Text} from 'react-native-paper';
 import InventorySwitch from './InventorySwitch';
+import DeviceInfo from 'react-native-device-info';
+
 export const DrawerContent = props => {
+  const [version, setVersion] = useState();
+  useEffect(() => {
+    setVersion(DeviceInfo.getVersion());
+  }, []);
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.drawerContent}>
@@ -17,6 +23,7 @@ export const DrawerContent = props => {
             size={50}
           />
           <Title style={styles.title}>KAYROS</Title>
+          <Text style={styles.version}>{version}</Text>
         </View>
         <InventorySwitch />
         <Drawer.Section style={styles.drawerSection}>
@@ -38,6 +45,9 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 20,
     fontWeight: 'bold',
+  },
+  version: {
+    fontSize: 12,
   },
   caption: {
     fontSize: 14,
