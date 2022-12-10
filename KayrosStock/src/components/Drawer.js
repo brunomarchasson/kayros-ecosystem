@@ -16,7 +16,7 @@ export const DrawerContent = props => {
             style={styles.logo}
             size={50}
           />
-          <Title style={styles.title}>KAYROS Roll</Title>
+          <Title style={styles.title}>KAYROS</Title>
         </View>
         <InventorySwitch />
         <Drawer.Section style={styles.drawerSection}>

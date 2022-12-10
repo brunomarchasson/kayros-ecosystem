@@ -1,83 +1,85 @@
 {
-  "api": {
-    "backendFound": "server found",
-    "notFound": "server not found"
+  "api":{
+     "backendFound":"server trouvé",
+     "notFound":"server introuvable"
   },
-  "bad-password": "incirrect password",
-  "cancel": "cancel",
-  "home": {
-    "title": "Home"
+  "connectionError": "impossible de se connected au serveur",
+  "bad-password":"mot de passe incirrect",
+  "cancel":"annuler",
+  "home":{
+     "title":"Accueil"
   },
-  "inventory-close": "Closed inventory",
-  "inventory-open": "Open inventory %{date}",
-  "itemDelivery": {
-    "title": "Items delivery"
+  "inventory-close":"Inventaire fermé",
+  "inventory-open":"Inventaire ouvert %{date}",
+  "itemDelivery":{
+     "title":"Livraison articles"
   },
-  "itemInventory": {
-    "title": "Items inventory"
+  "itemInventory":{
+     "title":"Inventaire articles"
   },
-  "itemManagment": {
-    "quantityMustBeGreaterThan0": "la quantité doit etre supperieure a 0",
-    "quantityNotInStock": "quantity is not in stock",
-    "saveError": "server not found0",
-    "saveSuccess": "server not found1",
-    "delivery": "server not found2",
-    "stock": "server not found3"
+  "itemManagment":{
+     "quantityMustBeGreaterThan0":"la quantité doit etre supperieure a 0",
+     "quantityNotInStock":"la quantité n'est pas en stock",
+     "saveError":"erreur d'enregistrement",
+     "saveSuccess":"succés",
+     "delivery":"livraison",
+     "stock":"stock"
   },
-  "ok": "server not found4",
-  "open-inventory-password": "server not found5",
-  "password": "server not found6",
-  "roll": {
-    "lastCheck": "server not found7",
-    "width": "server not found8",
-    "length": "server not found9",
-    "location": "incirrect password0",
-    "sendToJail": "incirrect password1",
-    "statuslabels": {
-      "L": "incirrect password2",
-      "R": "incirrect password3",
-      "F": "incirrect password4"
-    },
-    "sendToJailError": "incirrect password5",
-    "sendToJailSuccess": "incirrect password6",
-    "status": "incirrect password7",
-    "updateError": "incirrect password5",
-    "updateLocationError": "incirrect password5",
-    "updateLocationSuccess": "incirrect password6",
-    "updateSuccess": "incirrect password6"
+  "ok":"ok",
+  "open-inventory-password":"mot de passe inventaire",
+  "password":"mot de passe",
+  "roll":{
+     "lastCheck":"dernière vérif",
+     "width":"laize",
+     "length":"longueur",
+     "location":"loc",
+     "sendToJail":"mettre en zone prison",
+     "statuslabels":{
+        "L":"Libre",
+        "R":"Rérérvée",
+        "F":"Fabrication"
+     },
+     "sendToJailError":"erreur",
+     "sendToJailSuccess":"succes",
+     "status":"status",
+     "updateError":"erreur",
+     "updateLocationError":"erreur",
+     "updateLocationSuccess":"succes",
+     "updateSuccess":"succes"
   },
-  "rollCheck": {
-    "title": "incirrect password8"
+  "rollCheck":{
+     "title":"Vérification bobine"
   },
-  "rollDelivery": {
-    "title": "incirrect password9"
+  "rollDelivery":{
+     "title":"Livraison Bobine"
   },
-  "rollInventory": {
-    "title": "cancel0"
+  "rollInventory":{
+     "title":"Inventaire bobine"
   },
-  "rollManagment": {
-    "addProduct": "cancel1",
-    "rollExists": "cancel2",
-    "saveError": "incirrect password5",
-    "saveSuccess": "incirrect password6",
-    "unknowProduct": "cancel3",
-    "productIdCode": "cancel4",
-    "rollIdCode": "cancel5",
-    "rollDetailCode": "cancel6",
-    "bestBeforeCode": "cancel7",
-    "unknowCode": "cancel8"
+  "rollManagment":{
+     "addProduct":"ajouter produit",
+     "rollExists":"cette bobine existe déjas",
+     "saveError":"erreur",
+     "saveSuccess":"succes",
+     "unknowProduct":"produit inconu",
+     "newProductTitle": "rechercher produit",
+     "productIdCode":"EAN produit",
+     "rollIdCode":"Roll ID",
+     "rollDetailCode":"Roll détail",
+     "bestBeforeCode":"BestBefore",
+     "unknowCode":"code inconu"
   },
-  "scan": {
-    "title": "cancel9"
+  "scan":{
+     "title":"Entrer le code"
   },
-  "settings": {
-    "title": "Home0",
-    "language": "Home1",
-    "languages": {
-      "fr": "Home2",
-      "en": "Home3"
-    }
+  "settings":{
+     "title":"Paramètres",
+     "language":"Langue",
+     "languages":{
+        "fr":"Français",
+        "en":"Anglais"
+     }
   },
-  "test": "Home4",
-  "validate": "Home5"
+  "test":"test",
+  "validate":"valider"
 }

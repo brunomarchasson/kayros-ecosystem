@@ -8,6 +8,7 @@ const ApiFinder = () => {
   // const [apiUrl, setApiUrl] = useState();
   const [searching, setSearching] = useState(false);
   const {findBackend, setBackEnd, apiUrl} = useApi();
+
   const search = async () => {
     setSearching(true);
     try {
@@ -17,6 +18,7 @@ const ApiFinder = () => {
       setSearching(false);
     }
   };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -29,7 +31,7 @@ const ApiFinder = () => {
       {searching ? (
         <ActivityIndicator style={styles.activity} animating={true} />
       ) : (
-        <IconButton loading={searching} icon="find-replace" onPress={search} />
+        <IconButton loading={searching} icon="crosshairs" onPress={search} />
       )}
     </View>
   );

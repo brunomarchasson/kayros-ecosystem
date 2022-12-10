@@ -9,7 +9,10 @@ import {useTranslation} from './Translation';
 const NetworkContext = React.createContext();
 const {Provider} = NetworkContext;
 const APP_BACKEND = 'appBackend';
-const PORTS = [{from: 8850, to: 8855}];
+const PORTS = [
+  {from: 8850, to: 8855},
+  {from: 4410, to: 4411},
+];
 
 function range(min, max) {
   var len = max - min + 1;
@@ -21,9 +24,13 @@ function range(min, max) {
 }
 const getIPRange = ip => {
   const [ip1, ip2, ip3] = ip.split('.');
-  return ['10.0.2.2', 'localhost', ...Array(255).keys()].map(
-    i => `${ip1}.${ip2}.${ip3}.${i}`,
-  );
+  return [
+    '10.0.2.2',
+    'localhost',
+    ...Array(255)
+      .keys()
+      .map(i => `${ip1}.${ip2}.${ip3}.${i}`),
+  ];
 };
 
 const promiseAny = iterable =>
@@ -78,7 +85,10 @@ export const ApiProvider = ({children, config = null}) => {
 
   const findBackend = async () => {
     try {
+      const i = await NetworkInfo.getIPV4Address()
       const myIp = await NetworkInfo.getIPAddress();
+      console.log('myIP', myIp);
+      console.log('myIP2', i);
       const ipList = getIPRange(myIp);
       const portsList = PORTS.reduce(
         (acc, cur) => [...acc, ...range(cur.from, cur.to)],
@@ -135,12 +145,12 @@ export const ApiProvider = ({children, config = null}) => {
         .then(response => response && response.json().catch(e => ({})))
         .then(res => {
           console.log('res', res);
-          setConnected(true)
+          setConnected(true);
           setJWT(res.token);
         })
         .catch(error => {
           console.error('error', error);
-          snack.error(translate('connectionError'),)
+          snack.error(translate('connectionError'));
           setNetworkError(error);
 
           // throw error;
@@ -153,7 +163,7 @@ export const ApiProvider = ({children, config = null}) => {
       return fetch(`${apiUrl}/api/${endpoint}`, options)
         .then(response => {
           setNetworkError(false);
-          setConnected(true)
+          setConnected(true);
           return handleError(response);
         })
         .then(response => response && response.json().catch(e => ({})))

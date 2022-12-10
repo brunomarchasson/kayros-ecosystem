@@ -9,6 +9,7 @@ const CheckConnection = () => {
   const [connected, setConnected] = useState(false);
   const [loading, setLoading] = useState(false);
   const {translate} = useTranslation();
+
   const check = useCallback(async () => {
     setLoading(true);
     try {
@@ -23,7 +24,7 @@ const CheckConnection = () => {
 
   useEffect(() => {
     check();
-  }, [check]);
+  }, []);
 
   return (
     <Button

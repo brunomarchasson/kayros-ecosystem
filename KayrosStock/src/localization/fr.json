@@ -29,7 +29,7 @@
   "open-inventory-password":"mot de passe inventaire",
   "password":"mot de passe",
   "roll":{
-     "lastCheck":"dernière verrif",
+     "lastCheck":"dernière vérif",
      "width":"laize",
      "length":"longueur",
      "location":"loc",
@@ -48,7 +48,7 @@
      "updateSuccess":"succes"
   },
   "rollCheck":{
-     "title":"Verrification bobine"
+     "title":"Vérification bobine"
   },
   "rollDelivery":{
      "title":"Livraison Bobine"
